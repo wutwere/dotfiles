@@ -118,16 +118,21 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
--- TODO: add more lsps when needed
+-- TODO: add more lsps + install externally when needed
 -- why does lsp add delay when entering into a file
-require('lspconfig').clangd.setup({
-  flags = {
-    debounce_text_changes = 150,
-  },
-  on_init = function(client, _)
-    client.server_capabilities.semanticTokensProvider = nil
-  end,
-})
+local lspconfig = require('lspconfig')
+for _, lsp in ipairs({'clangd', 'pyright', 'vtsls', 'rust_analyzer', 'luau_lsp'}) do
+  require('lspconfig')[lsp].setup({
+    flags = {
+      debounce_text_changes = 150,
+    },
+    on_init = function(client, _)
+      if lsp == 'clangd' then
+        client.server_capabilities.semanticTokensProvider = nil
+      end
+    end,
+  })
+end
 
 ------------------
 -- AUTOCOMPLETE --
