@@ -1,6 +1,11 @@
 # put nvim in path
 export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+
+# put random stuff in path
 export PATH="$PATH:~/.local/bin"
+
+# make fzf faster
+export ESCDELAY=0
 
 # KACTL compile command
 alias c='g++ -Wall -Wconversion -Wfatal-errors -g -std=c++17 \
