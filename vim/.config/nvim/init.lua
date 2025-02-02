@@ -44,19 +44,18 @@ require("lazy").setup({
 	{ "mfussenegger/nvim-lint" },
 	{ "stevearc/conform.nvim" },
 	{ "ibhagwan/fzf-lua", dependencies = { "nvim-tree/nvim-web-devicons" } },
+	{ "echasnovski/mini.files" },
 })
 
 -- appearance
 vim.g.lightline = { colorscheme = "molokai" }
 vim.cmd.colorscheme("molokai")
 
--- keybinds
+-- editor keybinds
 vim.g.mapleader = " "
-
 vim.keymap.set("i", "{<cr>", "{<cr>}<esc>O")
-vim.keymap.set("n", "<leader>f", "<cmd>FzfLua<cr>")
-vim.keymap.set("n", "<C-p>", "<cmd>FzfLua files<cr>")
 vim.keymap.set("n", "<C-a>", "<cmd>%y+<cr>")
+vim.keymap.set("n", "<leader>s", "<cmd>cd %:h<cr>")
 
 -- TODO: detect windows and add competitive programming keybinds
 
@@ -104,6 +103,14 @@ conform.setup({
 		lsp_format = "fallback",
 	},
 })
+
+-- fuzzy finder
+vim.keymap.set("n", "<leader>f", "<cmd>FzfLua<cr>")
+vim.keymap.set("n", "<C-p>", "<cmd>FzfLua files<cr>")
+
+-- file editing
+require("mini.files").setup()
+vim.keymap.set("n", "<leader>q", "<cmd>lua MiniFiles.open()<cr>")
 
 ---------------------------------------------
 -- EVERYTHING BELOW IS STUFF FROM LSP-ZERO --

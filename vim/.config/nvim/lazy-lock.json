@@ -4,6 +4,7 @@
   "fzf-lua": { "branch": "main", "commit": "69a9f0a030e9b8f620866213c45fa2b843ec83e1" },
   "lazy.nvim": { "branch": "main", "commit": "7527af40ddd4a93a02911be570b32609b9d4ea53" },
   "lightline.vim": { "branch": "master", "commit": "e358557e1a9f9fc860416c8eb2e34c0404078155" },
+  "mini.files": { "branch": "main", "commit": "0db8f49088bcefff23c5cb8498a6c94e46a45a8e" },
   "molokai": { "branch": "master", "commit": "c67bdfcdb31415aa0ade7f8c003261700a885476" },
   "nvim-cmp": { "branch": "main", "commit": "12509903a5723a876abd65953109f926f4634c30" },
   "nvim-lint": { "branch": "master", "commit": "789b7ada1b4f00e08d026dffde410dcfa6a0ba87" },
