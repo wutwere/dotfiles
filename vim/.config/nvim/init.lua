@@ -45,6 +45,7 @@ require("lazy").setup({
 	{ "stevearc/conform.nvim" },
 	{ "ibhagwan/fzf-lua", dependencies = { "nvim-tree/nvim-web-devicons" } },
 	{ "echasnovski/mini.files" },
+	{ "Exafunction/codeium.nvim", dependencies = { "nvim-lua/plenary.nvim", "hrsh7th/nvim-cmp" } },
 })
 
 -- appearance
@@ -55,7 +56,6 @@ vim.cmd.colorscheme("molokai")
 vim.g.mapleader = " "
 vim.keymap.set("i", "{<cr>", "{<cr>}<esc>O")
 vim.keymap.set("n", "<C-a>", "<cmd>%y+<cr>")
-vim.keymap.set("n", "<leader>s", "<cmd>cd %:h<cr>")
 
 -- TODO: detect windows and add competitive programming keybinds
 
@@ -80,6 +80,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "VimEnter" }, {
 -- linting
 local lint = require("lint")
 lint.linters_by_ft = {
+	lua = { "selene" },
 	luau = { "selene" },
 }
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
@@ -110,7 +111,16 @@ vim.keymap.set("n", "<C-p>", "<cmd>FzfLua files<cr>")
 
 -- file editing
 require("mini.files").setup()
-vim.keymap.set("n", "<leader>q", "<cmd>lua MiniFiles.open()<cr>")
+vim.keymap.set("n", "<leader>q", MiniFiles.open)
+vim.keymap.set("n", "<leader>s", function()
+	local state = MiniFiles.get_explorer_state()
+	if state then
+		vim.cmd("cd " .. state.branch[state.depth_focus])
+	else
+		vim.cmd("cd %:h")
+	end
+	vim.cmd("pwd")
+end)
 
 ---------------------------------------------
 -- EVERYTHING BELOW IS STUFF FROM LSP-ZERO --
@@ -148,24 +158,30 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 -- why does lsp add delay when entering into a file
 local lspconfig = require("lspconfig")
-
-local cmds = {
-	luau_lsp = { "luau-lsp", "lsp", "--definitions=~/roblox/globalTypes.d.luau", "--docs=~/roblox/en-us.json" },
+local default_config = {
+	flags = {
+		debounce_text_changes = 150,
+	},
 }
-local on_inits = {
-	clangd = function(client, _)
-		client.server_capabilities.semanticTokensProvider = nil
-	end,
+local custom_config = {
+	luau_lsp = {
+		cmd = { "luau-lsp", "lsp", "--definitions=~/roblox/globalTypes.d.luau", "--docs=~/roblox/en-us.json" },
+	},
+	clangd = {
+		on_init = function(client, _)
+			client.server_capabilities.semanticTokensProvider = nil
+		end,
+	},
 }
 
 for _, lsp in ipairs({ "clangd", "pyright", "vtsls", "rust_analyzer", "luau_lsp" }) do
-	require("lspconfig")[lsp].setup({
-		flags = {
-			debounce_text_changes = 150,
-		},
-		cmd = cmds[lsp],
-		on_init = on_inits[lsp],
-	})
+	local config = custom_config[lsp] or {}
+	for k, v in pairs(default_config) do
+		if not config[k] then
+			config[k] = v
+		end
+	end
+	lspconfig[lsp].setup(config)
 end
 
 ------------------
@@ -176,20 +192,21 @@ local cmp = require("cmp")
 
 cmp.setup({
 	sources = {
+		{ name = "codeium" },
 		{ name = "nvim_lsp" },
 	},
 	mapping = cmp.mapping.preset.insert({
 		["<cr>"] = cmp.mapping.confirm(),
-		["<tab>"] = function(fallback)
+		["<tab>"] = function(_)
 			if cmp.visible() then
-				cmp.select_next_item()
+				cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
 			else
 				cmp.complete()
 			end
 		end,
-		["<S-tab>"] = function(fallback)
+		["<S-tab>"] = function(_)
 			if cmp.visible() then
-				cmp.select_prev_item()
+				cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
 			else
 				cmp.complete()
 			end
@@ -202,6 +219,9 @@ cmp.setup({
 	},
 })
 
+-- ai has to be after cmp
+require("codeium").setup({})
+
 ----------------
 -- TREESITTER --
 ----------------
@@ -211,7 +231,7 @@ require("nvim-treesitter.configs").setup({
 	ensure_installed = { "cpp", "typescript", "tsx", "python", "luau", "javascript", "rust", "json", "lua" },
 	highlight = {
 		enable = true,
-		disable = function(lang, buf)
+		disable = function(_lang, buf)
 			local max_filesize = 100 * 1024
 			local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
 			return ok and stats and stats.size > max_filesize
