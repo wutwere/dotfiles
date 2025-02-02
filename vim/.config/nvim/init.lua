@@ -120,7 +120,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 local lspconfig = require('lspconfig')
 
 local cmds = {
-  luau_lsp = {'luau-lsp', 'lsp', '--definitions=~/roblox/globalTypes.d.luau'}
+  luau_lsp = {'luau-lsp', 'lsp', '--definitions=~/roblox/globalTypes.d.luau', '--docs=~/roblox/en-us.json'}
 }
 local on_inits = {
   clangd = function(client, _)
