@@ -1,5 +1,6 @@
 # put nvim in path
 export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+export PATH="$PATH:~/.local/bin"
 
 # KACTL compile command
 alias c='g++ -Wall -Wconversion -Wfatal-errors -g -std=c++17 \
@@ -121,4 +122,11 @@ if ! shopt -oq posix; then
   elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
   fi
+fi
+
+# fnm
+FNM_PATH="/home/wwww/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="$FNM_PATH:$PATH"
+  eval "`fnm env`"
 fi

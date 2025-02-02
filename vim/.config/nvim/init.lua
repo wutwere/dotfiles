@@ -118,7 +118,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
--- TODO: add more lsps + install externally when needed
 -- why does lsp add delay when entering into a file
 local lspconfig = require('lspconfig')
 for _, lsp in ipairs({'clangd', 'pyright', 'vtsls', 'rust_analyzer', 'luau_lsp'}) do
@@ -144,7 +143,23 @@ cmp.setup({
   sources = {
     {name = 'nvim_lsp'},
   },
-  mapping = cmp.mapping.preset.insert({}),
+  mapping = cmp.mapping.preset.insert({
+    ['<cr>'] = cmp.mapping.confirm(),
+    ['<tab>'] = function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      else
+        cmp.complete()
+      end
+    end,
+    ['<S-tab>'] = function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      else
+        cmp.complete()
+      end
+    end,
+  }),
   snippet = {
     expand = function(args)
       vim.snippet.expand(args.body)
