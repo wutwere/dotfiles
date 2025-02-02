@@ -11,9 +11,7 @@ move it to opt, export path to opt/whatever/bin
 install fzf:
 sudo apt install fzf
 
-install clangd for c++ lsp:
-sudo apt-get install clangd-12
-sudo update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-12 100
+remember for new languages: install + add lsp and :TSInstall
 
 --]]
 
@@ -120,16 +118,23 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 -- why does lsp add delay when entering into a file
 local lspconfig = require('lspconfig')
+
+local cmds = {
+  luau_lsp = {'luau-lsp', 'lsp', '--definitions=~/roblox/globalTypes.d.luau'}
+}
+local on_inits = {
+  clangd = function(client, _)
+    client.server_capabilities.semanticTokensProvider = nil
+  end
+}
+
 for _, lsp in ipairs({'clangd', 'pyright', 'vtsls', 'rust_analyzer', 'luau_lsp'}) do
   require('lspconfig')[lsp].setup({
     flags = {
       debounce_text_changes = 150,
     },
-    on_init = function(client, _)
-      if lsp == 'clangd' then
-        client.server_capabilities.semanticTokensProvider = nil
-      end
-    end,
+    cmd = cmds[lsp],
+    on_init = on_inits[lsp],
   })
 end
 
@@ -173,7 +178,7 @@ cmp.setup({
 
 require('nvim-treesitter.configs').setup({
   -- A list of parser names, or "all" (the listed parsers MUST always be installed)
-  ensure_installed = {'cpp'},
+  ensure_installed = {'cpp', 'typescript', 'tsx', 'python', 'luau', 'javascript', 'rust', 'json'},
   highlight = {
     enable = true,
     disable = function(lang, buf)
