@@ -35,7 +35,8 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 	{ "tomasr/molokai" },
-	{ "itchyny/lightline.vim" },
+	{ "folke/tokyonight.nvim" },
+	{ "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons" } },
 	{ "ThePrimeagen/vim-be-good" },
 	{ "nvim-treesitter/nvim-treesitter" },
 	{ "neovim/nvim-lspconfig" },
@@ -48,9 +49,26 @@ require("lazy").setup({
 	{ "Exafunction/codeium.nvim", dependencies = { "nvim-lua/plenary.nvim", "hrsh7th/nvim-cmp" } },
 })
 
+vim.api.nvim_create_autocmd({ "UIEnter", "ColorScheme" }, {
+	callback = function()
+		local normal = vim.api.nvim_get_hl(0, { name = "Normal" })
+		if not normal.bg then
+			return
+		end
+		io.write(string.format("\027]11;#%06x\027\\", normal.bg))
+	end,
+})
+
+vim.api.nvim_create_autocmd("UILeave", {
+	callback = function()
+		io.write("\027]111\027\\")
+	end,
+})
+
 -- appearance
-vim.g.lightline = { colorscheme = "molokai" }
-vim.cmd.colorscheme("molokai")
+require("lualine").setup({ options = { theme = require("lualine.themes.palenight") } })
+require("tokyonight").setup({ transparent = true })
+vim.cmd.colorscheme("tokyonight-night")
 
 -- editor keybinds
 vim.g.mapleader = " "
