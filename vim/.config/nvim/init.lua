@@ -185,11 +185,11 @@ local custom_config = {
 	luau_lsp = {
 		cmd = { "luau-lsp", "lsp", "--definitions=~/roblox/globalTypes.d.luau", "--docs=~/roblox/en-us.json" },
 	},
-	clangd = {
-		on_init = function(client, _)
-			client.server_capabilities.semanticTokensProvider = nil
-		end,
-	},
+	--	clangd = {
+	--		on_init = function(client, _)
+	--			client.server_capabilities.semanticTokensProvider = nil
+	--		end,
+	--	},
 }
 
 for _, lsp in ipairs({ "clangd", "pyright", "vtsls", "rust_analyzer", "luau_lsp" }) do
