@@ -1,39 +1,12 @@
---[[
+--// Dependencies:
+--// - Neovim v0.10+
+--// - fzf
 
-basic nvim config with lsp, treesitter for highlighting, fzf, and autocomplete
-remember to get a nerd font https://www.nerdfonts.com/font-downloads
+-----------------
+-- MAIN CONFIG --
+-----------------
 
-install nvim 0.10.4:
-wget 'https://github.com/neovim/neovim/releases/download/v0.10.4/nvim-linux-x86_64.tar.gz'
-tar xvzf nvim-linux-x86_64.tar.gz
-move it to opt, export path to opt/whatever/bin
-
-install fzf:
-sudo apt install fzf
-
-remember for new languages: install + add lsp and :TSInstall
-
---]]
-
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-
--- Auto-install lazy.nvim if not present
-if not vim.uv.fs_stat(lazypath) then
-	print("Installing lazy.nvim....")
-	vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable", -- latest stable release
-		lazypath,
-	})
-	print("Done.")
-end
-
-vim.opt.rtp:prepend(lazypath)
-
-require("lazy").setup({
+local PLUGINS = {
 	{ "tomasr/molokai" },
 	{ "folke/tokyonight.nvim" },
 	{ "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons" } },
@@ -47,8 +20,101 @@ require("lazy").setup({
 	{ "ibhagwan/fzf-lua", dependencies = { "nvim-tree/nvim-web-devicons" } },
 	{ "echasnovski/mini.files" },
 	{ "Exafunction/codeium.nvim", dependencies = { "nvim-lua/plenary.nvim", "hrsh7th/nvim-cmp" } },
-})
+}
 
+local KEYMAP_SETTINGS = {}
+do
+	vim.g.mapleader = " "
+	local set = vim.keymap.set
+
+	KEYMAP_SETTINGS.general = function()
+		set("i", "{<cr>", "{<cr>}<esc>O")
+		set("n", "<leader>y", "<cmd>%y+<cr>")
+		set("n", "<leader>d", vim.diagnostic.open_float)
+		set("n", "<leader>f", "<cmd>FzfLua<cr>")
+		set("n", "<leader>p", "<cmd>FzfLua files<cr>")
+	end
+
+	KEYMAP_SETTINGS.mini_files = function(MiniFiles)
+		set("n", "<leader>q", MiniFiles.open)
+		set("n", "<leader>s", function() -- set working dir to current buffer
+			local state = MiniFiles.get_explorer_state()
+			local dir = state and state.branch[state.depth_focus] or "%:h"
+			vim.cmd("cd " .. dir)
+			vim.cmd("pwd")
+		end)
+	end
+
+	KEYMAP_SETTINGS.lsp = function(event)
+		local opts = { buffer = event.buf }
+		set("n", "K", vim.lsp.buf.hover, opts)
+		set("n", "gd", vim.lsp.buf.definition, opts)
+		-- set("n", "gD", vim.lsp.buf.declaration, opts)
+		set("n", "gi", vim.lsp.buf.implementation, opts)
+		set("n", "go", vim.lsp.buf.type_definition, opts)
+		set("n", "gr", vim.lsp.buf.references, opts)
+		set("n", "gs", vim.lsp.buf.signature_help, opts)
+		set("n", "<f2>", vim.lsp.buf.rename, opts)
+		set({ "n", "x" }, "<f3>", vim.lsp.buf.format, opts)
+		set("n", "<f4>", vim.lsp.buf.code_action, opts)
+	end
+
+	KEYMAP_SETTINGS.cmp = function(cmp)
+		local function get_selector(func)
+			return function(_fallback)
+				local _ = cmp.visible() and cmp[func]({ behavior = cmp.SelectBehavior.Select }) or cmp.complete()
+			end
+		end
+		return {
+			["<cr>"] = cmp.mapping.confirm(),
+			["<tab>"] = get_selector("select_next_item"),
+			["<S-tab>"] = get_selector("select_prev_item"),
+		}
+	end
+end
+
+vim.opt.termguicolors = true
+vim.opt.nu = true
+vim.opt.rnu = true
+vim.opt.expandtab = true
+vim.opt.cindent = true
+vim.opt.cinoptions = { "N-s", "g0", "j1", "(s", "m1" }
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+-- vim.opt.mouse = 'a'
+vim.g.netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
+
+---------------
+-- LAZY.NVIM --
+---------------
+
+do
+	-- Auto-install lazy.nvim if not present
+	local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+
+	if not vim.uv.fs_stat(lazypath) then
+		print("Installing lazy.nvim....")
+		vim.fn.system({
+			"git",
+			"clone",
+			"--filter=blob:none",
+			"https://github.com/folke/lazy.nvim.git",
+			"--branch=stable",
+			lazypath,
+		})
+		print("Done.")
+	end
+
+	vim.opt.rtp:prepend(lazypath)
+end
+
+require("lazy").setup(PLUGINS)
+
+----------------
+-- APPEARANCE --
+----------------
+
+-- Auto match terminal padding color
 vim.api.nvim_create_autocmd({ "UIEnter", "ColorScheme" }, {
 	callback = function()
 		local normal = vim.api.nvim_get_hl(0, { name = "Normal" })
@@ -58,44 +124,20 @@ vim.api.nvim_create_autocmd({ "UIEnter", "ColorScheme" }, {
 		io.write(string.format("\027]11;#%06x\027\\", normal.bg))
 	end,
 })
-
 vim.api.nvim_create_autocmd("UILeave", {
 	callback = function()
 		io.write("\027]111\027\\")
 	end,
 })
 
--- appearance
 require("lualine").setup({ options = { theme = require("lualine.themes.palenight") } })
 require("tokyonight").setup({ transparent = true })
 vim.cmd.colorscheme("tokyonight-night")
 
--- editor keybinds
-vim.g.mapleader = " "
-vim.keymap.set("i", "{<cr>", "{<cr>}<esc>O")
-vim.keymap.set("n", "<C-a>", "<cmd>%y+<cr>")
+-------------
+-- LINTING --
+-------------
 
--- TODO: detect windows and add competitive programming keybinds
-
--- preferences
-local function options()
-	vim.opt.termguicolors = true
-	vim.opt.nu = true
-	vim.opt.rnu = true
-	vim.opt.expandtab = true
-	vim.opt.cindent = true
-	vim.opt.cinoptions = { "N-s", "g0", "j1", "(s", "m1" }
-	vim.opt.tabstop = 2
-	vim.opt.shiftwidth = 2
-	-- vim.opt.mouse = 'a' -- why is this enabled by default now
-end
-vim.g.netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
-
-vim.api.nvim_create_autocmd({ "BufEnter", "VimEnter" }, {
-	callback = options,
-})
-
--- linting
 local lint = require("lint")
 lint.linters_by_ft = {
 	lua = { "selene" },
@@ -107,7 +149,10 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 	end,
 })
 
--- formatting
+----------------
+-- FORMATTING --
+----------------
+
 local conform = require("conform")
 conform.setup({
 	formatters_by_ft = {
@@ -117,66 +162,18 @@ conform.setup({
 })
 conform.setup({
 	format_on_save = {
-		-- These options will be passed to conform.format()
 		timeout_ms = 500,
 		lsp_format = "fallback",
 	},
 })
 
--- fuzzy finder
-vim.keymap.set("n", "<leader>f", "<cmd>FzfLua<cr>")
-vim.keymap.set("n", "<C-p>", "<cmd>FzfLua files<cr>")
+---------
+-- LSP --
+---------
 
--- file editing
-require("mini.files").setup()
-vim.keymap.set("n", "<leader>q", MiniFiles.open)
-vim.keymap.set("n", "<leader>s", function()
-	local state = MiniFiles.get_explorer_state()
-	if state then
-		vim.cmd("cd " .. state.branch[state.depth_focus])
-	else
-		vim.cmd("cd %:h")
-	end
-	vim.cmd("pwd")
-end)
-
----------------------------------------------
--- EVERYTHING BELOW IS STUFF FROM LSP-ZERO --
----------------------------------------------
-
--- Reserve a space in the gutter
--- This will avoid an annoying layout shift in the screen
-vim.opt.signcolumn = "yes"
-
--- Add cmp_nvim_lsp capabilities settings to lspconfig
--- This should be executed before you configure any language server
-local lspconfig_defaults = require("lspconfig").util.default_config
-lspconfig_defaults.capabilities =
-	vim.tbl_deep_extend("force", lspconfig_defaults.capabilities, require("cmp_nvim_lsp").default_capabilities())
-
--- This is where you enable features that only work
--- if there is a language server active in the file
-vim.api.nvim_create_autocmd("LspAttach", {
-	desc = "LSP actions",
-	callback = function(event)
-		local opts = { buffer = event.buf }
-
-		vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
-		vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", opts)
-		vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", opts)
-		vim.keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<cr>", opts)
-		vim.keymap.set("n", "go", "<cmd>lua vim.lsp.buf.type_definition()<cr>", opts)
-		vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>", opts)
-		vim.keymap.set("n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<cr>", opts)
-		vim.keymap.set("n", "<F2>", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
-		vim.keymap.set({ "n", "x" }, "<F3>", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
-		vim.keymap.set("n", "<F4>", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
-	end,
-})
-
--- why does lsp add delay when entering into a file
 local lspconfig = require("lspconfig")
 local default_config = {
+	capabilities = require("cmp_nvim_lsp").default_capabilities(),
 	flags = {
 		debounce_text_changes = 150,
 	},
@@ -185,22 +182,42 @@ local custom_config = {
 	luau_lsp = {
 		cmd = { "luau-lsp", "lsp", "--definitions=~/roblox/globalTypes.d.luau", "--docs=~/roblox/en-us.json" },
 	},
-	--	clangd = {
-	--		on_init = function(client, _)
-	--			client.server_capabilities.semanticTokensProvider = nil
-	--		end,
-	--	},
+	lua_ls = {
+		settings = {
+			Lua = {
+				diagnostics = {
+					globals = {
+						"vim",
+					},
+				},
+			},
+		},
+	},
+	clangd = {
+		-- on_init = function(client, _)
+		-- 	client.server_capabilities.semanticTokensProvider = nil
+		-- end,
+	},
+	pyright = {},
+	vtsls = {},
+	rust_analyzer = {},
 }
 
-for _, lsp in ipairs({ "clangd", "pyright", "vtsls", "rust_analyzer", "luau_lsp" }) do
-	local config = custom_config[lsp] or {}
-	for k, v in pairs(default_config) do
-		if not config[k] then
-			config[k] = v
-		end
-	end
+for lsp, config in pairs(custom_config) do
+	setmetatable(config, { __index = default_config })
 	lspconfig[lsp].setup(config)
 end
+
+-- Reserve a space in the gutter
+-- This will avoid an annoying layout shift in the screen
+vim.opt.signcolumn = "yes" -- (lsp-zero told me to do this)
+
+vim.api.nvim_create_autocmd("LspAttach", {
+	desc = "LSP actions",
+	callback = function(event)
+		KEYMAP_SETTINGS.lsp(event)
+	end,
+})
 
 ------------------
 -- AUTOCOMPLETE --
@@ -213,23 +230,7 @@ cmp.setup({
 		{ name = "codeium" },
 		{ name = "nvim_lsp" },
 	},
-	mapping = cmp.mapping.preset.insert({
-		["<cr>"] = cmp.mapping.confirm(),
-		["<tab>"] = function(_)
-			if cmp.visible() then
-				cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-			else
-				cmp.complete()
-			end
-		end,
-		["<S-tab>"] = function(_)
-			if cmp.visible() then
-				cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
-			else
-				cmp.complete()
-			end
-		end,
-	}),
+	mapping = cmp.mapping.preset.insert(KEYMAP_SETTINGS.cmp(cmp)),
 	snippet = {
 		expand = function(args)
 			vim.snippet.expand(args.body)
@@ -237,7 +238,10 @@ cmp.setup({
 	},
 })
 
--- ai has to be after cmp
+--------
+-- AI --
+--------
+
 require("codeium").setup({})
 
 ----------------
@@ -245,7 +249,6 @@ require("codeium").setup({})
 ----------------
 
 require("nvim-treesitter.configs").setup({
-	-- A list of parser names, or 'all' (the listed parsers MUST always be installed)
 	ensure_installed = { "cpp", "typescript", "tsx", "python", "luau", "javascript", "rust", "json", "lua" },
 	highlight = {
 		enable = true,
@@ -256,3 +259,13 @@ require("nvim-treesitter.configs").setup({
 		end,
 	},
 })
+
+----------------
+-- MINI.FILES --
+----------------
+
+local mini_files = require("mini.files")
+mini_files.setup()
+KEYMAP_SETTINGS.mini_files(mini_files)
+
+KEYMAP_SETTINGS.general()
