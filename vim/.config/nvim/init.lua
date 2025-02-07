@@ -31,14 +31,16 @@ do
 		set("i", "{<cr>", "{<cr>}<esc>O")
 		set("n", "<leader>y", "<cmd>%y+<cr>")
 		set("n", "<leader>d", vim.diagnostic.open_float)
+		set("n", "<leader>t", "<cmd>vs<cr><cmd>term<cr>a")
+		set("t", "<esc>", "<c-\\><c-n>")
 		set("n", "<leader>f", "<cmd>FzfLua<cr>")
 		set("n", "<leader>p", "<cmd>FzfLua files<cr>")
 	end
 
-	KEYMAP_SETTINGS.mini_files = function(MiniFiles)
-		set("n", "<leader>q", MiniFiles.open)
+	KEYMAP_SETTINGS.mini_files = function(mini_files)
+		set("n", "<leader>q", mini_files.open)
 		set("n", "<leader>s", function() -- set working dir to current buffer
-			local state = MiniFiles.get_explorer_state()
+			local state = mini_files.get_explorer_state()
 			local dir = state and state.branch[state.depth_focus] or "%:h"
 			vim.cmd("cd " .. dir)
 			vim.cmd("pwd")
