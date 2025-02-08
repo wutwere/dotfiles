@@ -76,15 +76,25 @@ do
 end
 
 vim.opt.termguicolors = true
-vim.opt.nu = true
-vim.opt.rnu = true
 vim.opt.expandtab = true
 vim.opt.cindent = true
 vim.opt.cinoptions = { "N-s", "g0", "j1", "(s", "m1" }
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
+vim.opt.laststatus = 3
 -- vim.opt.mouse = 'a'
 vim.g.netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
+vim.diagnostic.config({
+	float = {
+		border = "rounded",
+	},
+})
+vim.api.nvim_create_autocmd({ "BufEnter", "VimEnter" }, {
+	callback = function()
+		vim.opt.nu = true
+		vim.opt.rnu = true
+	end,
+})
 
 ---------------
 -- LAZY.NVIM --
@@ -132,8 +142,11 @@ vim.api.nvim_create_autocmd("UILeave", {
 	end,
 })
 
-require("lualine").setup({ options = { theme = require("lualine.themes.palenight") } })
-require("tokyonight").setup({ transparent = true })
+local theme = require("lualine.themes.tokyonight")
+theme.normal.c.bg = nil
+--require("lualine").setup({ options = { theme = require("lualine.themes.palenight") } })
+require("lualine").setup({ options = { theme = theme } })
+require("tokyonight").setup({ transparent = true, styles = { floats = "transparent" } })
 vim.cmd.colorscheme("tokyonight-night")
 
 -------------
@@ -221,6 +234,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
+
 ------------------
 -- AUTOCOMPLETE --
 ------------------
@@ -228,6 +244,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
 local cmp = require("cmp")
 
 cmp.setup({
+	window = {
+		completion = cmp.config.window.bordered(),
+		documentation = cmp.config.window.bordered(),
+	},
 	sources = {
 		{ name = "codeium" },
 		{ name = "nvim_lsp" },
@@ -267,7 +287,14 @@ require("nvim-treesitter.configs").setup({
 ----------------
 
 local mini_files = require("mini.files")
-mini_files.setup()
+mini_files.setup({
+	windows = {
+		preview = true,
+		width_preview = 30,
+		width_nofocus = 30,
+		width_focus = 30,
+	},
+})
 KEYMAP_SETTINGS.mini_files(mini_files)
 
 KEYMAP_SETTINGS.general()
