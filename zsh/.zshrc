@@ -11,6 +11,8 @@ export PATH=~/.aftman/bin:$PATH
 export ESCDELAY=0
 source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 alias ls="ls -F --color=auto"
+alias n="nvim"
+alias vim="nvim"
 alias b="g++ --std=c++17 -DLOCAL -O2 -include-pch /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/bits/stdc++.h.pch -o a"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.

@@ -28,17 +28,30 @@ do
 	local set = vim.keymap.set
 
 	KEYMAP_SETTINGS.general = function()
+		-- editor
 		set("i", "{<cr>", "{<cr>}<esc>O")
 		set("n", "<leader>y", "<cmd>%y+<cr>")
+		set("n", "<leader>m", "<cmd>vs $MYVIMRC<cr>")
 		set("n", "<leader>d", vim.diagnostic.open_float)
+
+		-- terminal
 		set("n", "<leader>t", "<cmd>vs<cr><cmd>term<cr>a")
 		set("t", "<esc>", "<c-\\><c-n>")
-		set("n", "<leader>f", "<cmd>FzfLua<cr>")
-		set("n", "<leader>p", "<cmd>FzfLua files<cr>")
+
+		-- fast navigation
+		set({ "n", "v", "x" }, "<c-j>", "7<c-e>")
+		set({ "n", "v", "x" }, "<c-k>", "7<c-y>")
+		set("n", "<c-h>", "<c-w>W")
+		set("n", "<c-l>", "<c-w>w")
+
+		-- fzf
+		set("n", "<leader>a", "<cmd>FzfLua<cr>")
+		set("n", "<leader>f", "<cmd>FzfLua files<cr>")
 	end
 
 	KEYMAP_SETTINGS.mini_files = function(mini_files)
-		set("n", "<leader>q", mini_files.open)
+		mini_files.config.mappings.close = "<esc>"
+		set("n", "<leader><space>", mini_files.open)
 		set("n", "<leader>s", function() -- set working dir to current buffer
 			local state = mini_files.get_explorer_state()
 			local dir = state and state.branch[state.depth_focus] or "%:h"
@@ -79,10 +92,11 @@ vim.opt.termguicolors = true
 vim.opt.expandtab = true
 vim.opt.cindent = true
 vim.opt.cinoptions = { "N-s", "g0", "j1", "(s", "m1" }
+vim.opt.scrolloff = 5
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.laststatus = 3
--- vim.opt.mouse = 'a'
+vim.opt.mouse = "nv"
 vim.g.netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
 vim.diagnostic.config({
 	float = {
@@ -144,7 +158,6 @@ vim.api.nvim_create_autocmd("UILeave", {
 
 local theme = require("lualine.themes.tokyonight")
 theme.normal.c.bg = nil
---require("lualine").setup({ options = { theme = require("lualine.themes.palenight") } })
 require("lualine").setup({ options = { theme = theme } })
 require("tokyonight").setup({ transparent = true, styles = { floats = "transparent" } })
 vim.cmd.colorscheme("tokyonight-night")
@@ -259,10 +272,6 @@ cmp.setup({
 		end,
 	},
 })
-
---------
--- AI --
---------
 
 require("codeium").setup({})
 
