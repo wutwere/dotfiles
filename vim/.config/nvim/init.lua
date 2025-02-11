@@ -13,13 +13,22 @@ local PLUGINS = {
 	{ "ThePrimeagen/vim-be-good" },
 	{ "nvim-treesitter/nvim-treesitter" },
 	{ "neovim/nvim-lspconfig" },
-	{ "hrsh7th/cmp-nvim-lsp" },
-	{ "hrsh7th/nvim-cmp" },
 	{ "mfussenegger/nvim-lint" },
 	{ "stevearc/conform.nvim" },
-	{ "ibhagwan/fzf-lua", dependencies = { "nvim-tree/nvim-web-devicons" } },
+	{
+		"ibhagwan/fzf-lua",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		opts = { previewers = { builtin = { syntax_limit_b = 100 * 1024 } } },
+	},
 	{ "echasnovski/mini.files" },
-	{ "Exafunction/codeium.nvim", dependencies = { "nvim-lua/plenary.nvim", "hrsh7th/nvim-cmp" } },
+	{ "zbirenbaum/copilot.lua" },
+	{ "fang2hou/blink-copilot" },
+	{
+		"folke/lazydev.nvim",
+		ft = "lua",
+		opts = { library = { { path = "${3rd}/luv/library", words = { "vim%.uv" } } } },
+	},
+	{ "saghen/blink.cmp", version = "*" },
 }
 
 local KEYMAP_SETTINGS = {}
@@ -31,7 +40,7 @@ do
 		-- editor
 		set("i", "{<cr>", "{<cr>}<esc>O")
 		set("n", "<leader>y", "<cmd>%y+<cr>")
-		set("n", "<leader>m", "<cmd>vs $MYVIMRC<cr>")
+		set("n", "<leader>m", "<cmd>e $MYVIMRC<cr>")
 		set("n", "<leader>d", vim.diagnostic.open_float)
 
 		-- terminal
@@ -74,18 +83,11 @@ do
 		set("n", "<f4>", vim.lsp.buf.code_action, opts)
 	end
 
-	KEYMAP_SETTINGS.cmp = function(cmp)
-		local function get_selector(func)
-			return function(_fallback)
-				local _ = cmp.visible() and cmp[func]({ behavior = cmp.SelectBehavior.Select }) or cmp.complete()
-			end
-		end
-		return {
-			["<cr>"] = cmp.mapping.confirm(),
-			["<tab>"] = get_selector("select_next_item"),
-			["<S-tab>"] = get_selector("select_prev_item"),
-		}
-	end
+	KEYMAP_SETTINGS.cmp = {
+		["<cr>"] = { "accept", "fallback" },
+		["<tab>"] = { "show", "select_next", "fallback" },
+		["<S-tab>"] = { "show", "select_prev", "fallback" },
+	}
 end
 
 vim.opt.termguicolors = true
@@ -101,6 +103,7 @@ vim.g.netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
 vim.diagnostic.config({
 	float = {
 		border = "rounded",
+		source = true,
 	},
 })
 vim.api.nvim_create_autocmd({ "BufEnter", "VimEnter" }, {
@@ -201,9 +204,9 @@ conform.setup({
 
 local lspconfig = require("lspconfig")
 local default_config = {
-	capabilities = require("cmp_nvim_lsp").default_capabilities(),
+	capabilities = require("blink.cmp").get_lsp_capabilities(),
 	flags = {
-		debounce_text_changes = 150,
+		debounce_text_changes = 0, --150,
 	},
 }
 local custom_config = {
@@ -254,26 +257,58 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.s
 -- AUTOCOMPLETE --
 ------------------
 
-local cmp = require("cmp")
-
-cmp.setup({
-	window = {
-		completion = cmp.config.window.bordered(),
-		documentation = cmp.config.window.bordered(),
+require("blink-cmp").setup({
+	completion = {
+		trigger = {
+			show_on_blocked_trigger_characters = {},
+		},
+		documentation = { auto_show = true, auto_show_delay_ms = 0, window = { border = "rounded" } },
+		menu = {
+			border = "rounded",
+			draw = {
+				columns = {
+					{ "kind_icon" },
+					{ "label", "label_description", gap = 1 },
+					{ "source_name" },
+				},
+			},
+		},
+		list = { selection = {
+			preselect = false,
+			auto_insert = false,
+		} },
+		ghost_text = { enabled = true },
 	},
+	signature = {
+		enabled = true,
+		window = { border = "rounded" },
+	},
+	keymap = KEYMAP_SETTINGS.cmp,
 	sources = {
-		{ name = "codeium" },
-		{ name = "nvim_lsp" },
-	},
-	mapping = cmp.mapping.preset.insert(KEYMAP_SETTINGS.cmp(cmp)),
-	snippet = {
-		expand = function(args)
-			vim.snippet.expand(args.body)
-		end,
+		default = { "lazydev", "copilot", "lsp", "path", "snippets", "buffer", "cmdline" },
+		providers = {
+			cmdline = {
+				score_offset = -10,
+			},
+			lazydev = {
+				name = "LazyDev",
+				module = "lazydev.integrations.blink",
+				score_offset = 90,
+			},
+			copilot = {
+				name = "copilot",
+				module = "blink-copilot",
+				score_offset = 100,
+				async = true,
+			},
+		},
 	},
 })
 
-require("codeium").setup({})
+require("copilot").setup({
+	suggestion = { enabled = false },
+	panel = { enabled = false },
+})
 
 ----------------
 -- TREESITTER --

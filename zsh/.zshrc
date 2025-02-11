@@ -7,6 +7,7 @@ fi
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
 export PATH=/Applications/WezTerm.app/Contents/MACOS:$PATH
+export PATH=~/.local/bin:$PATH
 export PATH=~/.aftman/bin:$PATH
 export ESCDELAY=0
 source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
