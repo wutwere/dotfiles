@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields
 --// Dependencies:
 --// - Neovim v0.10+
 --// - fzf
@@ -98,9 +99,9 @@ do
 		set("n", "go", vim.lsp.buf.type_definition, opts)
 		set("n", "gr", vim.lsp.buf.references, opts)
 		set("n", "gs", vim.lsp.buf.signature_help, opts)
-		set("n", "<f2>", vim.lsp.buf.rename, opts)
-		set({ "n", "x" }, "<f3>", vim.lsp.buf.format, opts)
-		set("n", "<f4>", vim.lsp.buf.code_action, opts)
+		set("n", "<leader>2", vim.lsp.buf.rename, opts)
+		set({ "n", "x" }, "<leader>3", vim.lsp.buf.format, opts)
+		set("n", "<leader>4", vim.lsp.buf.code_action, opts)
 	end
 
 	KEYMAPS.cmp = {
@@ -300,10 +301,12 @@ require("blink-cmp").setup({
 				},
 			},
 		},
-		list = { selection = {
-			preselect = false,
-			auto_insert = false,
-		} },
+		list = {
+			selection = {
+				preselect = false,
+				auto_insert = false,
+			},
+		},
 		ghost_text = { enabled = true },
 	},
 	signature = {
