@@ -36,11 +36,13 @@ local PLUGINS = {
 		dependencies = { "nvim-lua/plenary.nvim", "sindrets/diffview.nvim", "ibhagwan/fzf-lua" },
 		config = true,
 	},
+	{ "MagicDuck/grug-far.nvim" },
 }
 
 local KEYMAPS = {}
 do
 	vim.g.mapleader = " "
+	vim.g.maplocalleader = "\\"
 	local set = vim.keymap.set
 
 	KEYMAPS.general = function()
@@ -53,7 +55,7 @@ do
 
 		-- terminal
 		set("n", "<leader>t", "<cmd>vs<cr><cmd>term<cr>a")
-		set("t", "<esc>", "<c-\\><c-n>")
+		set("t", "<esc>", "<cmd>q<cr>")
 
 		-- fast navigation
 		set({ "n", "v", "x" }, "<c-j>", "7<c-e>")
@@ -64,6 +66,13 @@ do
 		-- fzf
 		set("n", "<leader>a", "<cmd>FzfLua<cr>")
 		set("n", "<leader>f", "<cmd>FzfLua files<cr>")
+		set("n", "<leader>b", "<cmd>FzfLua buffers<cr>")
+		set("n", "<leader>z", "<cmd>FzfLua zoxide<cr>")
+		set("n", "<leader>/", "<cmd>FzfLua grep<cr>")
+		set("v", "<leader>/", "<cmd>FzfLua grep_visual<cr>")
+
+		-- find and replace
+		set("n", "<leader>r", "<cmd>GrugFar<cr>")
 
 		-- git
 		set("n", "<leader>gg", "<cmd>Neogit<cr>")
@@ -100,6 +109,8 @@ do
 		["<S-tab>"] = { "show", "select_prev", "fallback" },
 	}
 end
+
+KEYMAPS.general()
 
 -----------------
 -- VIM OPTIONS --
@@ -346,4 +357,10 @@ mini_files.setup({
 })
 KEYMAPS.mini_files(mini_files)
 
-KEYMAPS.general()
+----------------------
+-- FIND AND REPLACE --
+----------------------
+
+require("grug-far").setup({
+	windowCreationCommand = "tab split",
+})
