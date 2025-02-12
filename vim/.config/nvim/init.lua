@@ -13,6 +13,8 @@ local PLUGINS = {
 	{ "ThePrimeagen/vim-be-good" },
 	{ "nvim-treesitter/nvim-treesitter" },
 	{ "neovim/nvim-lspconfig" },
+	{ "williamboman/mason.nvim" },
+	{ "williamboman/mason-lspconfig.nvim" },
 	{ "mfussenegger/nvim-lint" },
 	{ "stevearc/conform.nvim" },
 	{
@@ -21,6 +23,7 @@ local PLUGINS = {
 		opts = { previewers = { builtin = { syntax_limit_b = 100 * 1024 } } },
 	},
 	{ "echasnovski/mini.files" },
+	{ "saghen/blink.cmp", version = "*" },
 	{ "zbirenbaum/copilot.lua" },
 	{ "fang2hou/blink-copilot" },
 	{
@@ -28,20 +31,25 @@ local PLUGINS = {
 		ft = "lua",
 		opts = { library = { { path = "${3rd}/luv/library", words = { "vim%.uv" } } } },
 	},
-	{ "saghen/blink.cmp", version = "*" },
+	{
+		"NeogitOrg/neogit",
+		dependencies = { "nvim-lua/plenary.nvim", "sindrets/diffview.nvim", "ibhagwan/fzf-lua" },
+		config = true,
+	},
 }
 
-local KEYMAP_SETTINGS = {}
+local KEYMAPS = {}
 do
 	vim.g.mapleader = " "
 	local set = vim.keymap.set
 
-	KEYMAP_SETTINGS.general = function()
+	KEYMAPS.general = function()
 		-- editor
 		set("i", "{<cr>", "{<cr>}<esc>O")
 		set("n", "<leader>y", "<cmd>%y+<cr>")
 		set("n", "<leader>m", "<cmd>e $MYVIMRC<cr>")
 		set("n", "<leader>d", vim.diagnostic.open_float)
+		set("n", "<leader>w", "<cmd>tabc<cr>")
 
 		-- terminal
 		set("n", "<leader>t", "<cmd>vs<cr><cmd>term<cr>a")
@@ -56,9 +64,13 @@ do
 		-- fzf
 		set("n", "<leader>a", "<cmd>FzfLua<cr>")
 		set("n", "<leader>f", "<cmd>FzfLua files<cr>")
+
+		-- git
+		set("n", "<leader>gg", "<cmd>Neogit<cr>")
+		set("n", "<leader>gd", "<cmd>Neogit diff<cr>")
 	end
 
-	KEYMAP_SETTINGS.mini_files = function(mini_files)
+	KEYMAPS.mini_files = function(mini_files)
 		mini_files.config.mappings.close = "<esc>"
 		set("n", "<leader><space>", mini_files.open)
 		set("n", "<leader>s", function() -- set working dir to current buffer
@@ -69,11 +81,10 @@ do
 		end)
 	end
 
-	KEYMAP_SETTINGS.lsp = function(event)
+	KEYMAPS.lsp = function(event)
 		local opts = { buffer = event.buf }
 		set("n", "K", vim.lsp.buf.hover, opts)
 		set("n", "gd", vim.lsp.buf.definition, opts)
-		-- set("n", "gD", vim.lsp.buf.declaration, opts)
 		set("n", "gi", vim.lsp.buf.implementation, opts)
 		set("n", "go", vim.lsp.buf.type_definition, opts)
 		set("n", "gr", vim.lsp.buf.references, opts)
@@ -83,12 +94,16 @@ do
 		set("n", "<f4>", vim.lsp.buf.code_action, opts)
 	end
 
-	KEYMAP_SETTINGS.cmp = {
+	KEYMAPS.cmp = {
 		["<cr>"] = { "accept", "fallback" },
 		["<tab>"] = { "show", "select_next", "fallback" },
 		["<S-tab>"] = { "show", "select_prev", "fallback" },
 	}
 end
+
+-----------------
+-- VIM OPTIONS --
+-----------------
 
 vim.opt.termguicolors = true
 vim.opt.expandtab = true
@@ -100,12 +115,6 @@ vim.opt.shiftwidth = 2
 vim.opt.laststatus = 3
 vim.opt.mouse = "nv"
 vim.g.netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
-vim.diagnostic.config({
-	float = {
-		border = "rounded",
-		source = true,
-	},
-})
 vim.api.nvim_create_autocmd({ "BufEnter", "VimEnter" }, {
 	callback = function()
 		vim.opt.nu = true
@@ -142,6 +151,13 @@ require("lazy").setup(PLUGINS)
 ----------------
 -- APPEARANCE --
 ----------------
+
+vim.diagnostic.config({
+	float = {
+		border = "rounded",
+		source = true,
+	},
+})
 
 -- Auto match terminal padding color
 vim.api.nvim_create_autocmd({ "UIEnter", "ColorScheme" }, {
@@ -202,6 +218,10 @@ conform.setup({
 -- LSP --
 ---------
 
+require("mason").setup()
+require("mason-lspconfig").setup({
+	automatic_installation = true,
+})
 local lspconfig = require("lspconfig")
 local default_config = {
 	capabilities = require("blink.cmp").get_lsp_capabilities(),
@@ -225,9 +245,7 @@ local custom_config = {
 		},
 	},
 	clangd = {
-		-- on_init = function(client, _)
-		-- 	client.server_capabilities.semanticTokensProvider = nil
-		-- end,
+		-- on_init = function(client, _) client.server_capabilities.semanticTokensProvider = nil end,
 	},
 	pyright = {},
 	vtsls = {},
@@ -246,7 +264,7 @@ vim.opt.signcolumn = "yes" -- (lsp-zero told me to do this)
 vim.api.nvim_create_autocmd("LspAttach", {
 	desc = "LSP actions",
 	callback = function(event)
-		KEYMAP_SETTINGS.lsp(event)
+		KEYMAPS.lsp(event)
 	end,
 })
 
@@ -259,9 +277,7 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.s
 
 require("blink-cmp").setup({
 	completion = {
-		trigger = {
-			show_on_blocked_trigger_characters = {},
-		},
+		trigger = { show_on_blocked_trigger_characters = {} },
 		documentation = { auto_show = true, auto_show_delay_ms = 0, window = { border = "rounded" } },
 		menu = {
 			border = "rounded",
@@ -283,24 +299,13 @@ require("blink-cmp").setup({
 		enabled = true,
 		window = { border = "rounded" },
 	},
-	keymap = KEYMAP_SETTINGS.cmp,
+	keymap = KEYMAPS.cmp,
 	sources = {
 		default = { "lazydev", "copilot", "lsp", "path", "snippets", "buffer", "cmdline" },
 		providers = {
-			cmdline = {
-				score_offset = -10,
-			},
-			lazydev = {
-				name = "LazyDev",
-				module = "lazydev.integrations.blink",
-				score_offset = 90,
-			},
-			copilot = {
-				name = "copilot",
-				module = "blink-copilot",
-				score_offset = 100,
-				async = true,
-			},
+			cmdline = { score_offset = -10 },
+			lazydev = { name = "LazyDev", module = "lazydev.integrations.blink", score_offset = 90 },
+			copilot = { name = "copilot", module = "blink-copilot", score_offset = 100, async = true },
 		},
 	},
 })
@@ -339,6 +344,6 @@ mini_files.setup({
 		width_focus = 30,
 	},
 })
-KEYMAP_SETTINGS.mini_files(mini_files)
+KEYMAPS.mini_files(mini_files)
 
-KEYMAP_SETTINGS.general()
+KEYMAPS.general()
