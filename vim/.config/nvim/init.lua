@@ -94,14 +94,19 @@ do
 	KEYMAPS.lsp = function(event)
 		local opts = { buffer = event.buf }
 		set("n", "K", vim.lsp.buf.hover, opts)
-		set("n", "gd", vim.lsp.buf.definition, opts)
-		set("n", "gi", vim.lsp.buf.implementation, opts)
-		set("n", "go", vim.lsp.buf.type_definition, opts)
-		set("n", "gr", vim.lsp.buf.references, opts)
+		--set("n", "gd", vim.lsp.buf.definition, opts)
+		set("n", "gd", "<cmd>FzfLua lsp_definitions<cr>")
+		--set("n", "gi", vim.lsp.buf.implementation, opts)
+		set("n", "gi", "<cmd>FzfLua lsp_implementations<cr>")
+		--set("n", "go", vim.lsp.buf.type_definition, opts)
+		set("n", "go", "<cmd>FzfLua lsp_type_defs<cr>")
+		--set("n", "gr", vim.lsp.buf.references, opts)
+		set("n", "gr", "<cmd>FzfLua lsp_references<cr>")
 		set("n", "gs", vim.lsp.buf.signature_help, opts)
 		set("n", "<leader>2", vim.lsp.buf.rename, opts)
 		set({ "n", "x" }, "<leader>3", vim.lsp.buf.format, opts)
-		set("n", "<leader>4", vim.lsp.buf.code_action, opts)
+		--set("n", "<leader>4", vim.lsp.buf.code_action, opts)
+		set("n", "<leader>4", "<cmd>FzfLua lsp_code_actions<cr>")
 	end
 
 	KEYMAPS.cmp = {
@@ -319,15 +324,25 @@ require("blink-cmp").setup({
 		providers = {
 			cmdline = { score_offset = -10 },
 			lazydev = { name = "LazyDev", module = "lazydev.integrations.blink", score_offset = 90 },
-			copilot = { name = "copilot", module = "blink-copilot", score_offset = 100, async = true },
+			copilot = {
+				name = "copilot",
+				module = "blink-copilot",
+				score_offset = 100,
+				async = true,
+				opts = {
+					max_completions = 1,
+					max_attempts = 2,
+				},
+			},
 		},
 	},
 })
 
-require("copilot").setup({
-	suggestion = { enabled = false },
-	panel = { enabled = false },
-})
+-- how am i already out of copilot completions
+-- require("copilot").setup({
+-- 	suggestion = { enabled = false },
+-- 	panel = { enabled = false },
+-- })
 
 ----------------
 -- TREESITTER --
