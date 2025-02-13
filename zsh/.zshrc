@@ -10,6 +10,7 @@ export PATH=/Applications/WezTerm.app/Contents/MACOS:$PATH
 export PATH=~/.local/bin:$PATH
 export PATH=~/.aftman/bin:$PATH
 export ESCDELAY=0
+export EDITOR=nvim
 source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 alias ls="ls -F --color=auto"
 alias n=nvim
@@ -18,5 +19,14 @@ alias b="g++ --std=c++17 -DLOCAL -O2 -include-pch /Library/Developer/CommandLine
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
 
 eval "$(zoxide init zsh)"
