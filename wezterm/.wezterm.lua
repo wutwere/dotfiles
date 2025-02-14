@@ -16,16 +16,16 @@ config.tab_max_width = 32
 config.use_fancy_tab_bar = false
 config.window_decorations = "RESIZE | MACOS_FORCE_ENABLE_SHADOW"
 -- config.window_close_confirmation = "NeverPrompt"
-config.window_padding = { left = 5, right = 5, top = 10, bottom = 0 }
+config.window_padding = { left = 0, right = 0, top = 10, bottom = 0 }
 config.initial_cols = 170
 config.initial_rows = 45
-config.window_background_opacity = 0.9
+config.window_background_opacity = 1
 config.macos_window_background_blur = 15
 config.color_scheme = "Tokyo Night"
 
 config.colors = {
 	tab_bar = {
-		background = not config.tab_bar_at_bottom and "rgba(26,27,38,0.9)" or "rgba(0,0,0,0)",
+		background = not config.tab_bar_at_bottom and "rgba(26,27,38,1)" or "rgba(0,0,0,0)",
 	},
 }
 
@@ -65,20 +65,31 @@ for key, direction in pairs(DIRECTIONS) do
 	})
 end
 
+local battery_to_icon = {
+	quarter = wezterm.nerdfonts.fa_battery_quarter,
+	half = wezterm.nerdfonts.fa_battery_half,
+	three_quarters = wezterm.nerdfonts.fa_battery_three_quarters,
+	full = wezterm.nerdfonts.fa_battery_full,
+}
+
 local function battery_remaining()
 	local battery = wezterm.battery_info()[1]
 	local sec = battery.time_to_empty
+	local percent = math.floor(battery.state_of_charge * 100)
+	local icon = battery_to_icon.full
+	if battery.state_of_charge <= 0.375 then
+		icon = battery_to_icon.quarter
+	elseif battery.state_of_charge <= 0.625 then
+		icon = battery_to_icon.half
+	elseif battery.state_of_charge <= 0.875 then
+		icon = battery_to_icon.three_quarters
+	end
 	if sec then
 		local battery_min = math.min(math.ceil(sec / 60), 1200)
 		local battery_hr = math.floor(battery_min / 60)
-		return string.format(
-			" 󰂂 %d%% (%dh %02dm) ",
-			math.floor(battery.state_of_charge * 100),
-			tostring(battery_hr),
-			battery_min % 60
-		)
+		return string.format(" %s  %d%% (%dh %02dm) ", icon, percent, tostring(battery_hr), battery_min % 60)
 	end
-	return " 󰂋  "
+	return string.format(" 󰂋  %d%% ", percent)
 end
 
 local SOLID_RIGHT_ARROW = wezterm.nerdfonts.pl_left_hard_divider
@@ -93,64 +104,35 @@ local function getTabTitle(tab_info)
 	return string.gsub(processName, "(.*[/\\])(.*)", "%2")
 end
 
--- this code is so bad HOLY...............
 local function format_tab_title(tab, tabs, panes, config, hover, max_width)
 	local title = getTabTitle(tab)
 	local index = tab.tab_index + 1
-	local isFirst = index == 1
 	local isLast = index == #tabs and #tabs ~= 0
 	title = wezterm.truncate_right(title, max_width - 2)
 
 	local items = {}
 
+	local this_fg, this_bg, next_bg = inactive_foreground, inactive_background, transparent
+
 	if tab.is_active then
-		table.insert(items, { Background = { Color = active_background } })
-		table.insert(items, { Foreground = { Color = active_foreground } })
-		table.insert(items, { Text = " " .. index .. "  " .. title .. " " })
-
-		if isFirst then
-			if #tabs > 1 then
-				table.insert(items, { Background = { Color = inactive_background } })
-				table.insert(items, { Foreground = { Color = active_background } })
-			else
-				table.insert(items, { Background = { Color = transparent } })
-				table.insert(items, { Foreground = { Color = active_background } })
-			end
-		end
-
-		if isLast then
-			table.insert(items, { Background = { Color = transparent } })
-			table.insert(items, { Foreground = { Color = active_background } })
-		else
-			table.insert(items, { Background = { Color = inactive_background } })
-			table.insert(items, { Foreground = { Color = active_background } })
-		end
-
-		table.insert(items, { Text = SOLID_RIGHT_ARROW })
-	else
-		table.insert(items, { Background = { Color = active_background } })
-		table.insert(items, { Foreground = { Color = active_foreground } })
-		table.insert(items, { Background = { Color = inactive_background } })
-		table.insert(items, { Foreground = { Color = inactive_foreground } })
-		table.insert(items, { Text = " " .. index .. "  " .. title .. " " })
-
-		if isLast then
-			table.insert(items, { Background = { Color = transparent } })
-			table.insert(items, { Foreground = { Color = inactive_background } })
-		else
-			if index - 1 < #tabs then
-				local nextTab = tabs[index + 1]
-				if nextTab.is_active then
-					table.insert(items, { Background = { Color = active_background } })
-					table.insert(items, { Foreground = { Color = inactive_background } })
-				else
-					table.insert(items, { Background = { Color = inactive_background } })
-					table.insert(items, { Foreground = { Color = inactive_background } })
-				end
-			end
-		end
-		table.insert(items, { Text = SOLID_RIGHT_ARROW })
+		this_fg = active_foreground
+		this_bg = active_background
 	end
+
+	if not isLast then
+		if tabs[index + 1].is_active then
+			next_bg = active_background
+		else
+			next_bg = inactive_background
+		end
+	end
+
+	table.insert(items, { Background = { Color = this_bg } })
+	table.insert(items, { Foreground = { Color = this_fg } })
+	table.insert(items, { Text = " " .. index .. "  " .. title .. " " })
+	table.insert(items, { Background = { Color = next_bg } })
+	table.insert(items, { Foreground = { Color = this_bg } })
+	table.insert(items, { Text = SOLID_RIGHT_ARROW })
 
 	return items
 end
@@ -171,13 +153,16 @@ tabline.setup({
 		tabline_a = {},
 		tabline_b = {},
 		tabline_c = {},
+		tabline_x = {},
 		tabline_y = {
-			battery_remaining,
-			{ "datetime", style = "%Y/%m/%d %H:%M:%S" },
-		},
-		tabline_z = {
 			"domain",
 			"workspace",
+			"ram",
+			"cpu",
+		},
+		tabline_z = {
+			battery_remaining,
+			{ "datetime", style = " %m/%d/%Y, %H:%M:%S" },
 		},
 	},
 })

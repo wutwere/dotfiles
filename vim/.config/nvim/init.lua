@@ -69,7 +69,7 @@ do
 		set("n", "<leader>f", "<cmd>FzfLua files<cr>")
 		set("n", "<leader>b", "<cmd>FzfLua buffers<cr>")
 		set("n", "<leader>z", "<cmd>FzfLua zoxide<cr>")
-		set("n", "<leader>/", "<cmd>FzfLua grep<cr>")
+		set("n", "<leader>/", "<cmd>FzfLua treesitter<cr>")
 		set("v", "<leader>/", "<cmd>FzfLua grep_visual<cr>")
 
 		-- find and replace
