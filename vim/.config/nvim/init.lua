@@ -25,8 +25,17 @@ local PLUGINS = {
 	},
 	{ "echasnovski/mini.files" },
 	{ "saghen/blink.cmp", version = "*" },
-	{ "zbirenbaum/copilot.lua" },
-	{ "fang2hou/blink-copilot" },
+	{
+		"saghen/blink.compat",
+		version = "*",
+	},
+	{
+		"Exafunction/codeium.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"hrsh7th/nvim-cmp",
+		},
+	},
 	{
 		"folke/lazydev.nvim",
 		ft = "lua",
@@ -94,18 +103,13 @@ do
 	KEYMAPS.lsp = function(event)
 		local opts = { buffer = event.buf }
 		set("n", "K", vim.lsp.buf.hover, opts)
-		--set("n", "gd", vim.lsp.buf.definition, opts)
 		set("n", "gd", "<cmd>FzfLua lsp_definitions<cr>")
-		--set("n", "gi", vim.lsp.buf.implementation, opts)
 		set("n", "gi", "<cmd>FzfLua lsp_implementations<cr>")
-		--set("n", "go", vim.lsp.buf.type_definition, opts)
 		set("n", "go", "<cmd>FzfLua lsp_type_defs<cr>")
-		--set("n", "gr", vim.lsp.buf.references, opts)
 		set("n", "gr", "<cmd>FzfLua lsp_references<cr>")
 		set("n", "gs", vim.lsp.buf.signature_help, opts)
 		set("n", "<leader>2", vim.lsp.buf.rename, opts)
 		set({ "n", "x" }, "<leader>3", vim.lsp.buf.format, opts)
-		--set("n", "<leader>4", vim.lsp.buf.code_action, opts)
 		set("n", "<leader>4", "<cmd>FzfLua lsp_code_actions<cr>")
 	end
 
@@ -242,28 +246,14 @@ require("mason-lspconfig").setup({
 local lspconfig = require("lspconfig")
 local default_config = {
 	capabilities = require("blink.cmp").get_lsp_capabilities(),
-	flags = {
-		debounce_text_changes = 0, --150,
-	},
+	flags = { debounce_text_changes = 150 },
 }
 local custom_config = {
 	luau_lsp = {
 		cmd = { "luau-lsp", "lsp", "--definitions=~/roblox/globalTypes.d.luau", "--docs=~/roblox/en-us.json" },
 	},
-	lua_ls = {
-		settings = {
-			Lua = {
-				diagnostics = {
-					globals = {
-						"vim",
-					},
-				},
-			},
-		},
-	},
-	clangd = {
-		-- on_init = function(client, _) client.server_capabilities.semanticTokensProvider = nil end,
-	},
+	lua_ls = { settings = { Lua = { diagnostics = { globals = { "vim" } } } } },
+	clangd = {},
 	pyright = {},
 	vtsls = {},
 	rust_analyzer = {},
@@ -294,7 +284,6 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.s
 
 require("blink-cmp").setup({
 	completion = {
-		trigger = { show_on_blocked_trigger_characters = {} },
 		documentation = { auto_show = true, auto_show_delay_ms = 0, window = { border = "rounded" } },
 		menu = {
 			border = "rounded",
@@ -320,29 +309,23 @@ require("blink-cmp").setup({
 	},
 	keymap = KEYMAPS.cmp,
 	sources = {
-		default = { "lazydev", "copilot", "lsp", "path", "snippets", "buffer", "cmdline" },
+		default = { "lazydev", "codeium", "lsp", "path", "snippets", "buffer", "cmdline" },
 		providers = {
-			cmdline = { score_offset = -10 },
-			lazydev = { name = "LazyDev", module = "lazydev.integrations.blink", score_offset = 90 },
-			copilot = {
-				name = "copilot",
-				module = "blink-copilot",
+			cmdline = { score_offset = -30 },
+			lsp = { score_offset = 90 },
+			lazydev = { name = "LazyDev", module = "lazydev.integrations.blink", score_offset = 91 },
+			codeium = {
+				name = "codeium",
+				module = "blink.compat.source",
 				score_offset = 100,
 				async = true,
-				opts = {
-					max_completions = 1,
-					max_attempts = 2,
-				},
 			},
 		},
 	},
 })
 
--- how am i already out of copilot completions
--- require("copilot").setup({
--- 	suggestion = { enabled = false },
--- 	panel = { enabled = false },
--- })
+require("blink-compat").setup({ impersonate_nvim_cmp = true })
+require("codeium").setup({})
 
 ----------------
 -- TREESITTER --
