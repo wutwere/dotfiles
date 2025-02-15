@@ -33,7 +33,6 @@ local PLUGINS = {
 		"Exafunction/codeium.nvim",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
-			"hrsh7th/nvim-cmp",
 		},
 	},
 	{
@@ -47,6 +46,7 @@ local PLUGINS = {
 		config = true,
 	},
 	{ "MagicDuck/grug-far.nvim" },
+	{ "karb94/neoscroll.nvim" },
 }
 
 local KEYMAPS = {}
@@ -114,9 +114,12 @@ do
 	end
 
 	KEYMAPS.cmp = {
+		preset = "none",
 		["<cr>"] = { "accept", "fallback" },
 		["<tab>"] = { "show", "select_next", "fallback" },
 		["<S-tab>"] = { "show", "select_prev", "fallback" },
+		["<C-j>"] = { "scroll_documentation_down" },
+		["<C-k>"] = { "scroll_documentation_up" },
 	}
 end
 
@@ -201,6 +204,7 @@ theme.normal.c.bg = nil
 require("lualine").setup({ options = { theme = theme } })
 require("tokyonight").setup({ transparent = true, styles = { floats = "transparent" } })
 vim.cmd.colorscheme("tokyonight-night")
+require("neoscroll").setup({ duration_multiplier = 0.4 })
 
 -------------
 -- LINTING --
@@ -256,7 +260,11 @@ local custom_config = {
 	clangd = {},
 	pyright = {},
 	vtsls = {},
-	rust_analyzer = {},
+	rust_analyzer = {
+		on_init = function(client, _)
+			--client.server_capabilities.semanticTokensProvider = nil
+		end,
+	},
 }
 
 for lsp, config in pairs(custom_config) do
