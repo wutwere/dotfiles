@@ -25,7 +25,7 @@ config.color_scheme = "Tokyo Night"
 
 config.colors = {
 	tab_bar = {
-		background = not config.tab_bar_at_bottom and "rgba(26,27,38,1)" or "rgba(0,0,0,0)",
+		background = not config.tab_bar_at_bottom and "rgba(26,27,38,0.9)" or "rgba(0,0,0,0)",
 	},
 }
 
@@ -75,7 +75,7 @@ local battery_to_icon = {
 local function battery_remaining()
 	local battery = wezterm.battery_info()[1]
 	local sec = battery.time_to_empty
-	local percent = math.floor(battery.state_of_charge * 100)
+	local percent = math.ceil(battery.state_of_charge * 100)
 	local icon = battery_to_icon.full
 	if battery.state_of_charge <= 0.375 then
 		icon = battery_to_icon.quarter
