@@ -8,19 +8,22 @@ local DIRECTIONS = {
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
+local opacity = 1
+
 config.enable_tab_bar = true
 config.tab_bar_at_bottom = false
 config.show_new_tab_button_in_tab_bar = false
 config.tab_max_width = 32
 -- config.hide_tab_bar_if_only_one_tab = true
 config.use_fancy_tab_bar = false
-config.window_decorations = "RESIZE | MACOS_FORCE_ENABLE_SHADOW"
+-- config.window_decorations = "RESIZE | MACOS_FORCE_ENABLE_SHADOW"
+config.window_decorations = "RESIZE"
 -- config.window_close_confirmation = "NeverPrompt"
 config.window_padding = { left = 0, right = 0, top = 10, bottom = 0 }
 config.initial_cols = 170
 config.initial_rows = 45
-config.window_background_opacity = 1
-config.macos_window_background_blur = 15
+config.window_background_opacity = opacity
+config.macos_window_background_blur = 0
 config.color_scheme = "Tokyo Night"
 
 config.colors = {
@@ -44,6 +47,20 @@ config.keys = {
 		key = "r",
 		mods = "ALT",
 		action = wezterm.action.RotatePanes("CounterClockwise"),
+	},
+	{
+		key = " ",
+		mods = "ALT",
+		action = wezterm.action_callback(function(window, pane)
+			local overrides = window:get_config_overrides() or {}
+			if opacity == 1 then
+				opacity = 0.9
+			else
+				opacity = 1
+			end
+			overrides.window_background_opacity = opacity
+			window:set_config_overrides(overrides)
+		end),
 	},
 }
 
