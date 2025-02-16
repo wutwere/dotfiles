@@ -25,10 +25,7 @@ local PLUGINS = {
 	},
 	{ "echasnovski/mini.files" },
 	{ "saghen/blink.cmp", version = "*" },
-	{
-		"saghen/blink.compat",
-		version = "*",
-	},
+	{ "saghen/blink.compat", version = "*" },
 	{
 		"Exafunction/codeium.nvim",
 		dependencies = {
@@ -46,7 +43,7 @@ local PLUGINS = {
 		config = true,
 	},
 	{ "MagicDuck/grug-far.nvim" },
-	{ "karb94/neoscroll.nvim" },
+	{ "lewis6991/gitsigns.nvim" },
 }
 
 local KEYMAPS = {}
@@ -65,13 +62,14 @@ do
 
 		-- terminal
 		set("n", "<leader>t", "<cmd>vs<cr><cmd>term<cr>a")
-		set("t", "<esc>", "<cmd>q<cr>")
+		set("t", "<esc>", "<cmd>bd!<cr>")
 
 		-- fast navigation
 		set({ "n", "v", "x" }, "<c-j>", "7<c-e>")
 		set({ "n", "v", "x" }, "<c-k>", "7<c-y>")
 		set("n", "<c-h>", "<c-w>W")
 		set("n", "<c-l>", "<c-w>w")
+		set("n", "gb", "<cmd>bnext<cr>")
 
 		-- fzf
 		set("n", "<leader>a", "<cmd>FzfLua<cr>")
@@ -87,6 +85,9 @@ do
 		-- git
 		set("n", "<leader>gg", "<cmd>Neogit<cr>")
 		set("n", "<leader>gd", "<cmd>Neogit diff<cr>")
+		set("n", "<leader>gp", "<cmd>Gitsigns preview_hunk_inline<cr>")
+		set("n", "]g", "<cmd>Gitsigns nav_hunk next<cr><cmd>Gitsigns preview_hunk_inline<cr>")
+		set("n", "[g", "<cmd>Gitsigns nav_hunk prev<cr><cmd>Gitsigns preview_hunk_inline<cr>")
 	end
 
 	KEYMAPS.mini_files = function(mini_files)
@@ -129,6 +130,7 @@ KEYMAPS.general()
 -- VIM OPTIONS --
 -----------------
 
+vim.opt.cursorline = true
 vim.opt.termguicolors = true
 vim.opt.expandtab = true
 vim.opt.cindent = true
@@ -136,7 +138,7 @@ vim.opt.cinoptions = { "N-s", "g0", "j1", "(s", "m1" }
 vim.opt.scrolloff = 5
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
-vim.opt.laststatus = 3
+-- vim.opt.laststatus = 3
 vim.opt.mouse = "nv"
 vim.g.netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
 vim.api.nvim_create_autocmd({ "BufEnter", "VimEnter" }, {
@@ -201,10 +203,20 @@ vim.api.nvim_create_autocmd("UILeave", {
 
 local theme = require("lualine.themes.tokyonight")
 theme.normal.c.bg = nil
-require("lualine").setup({ options = { theme = theme } })
+require("lualine").setup({
+	options = { theme = theme, always_show_tabline = false, globalstatus = true },
+	sections = {
+		lualine_a = { "mode" },
+		lualine_b = { { "buffers", use_mode_colors = true } },
+		lualine_c = {},
+		lualine_x = { "encoding", "fileformat", "filetype", "branch", "diff", "diagnostics", "progress" },
+		lualine_y = {},
+		lualine_z = { "location" },
+	},
+	tabline = { lualine_a = { { "tabs", mode = 2, use_mode_colors = true, max_length = vim.o.columns } } },
+})
 require("tokyonight").setup({ transparent = true, styles = { floats = "transparent" } })
 vim.cmd.colorscheme("tokyonight-night")
-require("neoscroll").setup({ duration_multiplier = 0.4 })
 
 -------------
 -- LINTING --
@@ -373,3 +385,9 @@ KEYMAPS.mini_files(mini_files)
 require("grug-far").setup({
 	windowCreationCommand = "tab split",
 })
+
+---------
+-- GIT --
+---------
+
+require("gitsigns").setup()
