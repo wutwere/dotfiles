@@ -26,12 +26,7 @@ local PLUGINS = {
 	{ "echasnovski/mini.files" },
 	{ "saghen/blink.cmp", version = "*" },
 	{ "saghen/blink.compat", version = "*" },
-	{
-		"Exafunction/codeium.nvim",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-		},
-	},
+	{ "Exafunction/codeium.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
 	{
 		"folke/lazydev.nvim",
 		ft = "lua",
@@ -42,8 +37,8 @@ local PLUGINS = {
 		dependencies = { "nvim-lua/plenary.nvim", "sindrets/diffview.nvim", "ibhagwan/fzf-lua" },
 		config = true,
 	},
-	{ "MagicDuck/grug-far.nvim" },
-	{ "lewis6991/gitsigns.nvim" },
+	{ "MagicDuck/grug-far.nvim", opts = { windowCreationCommand = "e" } },
+	{ "lewis6991/gitsigns.nvim", opts = {} },
 }
 
 local KEYMAPS = {}
@@ -69,7 +64,9 @@ do
 		set({ "n", "v", "x" }, "<c-k>", "7<c-y>")
 		set("n", "<c-h>", "<c-w>W")
 		set("n", "<c-l>", "<c-w>w")
-		set("n", "gb", "<cmd>bnext<cr>")
+		set("n", "gb", "<cmd>b#<cr>")
+		set("n", "]b", "<cmd>bn<cr>")
+		set("n", "[b", "<cmd>bp<cr>")
 
 		-- fzf
 		set("n", "<leader>a", "<cmd>FzfLua<cr>")
@@ -131,6 +128,7 @@ KEYMAPS.general()
 -----------------
 
 vim.opt.cursorline = true
+vim.opt.wrap = false
 vim.opt.termguicolors = true
 vim.opt.expandtab = true
 vim.opt.cindent = true
@@ -329,9 +327,15 @@ require("blink-cmp").setup({
 	},
 	keymap = KEYMAPS.cmp,
 	sources = {
-		default = { "lazydev", "codeium", "lsp", "path", "snippets", "buffer", "cmdline" },
+		default = {
+			"lazydev",
+			"codeium",
+			"lsp",
+			"path",
+			"snippets",
+			"buffer", --[["cmdline"]]
+		},
 		providers = {
-			cmdline = { score_offset = -30 },
 			lsp = { score_offset = 90 },
 			lazydev = { name = "LazyDev", module = "lazydev.integrations.blink", score_offset = 91 },
 			codeium = {
@@ -377,17 +381,3 @@ mini_files.setup({
 	},
 })
 KEYMAPS.mini_files(mini_files)
-
-----------------------
--- FIND AND REPLACE --
-----------------------
-
-require("grug-far").setup({
-	windowCreationCommand = "tab split",
-})
-
----------
--- GIT --
----------
-
-require("gitsigns").setup()

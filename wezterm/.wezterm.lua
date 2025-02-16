@@ -20,7 +20,7 @@ config.window_decorations = "RESIZE | MACOS_FORCE_ENABLE_SHADOW"
 -- config.window_padding = { left = 0, right = 0, top = 10, bottom = 0 }
 config.initial_cols = 170
 config.initial_rows = 45
-config.color_scheme = "Tokyo Night"
+config.color_scheme = "tokyonight"
 
 config.colors = {
 	tab_bar = {
@@ -93,7 +93,7 @@ local battery_to_icon = {
 local function battery_remaining()
 	local battery = wezterm.battery_info()[1]
 	local sec = battery.time_to_empty
-	local percent = math.ceil(battery.state_of_charge * 100)
+	local percent = math.floor(battery.state_of_charge * 100 + 0.5)
 	local icon = battery_to_icon.full
 	if battery.state_of_charge <= 0.375 then
 		icon = battery_to_icon.quarter
@@ -103,11 +103,11 @@ local function battery_remaining()
 		icon = battery_to_icon.three_quarters
 	end
 	if sec then
-		local battery_min = math.min(math.ceil(sec / 60), 1200)
+		local battery_min = math.min(math.floor(sec / 60 + 0.5), 1800)
 		local battery_hr = math.floor(battery_min / 60)
-		return string.format(" %s  %d%% (%dh %02dm) ", icon, percent, tostring(battery_hr), battery_min % 60)
+		return string.format(" %s %d%% (%dh %02dm) ", icon, percent, tostring(battery_hr), battery_min % 60)
 	end
-	return string.format(" 󰂋  %d%% ", percent)
+	return string.format(" 󰂋 %d%% ", percent)
 end
 
 local SOLID_RIGHT_ARROW = wezterm.nerdfonts.pl_left_hard_divider
@@ -178,7 +178,7 @@ tabline.setup({
 			"ram",
 			"cpu",
 			battery_remaining,
-			{ "datetime", style = " %m/%d/%Y, %H:%M:%S" },
+			{ "datetime", style = "%H:%M:%S %m/%d/%Y" },
 		},
 		tabline_y = {},
 		tabline_z = {},
