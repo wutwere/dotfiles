@@ -39,6 +39,14 @@ local PLUGINS = {
 	},
 	{ "MagicDuck/grug-far.nvim", opts = { windowCreationCommand = "e" } },
 	{ "lewis6991/gitsigns.nvim", opts = {} },
+	{
+		"iamcco/markdown-preview.nvim",
+		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+		ft = { "markdown" },
+		build = function()
+			vim.cmd("call mkdp#util#install()")
+		end,
+	},
 }
 
 local KEYMAPS = {}
