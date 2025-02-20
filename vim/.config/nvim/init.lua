@@ -97,7 +97,9 @@ do
 
 	KEYMAPS.mini_files = function(mini_files)
 		mini_files.config.mappings.close = "<esc>"
-		set("n", "<leader><space>", mini_files.open)
+		set("n", "<leader><space>", function()
+			mini_files.open(vim.fn.expand("%:p:h"), false)
+		end)
 		set("n", "<leader>s", function() -- set working dir to current buffer
 			local state = mini_files.get_explorer_state()
 			local dir = state and state.branch[state.depth_focus] or "%:h"

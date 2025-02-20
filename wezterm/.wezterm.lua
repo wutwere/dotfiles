@@ -160,6 +160,7 @@ wezterm.on("format-tab-title", format_tab_title)
 local tabline = wezterm.plugin.require("https://github.com/michaelbrusegard/tabline.wez")
 tabline.setup({
 	options = {
+		theme = config.color_scheme,
 		theme_overrides = {
 			normal_mode = {
 				x = { fg = dark_neutral, bg = transparent },

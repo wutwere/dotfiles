@@ -6,6 +6,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
+
 export PATH=/Applications/WezTerm.app/Contents/MACOS:$PATH
 export PATH=~/.local/bin:$PATH
 export PATH=~/.aftman/bin:$PATH
@@ -30,3 +31,6 @@ function y() {
 }
 
 eval "$(zoxide init zsh)"
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# bind shift tab to autosuggest-accept
+bindkey '^[[Z' autosuggest-accept
