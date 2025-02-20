@@ -12,14 +12,14 @@ config.enable_tab_bar = true
 config.tab_bar_at_bottom = false
 config.show_new_tab_button_in_tab_bar = false
 config.tab_max_width = 32
--- config.hide_tab_bar_if_only_one_tab = true
+config.hide_tab_bar_if_only_one_tab = true
 config.use_fancy_tab_bar = false
 config.window_decorations = "RESIZE | MACOS_FORCE_ENABLE_SHADOW"
 -- config.window_decorations = "RESIZE"
 -- config.window_close_confirmation = "NeverPrompt"
 -- config.window_padding = { left = 0, right = 0, top = 10, bottom = 0 }
-config.initial_cols = 170
-config.initial_rows = 45
+config.initial_cols = 150
+config.initial_rows = 50
 config.color_scheme = "tokyonight"
 
 config.colors = {
@@ -33,6 +33,25 @@ config.inactive_pane_hsb = {
 	brightness = 1,
 }
 
+local border_thickness = "0px"
+local border_color = "#bb9af7"
+
+config.window_frame = {
+	border_left_width = border_thickness,
+	border_right_width = border_thickness,
+	border_bottom_height = border_thickness,
+	border_top_height = border_thickness,
+	border_left_color = border_color,
+	border_right_color = border_color,
+	border_bottom_color = border_color,
+	border_top_color = border_color,
+}
+
+config.default_cursor_style = "BlinkingUnderline"
+config.cursor_blink_rate = 300
+config.animation_fps = 60
+
+--[[
 config.keys = {
 	{
 		key = "w",
@@ -82,6 +101,7 @@ for key, direction in pairs(DIRECTIONS) do
 		action = wezterm.action.AdjustPaneSize({ direction, 5 }),
 	})
 end
+--]]
 
 local battery_to_icon = {
 	quarter = wezterm.nerdfonts.fa_battery_quarter,

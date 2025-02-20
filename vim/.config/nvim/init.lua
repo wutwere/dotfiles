@@ -153,6 +153,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "VimEnter" }, {
 	callback = function()
 		vim.opt.nu = true
 		vim.opt.rnu = true
+		vim.cmd("hi cursorline guibg=NONE")
 	end,
 })
 

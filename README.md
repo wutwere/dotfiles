@@ -15,7 +15,7 @@ stow vim # example, stow what you need
 # Packages
 
 ```sh
-brew install clipboard fastfetch fzf gcc gh glow neovim node powerlevel10k python ripgrep rust stow tree-sitter wget yazi zoxide
+brew install FelixKratz/formulae/borders clipboard fastfetch fzf gcc gh glow neovim node powerlevel10k python ripgrep rust FelixKratz/formulae/sketchybar koekeishiya/formulae/skhd stow tree-sitter wget koekeishiya/formulae/yabai yazi zoxide
 brew install --cask alt-tab discord firefox middleclick obsidian topnotch wezterm
 
 # yazi dependencies
