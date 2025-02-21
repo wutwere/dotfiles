@@ -65,10 +65,10 @@ shift + alt - n : yabai -m window --display next; yabai -m display --focus next
 shift + alt - p : yabai -m window --display previous; yabai -m display --focus previous
 
 # increase window size
-shift + alt - w : yabai -m window --resize top:0:-20; yabai -m window --resize bottom:0:-20
-shift + alt - s : yabai -m window --resize bottom:0:20; yabai -m window --resize top:0:20
-shift + alt - d : yabai -m window --resize right:20:0; yabai -m window --resize left:20:0
-shift + alt - a : yabai -m window --resize left:-20:0 yabai -m window --resize right:-20:0
+alt - o : yabai -m window --resize top:0:-50; yabai -m window --resize bottom:0:-50
+alt - i : yabai -m window --resize bottom:0:50; yabai -m window --resize top:0:50
+alt - p : yabai -m window --resize right:75:0; yabai -m window --resize left:75:0
+alt - u : yabai -m window --resize left:-75:0 yabai -m window --resize right:-75:0
 
 # restart
 ctrl + alt + cmd - r : yabai --restart-service; skhd --restart-service; brew services restart borders

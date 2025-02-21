@@ -1,6 +1,6 @@
 # my dotfiles
 
-![preview](./preview.png)
+![preview](./demo.gif)
 
 # Setup
 
