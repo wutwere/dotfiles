@@ -15,6 +15,7 @@ local mine = {
 	mauve = 0xff9cd399,
 	bg1 = 0xef1f2335,
 	bg2 = 0xff545c7e,
+	transparent = 0x00000000,
 }
 
 local catppuccin_mocha = {
@@ -77,7 +78,7 @@ colors.bar = {
 	border = colors.black,
 }
 colors.popup = {
-	bg = colors.bg2,
+	bg = with_alpha(colors.black, 0.2),
 	border = colors.black,
 }
 colors.bar.bg = with_alpha(colors.bar.bg, 0.2)
