@@ -57,7 +57,7 @@ alt - u : yabai -m window --resize left:-75:0 yabai -m window --resize right:-75
 ctrl + alt + cmd - r : yabai --restart-service; skhd --restart-service; brew services restart borders
 
 # open apps
-alt - w : /Applications/WezTerm.app/Contents/MacOS/wezterm
+alt - w : (LABEL=$(uuidgen) && yabai -m signal --add event="window_created" label="$LABEL" app="^WezTerm$" action="yabai -m window \$YABAI_WINDOW_ID --focus && yabai -m signal --remove $LABEL") && (/Applications/WezTerm.app/Contents/MacOS/wezterm)
 alt - s : open -a Safari https://google.com
 
 # balance
