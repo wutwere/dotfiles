@@ -121,10 +121,25 @@ do
 		set("n", "<leader>4", "<cmd>FzfLua lsp_code_actions<cr>", opts)
 	end
 
+	local has_words_before = function()
+		local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+		return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+	end
+
 	KEYMAPS.cmp = {
 		preset = "none",
 		["<cr>"] = { "accept", "fallback" },
-		["<tab>"] = { "show", "select_next", "fallback" },
+		["<tab>"] = {
+			function(cmp)
+				if has_words_before() and not cmp.is_visible() then
+					return cmp.show()
+				elseif cmp.is_visible() then
+					return cmp.select_next()
+				end
+				return nil
+			end,
+			"fallback",
+		},
 		["<S-tab>"] = { "show", "select_prev", "fallback" },
 		["<C-j>"] = { "scroll_documentation_down" },
 		["<C-k>"] = { "scroll_documentation_up" },
@@ -144,8 +159,9 @@ vim.opt.expandtab = true
 vim.opt.cindent = true
 vim.opt.cinoptions = { "N-s", "g0", "j1", "(s", "m1" }
 vim.opt.scrolloff = 5
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
+vim.opt.sidescrolloff = 10
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
 -- vim.opt.laststatus = 3
 vim.opt.mouse = "nv"
 vim.g.netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
