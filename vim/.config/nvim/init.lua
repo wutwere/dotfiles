@@ -111,14 +111,14 @@ do
 	KEYMAPS.lsp = function(event)
 		local opts = { buffer = event.buf }
 		set("n", "K", vim.lsp.buf.hover, opts)
-		set("n", "gd", "<cmd>FzfLua lsp_definitions<cr>")
-		set("n", "gi", "<cmd>FzfLua lsp_implementations<cr>")
-		set("n", "go", "<cmd>FzfLua lsp_type_defs<cr>")
-		set("n", "gr", "<cmd>FzfLua lsp_references<cr>")
+		set("n", "gd", "<cmd>FzfLua lsp_definitions<cr>", opts)
+		set("n", "gi", "<cmd>FzfLua lsp_implementations<cr>", opts)
+		set("n", "go", "<cmd>FzfLua lsp_type_defs<cr>", opts)
+		set("n", "gr", "<cmd>FzfLua lsp_references<cr>", opts)
 		set("n", "gs", vim.lsp.buf.signature_help, opts)
 		set("n", "<leader>2", vim.lsp.buf.rename, opts)
 		set({ "n", "x" }, "<leader>3", vim.lsp.buf.format, opts)
-		set("n", "<leader>4", "<cmd>FzfLua lsp_code_actions<cr>")
+		set("n", "<leader>4", "<cmd>FzfLua lsp_code_actions<cr>", opts)
 	end
 
 	KEYMAPS.cmp = {
