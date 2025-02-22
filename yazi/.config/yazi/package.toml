@@ -23,5 +23,10 @@ use = "llanosrocas/yaziline"
 rev = "e06c47f"
 hash = "7df84299e89ffefd4686d1e20a295c8a"
 
+[[plugin.deps]]
+use = "yazi-rs/plugins:smart-enter"
+rev = "5186af7"
+hash = "aef2b1a805b80cce573bb766f1459d88"
+
 [flavor]
 deps = []

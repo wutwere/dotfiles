@@ -3,7 +3,7 @@ on = "<C-c>"
 run = ["plugin system-clipboard"]
 
 [[manager.prepend_keymap]]
-on = "t" # unbind tabs
+on = "T"
 run  = "plugin max-preview"
 desc = "Maximize or restore preview"
 
@@ -11,3 +11,12 @@ desc = "Maximize or restore preview"
 on   = [ "c", "a" ]
 run  = "plugin compress"
 desc = "Archive selected files"
+
+[[manager.prepend_keymap]]
+on   = "l"
+run  = "plugin smart-enter"
+desc = "Enter the child directory, or open the file"
+
+[[manager.prepend_keymap]]
+on = [ "g", "r" ]
+run = 'shell -- ya emit cd "$(git rev-parse --show-toplevel)"'
