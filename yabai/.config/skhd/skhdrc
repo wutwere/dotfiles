@@ -57,7 +57,7 @@ alt - u : yabai -m window --resize left:-75:0 yabai -m window --resize right:-75
 ctrl + alt + cmd - r : yabai --restart-service; skhd --restart-service; brew services restart borders
 
 # open apps
-alt - space : /Applications/WezTerm.app/Contents/MacOS/wezterm
+alt - w : /Applications/WezTerm.app/Contents/MacOS/wezterm
 alt - s : open -a Safari https://google.com
 
 # balance
@@ -73,7 +73,7 @@ alt - f : yabai -m window --toggle zoom-fullscreen
 alt - g : yabai -m space --toggle padding; yabai -m space --toggle gap
 
 # float / unfloat window and center on screen
-alt - t : yabai -m window --toggle float; yabai -m window --grid 20:20:1:1:18:18
+alt - space : yabai -m window --toggle float; yabai -m window --grid 20:20:1:1:18:18
 
 # toggle window split type
 alt - e : yabai -m window --toggle split
