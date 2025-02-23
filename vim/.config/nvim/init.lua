@@ -58,7 +58,12 @@ do
 	KEYMAPS.general = function()
 		-- editor
 		set("i", "{<cr>", "{<cr>}<esc>O")
+		set("v", "<leader>y", '"+y')
 		set("n", "<leader>y", "<cmd>%y+<cr>")
+		set("n", "<leader>Y", function()
+			vim.fn.setreg("+", vim.fn.expand("%:p"))
+		end)
+		set("n", "<leader>p", '"+p')
 		set("n", "<leader>m", "<cmd>e $MYVIMRC<cr>")
 		set("n", "<leader>d", vim.diagnostic.open_float)
 		set("n", "<leader>w", "<cmd>tabc<cr>")
