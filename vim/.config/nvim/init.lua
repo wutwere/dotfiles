@@ -1,7 +1,4 @@
 ---@diagnostic disable: missing-fields
---// Dependencies:
---// - Neovim v0.10+
---// - fzf
 
 -----------------
 -- MAIN CONFIG --
@@ -63,7 +60,7 @@ do
 		set("n", "<leader>Y", function()
 			vim.fn.setreg("+", vim.fn.expand("%:p"))
 		end)
-		set("n", "<leader>p", '"+p')
+		set({ "n", "v" }, "<leader>p", '"+p')
 		set("n", "<leader>m", "<cmd>e $MYVIMRC<cr>")
 		set("n", "<leader>d", vim.diagnostic.open_float)
 		set("n", "<leader>w", "<cmd>tabc<cr>")
@@ -207,6 +204,13 @@ require("lazy").setup(PLUGINS)
 ----------------
 -- APPEARANCE --
 ----------------
+
+vim.api.nvim_create_autocmd("TextYankPost", {
+	desc = "Highlight when yanking (copying) text",
+	callback = function()
+		vim.highlight.on_yank({ higroup = "Cursor", timeout = 60 })
+	end,
+})
 
 vim.diagnostic.config({
 	float = {
@@ -396,6 +400,13 @@ require("nvim-treesitter.configs").setup({
 			local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
 			return ok and stats and stats.size > max_filesize
 		end,
+	},
+	incremental_selection = {
+		enable = true,
+		keymaps = {
+			node_incremental = "v",
+			node_decremental = "V",
+		},
 	},
 })
 
