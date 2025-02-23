@@ -44,12 +44,13 @@ local PLUGINS = {
 			vim.cmd("call mkdp#util#install()")
 		end,
 	},
+	{ "bassamsdata/namu.nvim" },
 }
 
 local KEYMAPS = {}
 do
 	vim.g.mapleader = " "
-	vim.g.maplocalleader = "\\"
+	vim.g.maplocalleader = " "
 	local set = vim.keymap.set
 
 	KEYMAPS.general = function()
@@ -78,28 +79,28 @@ do
 		set("n", "]b", "<cmd>bn<cr>")
 		set("n", "[b", "<cmd>bp<cr>")
 
-		-- fzf
-		set("n", "<leader>a", "<cmd>FzfLua<cr>")
-		set("n", "<leader>f", "<cmd>FzfLua files<cr>")
-		set("n", "<leader>b", "<cmd>FzfLua buffers<cr>")
+		-- plugins
+		set({ "n", "v" }, "<leader>a", "<cmd>FzfLua<cr>")
+		set("n", "<leader><space>", "<cmd>FzfLua files<cr>")
+		set("n", "<leader>j", "<cmd>FzfLua jumps<cr>")
+		set("n", "<leader>b", "<cmd>FzfLua lines<cr>")
 		set("n", "<leader>z", "<cmd>FzfLua zoxide<cr>")
-		set("n", "<leader>/", "<cmd>FzfLua treesitter<cr>")
-		set("v", "<leader>/", "<cmd>FzfLua grep_visual<cr>")
+		set("v", "<leader>/", "<cmd>FzfLua live_grep<cr>")
 
-		-- find and replace
 		set("n", "<leader>r", "<cmd>GrugFar<cr>")
 
-		-- git
-		set("n", "<leader>gg", "<cmd>Neogit<cr>")
-		set("n", "<leader>gd", "<cmd>Neogit diff<cr>")
-		set("n", "<leader>gp", "<cmd>Gitsigns preview_hunk_inline<cr>")
-		set("n", "]g", "<cmd>Gitsigns nav_hunk next<cr><cmd>Gitsigns preview_hunk_inline<cr>")
-		set("n", "[g", "<cmd>Gitsigns nav_hunk prev<cr><cmd>Gitsigns preview_hunk_inline<cr>")
+		set("n", "<leader>g", "<cmd>Neogit<cr>")
+		set("n", "<leader>D", "<cmd>Neogit diff<cr>")
+		set("n", "<leader>h", "<cmd>Gitsigns preview_hunk<cr>")
+		set("n", "]h", "<cmd>Gitsigns nav_hunk next<cr><cmd>Gitsigns preview_hunk<cr>")
+		set("n", "[h", "<cmd>Gitsigns nav_hunk prev<cr><cmd>Gitsigns preview_hunk<cr>")
+
+		set("n", "<leader>n", "<cmd>Namu symbols<cr>")
 	end
 
 	KEYMAPS.mini_files = function(mini_files)
 		mini_files.config.mappings.close = "<esc>"
-		set("n", "<leader><space>", function()
+		set("n", "<leader>f", function()
 			mini_files.open(vim.fn.expand("%:p:h"), false)
 		end)
 		set("n", "<leader>s", function() -- set working dir to current buffer
@@ -424,3 +425,18 @@ mini_files.setup({
 	},
 })
 KEYMAPS.mini_files(mini_files)
+
+----------
+-- NAMU --
+----------
+
+require("namu").setup({
+	namu_symbols = {
+		options = {
+			movement = {
+				next = { "<C-j>", "<DOWN>" },
+				previous = { "<C-k>", "<UP>" },
+			},
+		},
+	},
+})
