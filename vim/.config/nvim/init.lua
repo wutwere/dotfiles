@@ -33,9 +33,10 @@ local PLUGINS = {
 		"NeogitOrg/neogit",
 		dependencies = { "nvim-lua/plenary.nvim", "sindrets/diffview.nvim", "ibhagwan/fzf-lua" },
 		config = true,
+		opts = { kind = "floating", commit_editor = { kind = "floating" } },
 	},
 	{ "MagicDuck/grug-far.nvim", opts = { windowCreationCommand = "e" } },
-	{ "lewis6991/gitsigns.nvim", opts = {} },
+	{ "lewis6991/gitsigns.nvim", opts = { current_line_blame_opts = { delay = 0 } } },
 	{
 		"iamcco/markdown-preview.nvim",
 		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
@@ -45,6 +46,7 @@ local PLUGINS = {
 		end,
 	},
 	{ "bassamsdata/namu.nvim" },
+	{ "nvim-treesitter/nvim-treesitter-textobjects" },
 }
 
 local KEYMAPS = {}
@@ -85,15 +87,15 @@ do
 		set("n", "<leader>j", "<cmd>FzfLua jumps<cr>")
 		set("n", "<leader>b", "<cmd>FzfLua lines<cr>")
 		set("n", "<leader>z", "<cmd>FzfLua zoxide<cr>")
-		set("v", "<leader>/", "<cmd>FzfLua live_grep<cr>")
+		set("n", "<leader>/", "<cmd>FzfLua live_grep<cr>")
+		set("v", "<leader>/", "<cmd>FzfLua grep_visual<cr>")
 
 		set("n", "<leader>r", "<cmd>GrugFar<cr>")
 
-		set("n", "<leader>g", "<cmd>Neogit<cr>")
-		set("n", "<leader>D", "<cmd>Neogit diff<cr>")
-		set("n", "<leader>h", "<cmd>Gitsigns preview_hunk<cr>")
-		set("n", "]h", "<cmd>Gitsigns nav_hunk next<cr><cmd>Gitsigns preview_hunk<cr>")
-		set("n", "[h", "<cmd>Gitsigns nav_hunk prev<cr><cmd>Gitsigns preview_hunk<cr>")
+		set("n", "<leader>gg", "<cmd>Neogit<cr>")
+		set("n", "<leader>gd", "<cmd>DiffviewOpen<cr>")
+		set("n", "<leader>gb", "<cmd>Gitsigns toggle_current_line_blame<cr>")
+		set("n", "<leader>gB", "<cmd>Gitsigns blame<cr>")
 
 		set("n", "<leader>n", "<cmd>Namu symbols<cr>")
 	end
@@ -278,8 +280,6 @@ conform.setup({
 		lua = { "stylua" },
 		luau = { "stylua" },
 	},
-})
-conform.setup({
 	format_on_save = {
 		timeout_ms = 500,
 		lsp_format = "fallback",
@@ -307,6 +307,7 @@ local custom_config = {
 	clangd = {},
 	pyright = {},
 	vtsls = {},
+	jsonls = {},
 	rust_analyzer = {
 		on_init = function(client, _)
 			--client.server_capabilities.semanticTokensProvider = nil
@@ -407,6 +408,24 @@ require("nvim-treesitter.configs").setup({
 		keymaps = {
 			node_incremental = "v",
 			node_decremental = "V",
+		},
+	},
+	textobjects = {
+		select = {
+			enable = true,
+			-- Automatically jump forward to textobj, similar to targets.vim
+			lookahead = true,
+			keymaps = {
+				-- You can use the capture groups defined in textobjects.scm
+				["af"] = "@function.outer",
+				["if"] = "@function.inner",
+				["ac"] = "@class.outer",
+				-- You can optionally set descriptions to the mappings (used in the desc parameter of
+				-- nvim_buf_set_keymap) which plugins like which-key display
+				["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+				-- You can also use captures from other query groups like `locals.scm`
+				["al"] = { query = "@local.scope", query_group = "locals", desc = "Select language scope" },
+			},
 		},
 	},
 })
