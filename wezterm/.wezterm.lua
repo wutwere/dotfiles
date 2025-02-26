@@ -21,10 +21,13 @@ config.window_decorations = "RESIZE | MACOS_FORCE_ENABLE_SHADOW"
 config.initial_cols = 150
 config.initial_rows = 50
 config.color_scheme = "tokyonight"
+config.color_scheme = "catppuccin-macchiato"
+config.color_scheme = "rose-pine"
 
 config.colors = {
 	tab_bar = {
-		background = not config.tab_bar_at_bottom and "rgba(26,27,38,0.9)" or "rgba(0,0,0,0)",
+		-- background = not config.tab_bar_at_bottom and "rgba(26,27,38,0.9)" or "rgba(0,0,0,0)",
+		background = "rgba(0,0,0,0)",
 	},
 }
 
@@ -197,9 +200,9 @@ tabline.setup({
 			"domain",
 			"workspace",
 			"ram",
-			"cpu",
+			-- "cpu",
 			battery_remaining,
-			{ "datetime", style = "%H:%M:%S %m/%d/%Y" },
+			-- { "datetime", style = "%H:%M:%S %m/%d/%Y" },
 		},
 		tabline_y = {},
 		tabline_z = {},
