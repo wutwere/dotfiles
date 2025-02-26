@@ -47,6 +47,15 @@ local PLUGINS = {
 	},
 	{ "bassamsdata/namu.nvim" },
 	{ "nvim-treesitter/nvim-treesitter-textobjects" },
+	{
+		"folke/noice.nvim",
+		event = "VeryLazy",
+		opts = {},
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+			"rcarriga/nvim-notify",
+		},
+	},
 }
 
 local KEYMAPS = {}
@@ -175,6 +184,9 @@ vim.api.nvim_create_autocmd({ "BufEnter", "VimEnter" }, {
 		vim.opt.nu = true
 		vim.opt.rnu = true
 		vim.cmd("hi cursorline guibg=NONE")
+		-- Reserve a space in the gutter
+		-- This will avoid an annoying layout shift in the screen
+		vim.opt.signcolumn = "yes" -- (lsp-zero told me to do this)
 	end,
 })
 
@@ -319,10 +331,6 @@ for lsp, config in pairs(custom_config) do
 	setmetatable(config, { __index = default_config })
 	lspconfig[lsp].setup(config)
 end
-
--- Reserve a space in the gutter
--- This will avoid an annoying layout shift in the screen
-vim.opt.signcolumn = "yes" -- (lsp-zero told me to do this)
 
 vim.api.nvim_create_autocmd("LspAttach", {
 	desc = "LSP actions",
