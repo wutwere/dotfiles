@@ -50,7 +50,7 @@ local PLUGINS = {
 	{
 		"folke/noice.nvim",
 		event = "VeryLazy",
-		opts = {},
+		opts = { lsp = { signature = { enabled = false }, hover = { enabled = false } } },
 		dependencies = {
 			"MunifTanjim/nui.nvim",
 			"rcarriga/nvim-notify",
@@ -67,6 +67,7 @@ do
 	KEYMAPS.general = function()
 		-- editor
 		set("i", "{<cr>", "{<cr>}<esc>O")
+		set("i", "{<s-cr>", "{<cr>}<esc>O")
 		set("v", "<leader>y", '"+y')
 		set("n", "<leader>y", "<cmd>%y+<cr>")
 		set("n", "<leader>Y", function()
