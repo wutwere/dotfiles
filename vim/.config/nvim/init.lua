@@ -112,10 +112,10 @@ do
 
 	KEYMAPS.mini_files = function(mini_files)
 		mini_files.config.mappings.close = "<esc>"
-		set("n", "<leader>f", function()
+		set("n", "-", function()
 			mini_files.open(vim.fn.expand("%:p:h"), false)
 		end)
-		set("n", "<leader>s", function() -- set working dir to current buffer
+		set("n", "<cr>", function() -- set working dir to current buffer
 			local state = mini_files.get_explorer_state()
 			local dir = state and state.branch[state.depth_focus] or "%:h"
 			vim.cmd("cd " .. dir)
@@ -176,7 +176,7 @@ vim.opt.cinoptions = { "N-s", "g0", "j1", "(s", "m1" }
 vim.opt.scrolloff = 5
 vim.opt.sidescrolloff = 10
 vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
+vim.opt.shiftwidth = 2
 -- vim.opt.laststatus = 3
 vim.opt.mouse = "nv"
 vim.g.netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
@@ -310,7 +310,10 @@ require("mason-lspconfig").setup({
 local lspconfig = require("lspconfig")
 local default_config = {
 	capabilities = require("blink.cmp").get_lsp_capabilities(),
-	flags = { debounce_text_changes = 150 },
+	flags = { debounce_text_changes = 1000 },
+	-- on_init = function(client, _)
+	-- 	client.server_capabilities.semanticTokensProvider = nil
+	-- end,
 }
 local custom_config = {
 	luau_lsp = {
@@ -321,15 +324,15 @@ local custom_config = {
 	pyright = {},
 	vtsls = {},
 	jsonls = {},
-	rust_analyzer = {
-		on_init = function(client, _)
-			--client.server_capabilities.semanticTokensProvider = nil
-		end,
-	},
+	rust_analyzer = {},
 }
 
 for lsp, config in pairs(custom_config) do
-	setmetatable(config, { __index = default_config })
+	for k, v in pairs(default_config) do
+		if not config[k] then
+			config[k] = v
+		end
+	end
 	lspconfig[lsp].setup(config)
 end
 
@@ -351,6 +354,7 @@ require("blink-cmp").setup({
 	completion = {
 		documentation = { auto_show = true, auto_show_delay_ms = 0, window = { border = "rounded" } },
 		menu = {
+			-- auto_show = false,
 			border = "rounded",
 			draw = {
 				columns = {
