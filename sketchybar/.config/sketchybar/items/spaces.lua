@@ -27,22 +27,23 @@ for i = 1, 10, 1 do
 		padding_left = 1,
 		background = {
 			color = colors.bg1,
-			border_width = 1,
+			border_width = 2,
 			height = 26,
 		},
 		popup = { background = { border_width = 5, border_color = colors.black } },
 	})
 
 	spaces[i] = space
+	-- wtf is this thing
 	-- Single item bracket for space items to achieve double border on highlight
-	local space_bracket = sbar.add("bracket", { space.name }, {
-		background = {
-			color = colors.bg1,
-			-- border_color = colors.bg2,
-			height = 28,
-			-- border_width = 2
-		},
-	})
+	-- local space_bracket = sbar.add("bracket", { space.name }, {
+	-- 	background = {
+	-- 		color = colors.bg1,
+	-- 		-- border_color = colors.bg2,
+	-- 		height = 28,
+	-- 		-- border_width = 2,
+	-- 	},
+	-- })
 
 	-- Padding space
 	sbar.add("space", "space.padding." .. i, {
@@ -72,9 +73,9 @@ for i = 1, 10, 1 do
 			label = { highlight = selected },
 			background = { border_color = color },
 		})
-		space_bracket:set({
-			background = { border_color = color },
-		})
+		-- space_bracket:set({
+		-- 	background = { border_color = color },
+		-- })
 	end)
 
 	space:subscribe("mouse.clicked", function(env)
