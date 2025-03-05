@@ -13,8 +13,9 @@ local mine = {
 	magenta = 0xffcba6f7,
 	grey = 0xff939ab7,
 	mauve = 0xff9cd399,
-	bg1 = 0xef1f2335,
-	bg2 = 0xff545c7e,
+	bg1 = 0xff000000,
+	bg2 = 0xff64697d,
+	-- bg2 = 0x00000000,
 	transparent = 0x00000000,
 }
 
@@ -78,9 +79,9 @@ colors.bar = {
 	border = colors.black,
 }
 colors.popup = {
-	bg = with_alpha(colors.black, 0.2),
-	border = colors.black,
+	bg = with_alpha(colors.bg1, 0.5),
+	border = colors.transparent,
 }
-colors.bar.bg = with_alpha(colors.bar.bg, 0.2)
-colors.bg1 = with_alpha(colors.bg1, 0.2)
+colors.bg1 = with_alpha(colors.bg1, 0.4)
+
 return colors
