@@ -4,11 +4,6 @@ rev = "60b24af"
 hash = "ee025be766240cc98e671754ac836da3"
 
 [[plugin.deps]]
-use = "yazi-rs/plugins:full-border"
-rev = "8945e54"
-hash = "ae9e1d0c6bfd68cdebc98cc684c22b45"
-
-[[plugin.deps]]
 use = "yazi-rs/plugins:max-preview"
 rev = "8945e54"
 hash = "15b2ff7f6563c14d5b2e93b3e9da35de"
@@ -28,5 +23,7 @@ use = "yazi-rs/plugins:smart-enter"
 rev = "5186af7"
 hash = "aef2b1a805b80cce573bb766f1459d88"
 
-[flavor]
-deps = []
+[[flavor.deps]]
+use = "kalidyasin/yazi-flavors:tokyonight-night"
+rev = "92a09a6"
+hash = "845c5ee33e147b1a57f48728e42600ee"
