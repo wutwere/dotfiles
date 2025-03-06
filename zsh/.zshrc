@@ -15,8 +15,15 @@ export EDITOR=nvim
 source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 alias ls="ls -F --color=auto"
 alias n=nvim
-alias vim=nvim
+alias v=nvim
 alias b="g++ --std=c++17 -DLOCAL -O2 -include-pch /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/bits/stdc++.h.pch -o a"
+cht() {
+  if [ -z $1 ]; then
+    curl cht.sh/$(cat ~/.cht_sh | fzf)
+  else
+    curl cht.sh/$1
+  fi
+}
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
