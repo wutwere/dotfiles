@@ -1644,7 +1644,7 @@ go/print
 go/range
 go/rosetta/
 go/slices
-go/south meaning
+go/south+meaning
 go/switch
 go/types
 goaccess
@@ -1801,7 +1801,7 @@ hadolint
 hakyll-init
 halt
 handbrakecli
-handl 14  111k   14 16736    0     0  27242      0  0:00:04 --:--:--  0:00:04 27213r
+handr
 hangups
 hardhat
 hardinfo
@@ -12470,8 +12470,7 @@ todo
 todoist
 todoman
 toilet
-t100  111k  100  111k    0     0   124k      0 --:--:-- --:--:-- --:--:--  124k
-okei
+tokei
 tomb
 toolbox
 toolbox-create
