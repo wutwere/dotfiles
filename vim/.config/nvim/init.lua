@@ -67,6 +67,7 @@ local PLUGINS = {
 			vim.g.vimtex_quickfix_open_on_warning = 0
 		end,
 	},
+	{ "micangl/cmp-vimtex" },
 }
 
 local KEYMAPS = {}
@@ -390,6 +391,7 @@ require("blink-cmp").setup({
 	keymap = KEYMAPS.cmp,
 	sources = {
 		default = {
+			"vimtex",
 			"lazydev",
 			"codeium",
 			"lsp",
@@ -405,6 +407,11 @@ require("blink-cmp").setup({
 				module = "blink.compat.source",
 				score_offset = 100,
 				async = true,
+			},
+			vimtex = {
+				name = "vimtex",
+				module = "blink.compat.source",
+				score_offset = 91,
 			},
 		},
 	},
