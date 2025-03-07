@@ -54,8 +54,8 @@ config.default_cursor_style = "BlinkingUnderline"
 config.cursor_blink_rate = 300
 config.animation_fps = 60
 
---[[
 config.keys = {
+	--[[
 	{
 		key = "w",
 		mods = "ALT",
@@ -85,8 +85,15 @@ config.keys = {
 			window:set_config_overrides(overrides)
 		end),
 	},
+    ]]
+	{
+		key = "w",
+		mods = "CMD",
+		action = wezterm.action.CloseCurrentTab({ confirm = false }),
+	},
 }
 
+--[[
 for key, direction in pairs(DIRECTIONS) do
 	table.insert(config.keys, {
 		key = key,
