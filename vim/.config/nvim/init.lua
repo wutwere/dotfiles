@@ -424,10 +424,13 @@ require("codeium").setup({})
 ----------------
 
 require("nvim-treesitter.configs").setup({
-	ensure_installed = { "cpp", "typescript", "tsx", "python", "luau", "javascript", "rust", "json", "lua" },
+	ensure_installed = { "cpp", "typescript", "tsx", "python", "luau", "javascript", "rust", "json", "lua", "latex" },
 	highlight = {
 		enable = true,
-		disable = function(_lang, buf)
+		disable = function(lang, buf)
+			if lang == "latex" then
+				return true
+			end
 			local max_filesize = 100 * 1024
 			local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
 			return ok and stats and stats.size > max_filesize
