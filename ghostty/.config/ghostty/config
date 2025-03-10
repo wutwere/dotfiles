@@ -1,0 +1,16 @@
+theme = rose-pine
+
+cursor-style = underline
+cursor-style-blink = true
+
+mouse-hide-while-typing = true
+
+window-decoration = auto
+macos-titlebar-style = hidden
+
+font-family = JetBrains Mono
+font-size = 12
+
+confirm-close-surface = false
+
+copy-on-select = clipboard
