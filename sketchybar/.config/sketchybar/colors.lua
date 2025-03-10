@@ -14,8 +14,8 @@ local mine = {
 	grey = 0xff939ab7,
 	mauve = 0xff9cd399,
 	bg1 = 0xff000000,
-	bg2 = 0xff64697d,
-	-- bg2 = 0x00000000,
+	-- bg2 = 0xff64697d,
+	bg2 = 0x00000000,
 	transparent = 0x00000000,
 }
 

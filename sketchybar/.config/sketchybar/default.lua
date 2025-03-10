@@ -28,19 +28,19 @@ sbar.default({
 	},
 	background = {
 		height = 28,
-		corner_radius = 9,
+		corner_radius = 7,
 		border_width = 2,
 		border_color = colors.bg2,
 		image = {
-			corner_radius = 9,
-			border_color = colors.grey,
-			border_width = 1,
+			corner_radius = 7,
+			border_color = colors.bg1,
+			border_width = 0,
 		},
 	},
 	popup = {
 		background = {
 			border_width = 2,
-			corner_radius = 9,
+			corner_radius = 7,
 			border_color = colors.popup.border,
 			color = colors.popup.bg,
 			shadow = { drawing = true },
