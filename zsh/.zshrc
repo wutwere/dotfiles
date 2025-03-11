@@ -19,9 +19,9 @@ alias v=nvim
 alias b="g++ --std=c++17 -DLOCAL -O2 -include-pch /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/bits/stdc++.h.pch -o a"
 cht() {
   if [ -z $1 ]; then
-    curl cht.sh/$(cat ~/.cht_sh | fzf)
+    curl -s cht.sh/$(cat ~/.cht_sh | fzf --bind=enter:replace-query+print-query) | less -Rc
   else
-    curl cht.sh/$1
+    curl -s cht.sh/$1 | less -Rc
   fi
 }
 
