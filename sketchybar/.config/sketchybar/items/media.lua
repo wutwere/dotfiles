@@ -9,7 +9,7 @@ local media_cover = sbar.add("item", {
 		height = 1,
 		image = {
 			string = "media.artwork",
-			scale = 0.75,
+			scale = 0.7,
 		},
 		color = colors.transparent,
 	},

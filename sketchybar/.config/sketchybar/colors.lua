@@ -78,10 +78,10 @@ colors.bar = {
 	bg = colors.bg1,
 	border = colors.black,
 }
+colors.bg1 = with_alpha(colors.bg1, 0.4)
 colors.popup = {
-	bg = with_alpha(colors.bg1, 0.5),
+	bg = colors.bg1,
 	border = colors.transparent,
 }
-colors.bg1 = with_alpha(colors.bg1, 0.4)
 
 return colors
