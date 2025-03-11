@@ -109,7 +109,7 @@ do
 		set({ "n", "v" }, "<leader>a", "<cmd>FzfLua<cr>")
 		set("n", "<leader><space>", "<cmd>FzfLua files<cr>")
 		set("n", "<leader>j", "<cmd>FzfLua jumps<cr>")
-		set("n", "<leader>b", "<cmd>FzfLua lines<cr>")
+		set("n", "<leader>b", "<cmd>FzfLua buffers<cr>")
 		set("n", "<leader>z", "<cmd>FzfLua zoxide<cr>")
 		set("n", "<leader>/", "<cmd>FzfLua live_grep<cr>")
 		set("v", "<leader>/", "<cmd>FzfLua grep_visual<cr>")
@@ -286,7 +286,7 @@ require("lualine").setup({
 	tabline = { lualine_a = { { "tabs", mode = 2, use_mode_colors = true, max_length = vim.o.columns } } },
 })
 
--- require("tokyonight").setup({ transparent = true, styles = { floats = "transparent" } })
+require("tokyonight").setup({ transparent = true, styles = { floats = "transparent" } })
 -- vim.cmd.colorscheme("tokyonight-night")
 
 require("rose-pine").setup({
