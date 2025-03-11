@@ -102,6 +102,8 @@ do
 		set("n", "gb", "<cmd>b#<cr>")
 		set("n", "]b", "<cmd>bn<cr>")
 		set("n", "[b", "<cmd>bp<cr>")
+		set("n", "]c", "<cmd>cn<cr>")
+		set("n", "[c", "<cmd>cp<cr>")
 
 		-- plugins
 		set({ "n", "v" }, "<leader>a", "<cmd>FzfLua<cr>")
@@ -127,7 +129,7 @@ do
 		set("n", "-", function()
 			mini_files.open(vim.fn.expand("%:p:h"), false)
 		end)
-		set("n", "<cr>", function() -- set working dir to current buffer
+		set("n", "<leader>-", function() -- set working dir to current buffer
 			local state = mini_files.get_explorer_state()
 			local dir = state and state.branch[state.depth_focus] or "%:h"
 			vim.cmd("cd " .. dir)
@@ -367,9 +369,9 @@ require("rose-pine").setup({
 	end,
 })
 
--- vim.cmd("colorscheme rose-pine")
+vim.cmd("colorscheme rose-pine")
 -- vim.cmd("colorscheme rose-pine-main")
-vim.cmd("colorscheme rose-pine-moon")
+-- vim.cmd("colorscheme rose-pine-moon")
 -- vim.cmd("colorscheme rose-pine-dawn")
 
 -------------
