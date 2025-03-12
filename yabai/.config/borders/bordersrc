@@ -8,4 +8,5 @@ options=(
   inactive_color=0x0064697d
 )
 
-borders "${options[@]}"
+# disable/enable
+# borders "${options[@]}"

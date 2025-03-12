@@ -11,6 +11,10 @@ macos-titlebar-style = hidden
 font-family = JetBrains Mono
 font-size = 12
 
+window-padding-x = 10
+window-padding-y = 10
+window-padding-balance = true
+
 confirm-close-surface = false
 
 copy-on-select = clipboard

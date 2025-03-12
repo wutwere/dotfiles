@@ -13,7 +13,24 @@ local mine = {
 	magenta = 0xffcba6f7,
 	grey = 0xff939ab7,
 	mauve = 0xff9cd399,
-	bg1 = 0xff000000,
+	bg1 = 0xa1000000,
+	-- bg2 = 0xff64697d,
+	bg2 = 0x00000000,
+	transparent = 0x00000000,
+}
+
+local mine_clear_light = {
+	white = 0xff181926,
+	black = 0xffcdd6f4,
+	red = 0xffff229e,
+	green = 0xff40434d,
+	blue = 0xff7aa2f7,
+	yellow = 0xffa6e3a1,
+	orange = 0xfffab387,
+	magenta = 0xffcba6f7,
+	grey = 0xff535a77,
+	mauve = 0xff9cd399,
+	bg1 = 0x66ffffff,
 	-- bg2 = 0xff64697d,
 	bg2 = 0x00000000,
 	transparent = 0x00000000,
@@ -71,14 +88,13 @@ local function with_alpha(color, alpha)
 	return (color & 0x00ffffff) | (math.floor(alpha * 255.0) << 24)
 end
 
-colors = mine
+colors = mine_clear_light
 colors.with_alpha = with_alpha
 
 colors.bar = {
 	bg = colors.bg1,
 	border = colors.black,
 }
-colors.bg1 = with_alpha(colors.bg1, 0.4)
 colors.popup = {
 	bg = colors.bg1,
 	border = colors.transparent,
