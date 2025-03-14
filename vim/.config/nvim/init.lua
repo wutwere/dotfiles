@@ -46,7 +46,19 @@ local PLUGINS = {
 			vim.cmd("call mkdp#util#install()")
 		end,
 	},
-	{ "bassamsdata/namu.nvim" },
+	{
+		"bassamsdata/namu.nvim",
+		opts = {
+			namu_symbols = {
+				options = {
+					movement = {
+						next = { "<C-j>", "<DOWN>" },
+						previous = { "<C-k>", "<UP>" },
+					},
+				},
+			},
+		},
+	},
 	{ "nvim-treesitter/nvim-treesitter-textobjects" },
 	{
 		"folke/noice.nvim",
@@ -75,6 +87,24 @@ local PLUGINS = {
 		dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
 		opts = { completions = { lsp = { enabled = true } }, render_modes = { "n", "c", "t", "R", "i" } },
 	},
+	{
+		"karb94/neoscroll.nvim",
+		opts = { duration_multiplier = 0.5 },
+	},
+	{
+		"folke/which-key.nvim",
+		event = "VeryLazy",
+		opts = { delay = 300 },
+		keys = {
+			{
+				"<leader>?",
+				function()
+					require("which-key").show({ global = false })
+				end,
+				desc = "Buffer Local Keymaps (which-key)",
+			},
+		},
+	},
 }
 
 local KEYMAPS = {}
@@ -87,25 +117,26 @@ do
 		-- editor
 		set("i", "{<cr>", "{<cr>}<esc>O")
 		set("i", "{<s-cr>", "{<cr>}<esc>O")
-		set("v", "<leader>y", '"+y')
-		set("n", "<leader>y", "<cmd>%y+<cr>")
+		set("v", "<leader>y", '"+y', { desc = "Copy selected to clipboard" })
+		set("n", "<leader>y", "<cmd>%y+<cr>", { desc = "Copy entire file contents to clipboard" })
 		set("n", "<leader>Y", function()
 			vim.fn.setreg("+", vim.fn.expand("%:p"))
-		end)
-		set({ "n", "v" }, "<leader>p", '"+p')
-		set("n", "<leader>m", "<cmd>e $MYVIMRC<cr>")
-		set("n", "<leader>d", vim.diagnostic.open_float)
-		set("n", "<leader>w", "<cmd>tabc<cr>")
+		end, { desc = "Copy file path to clipboard" })
+		set({ "n", "v" }, "<leader>p", '"+p', { desc = "Paste clipboard" })
+		set("n", "<leader>m", "<cmd>e $MYVIMRC<cr>", { desc = "Edit vim config" })
+		set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Show diagnostics at cursor" })
+		set("n", "<leader>w", "<cmd>tabc<cr>", { desc = "Close tab" })
 
 		-- terminal
-		set("n", "<leader>t", "<cmd>vs<cr><cmd>term<cr>a")
+		set("n", "<leader>t", "<cmd>vs<cr><cmd>term<cr>a", { desc = "Open new terminal split" })
 		set("t", "<esc>", "<cmd>bd!<cr>")
+		set("t", "<c-n>", "<c-\\><c-n>")
 
 		-- fast navigation
-		set({ "n", "v", "x" }, "<c-j>", "7<c-e>")
-		set({ "n", "v", "x" }, "<c-k>", "7<c-y>")
-		set("n", "<c-h>", "<c-w>W")
-		set("n", "<c-l>", "<c-w>w")
+		set("n", "<leader>h", "<c-w>h", { desc = "Move to left pane" })
+		set("n", "<leader>j", "<c-w>j", { desc = "Move to lower pane" })
+		set("n", "<leader>k", "<c-w>k", { desc = "Move to upper pane" })
+		set("n", "<leader>l", "<c-w>l", { desc = "Move to right pane" })
 		set("n", "gb", "<cmd>b#<cr>")
 		set("n", "]b", "<cmd>bn<cr>")
 		set("n", "[b", "<cmd>bp<cr>")
@@ -113,22 +144,28 @@ do
 		set("n", "[c", "<cmd>cp<cr>")
 
 		-- plugins
-		set({ "n", "v" }, "<leader>a", "<cmd>FzfLua<cr>")
 		set("n", "<leader><space>", "<cmd>FzfLua files<cr>")
-		set("n", "<leader>j", "<cmd>FzfLua jumps<cr>")
-		set("n", "<leader>b", "<cmd>FzfLua buffers<cr>")
-		set("n", "<leader>z", "<cmd>FzfLua zoxide<cr>")
-		set("n", "<leader>/", "<cmd>FzfLua live_grep<cr>")
-		set("v", "<leader>/", "<cmd>FzfLua grep_visual<cr>")
+		set({ "n", "v" }, "<leader>ff", "<cmd>FzfLua<cr>")
+		set("n", "<leader>fh", "<cmd>FzfLua helptags<cr>")
+		set("n", "<leader>fj", "<cmd>FzfLua jumps<cr>")
+		set("n", "<leader>fb", "<cmd>FzfLua buffers<cr>")
+		set("n", "<leader>fz", "<cmd>FzfLua zoxide<cr>")
+		set("n", "<leader>fg", "<cmd>FzfLua live_grep<cr>")
+		set("n", "<leader>fl", "<cmd>FzfLua lines<cr>")
+		set("n", "<leader>fd", "<cmd>FzfLua document_diagnostics<cr>")
+		set("v", "<leader>fv", "<cmd>FzfLua grep_visual<cr>")
 
-		set("n", "<leader>r", "<cmd>GrugFar<cr>")
+		set("n", "<leader>r", "<cmd>GrugFar<cr>", { desc = "Search and replace all files" })
 
 		set("n", "<leader>gg", "<cmd>Neogit<cr>")
 		set("n", "<leader>gd", "<cmd>DiffviewOpen<cr>")
-		set("n", "<leader>gb", "<cmd>Gitsigns toggle_current_line_blame<cr>")
-		set("n", "<leader>gB", "<cmd>Gitsigns blame<cr>")
+		set("n", "<leader>gb", "<cmd>Neogit branch<cr>")
+		set("n", "<leader>gl", "<cmd>Gitsigns toggle_current_line_blame<cr>")
+		set("n", "<leader>gL", "<cmd>Gitsigns blame<cr>")
+		set("n", "<leader>gp", "<cmd>Gitsigns preview_hunk_inline<cr>")
+		set("n", "<leader>gr", "<cmd>Gitsigns reset_hunk<cr>")
 
-		set("n", "<leader>n", "<cmd>Namu symbols<cr>")
+		set("n", "<leader>n", "<cmd>Namu symbols<cr>", { desc = "Open LSP search" })
 
 		set("n", "<bs>", "<cmd>NoiceDismiss<cr>")
 	end
@@ -137,26 +174,26 @@ do
 		mini_files.config.mappings.close = "<esc>"
 		set("n", "-", function()
 			mini_files.open(vim.fn.expand("%:p:h"), false)
-		end)
-		set("n", "<leader>-", function() -- set working dir to current buffer
+		end, { desc = "Open file explorer" })
+		set("n", "<leader>-", function()
 			local state = mini_files.get_explorer_state()
 			local dir = state and state.branch[state.depth_focus] or "%:h"
 			vim.cmd("cd " .. dir)
 			vim.cmd("pwd")
-		end)
+		end, { desc = "Set working directory here" })
 	end
 
 	KEYMAPS.lsp = function(event)
 		local opts = { buffer = event.buf }
-		set("n", "K", vim.lsp.buf.hover, opts)
+		set("n", "K", vim.lsp.buf.hover, { buffer = event.buf, desc = "Show LSP hover at cursor" })
 		set("n", "gd", "<cmd>FzfLua lsp_definitions<cr>", opts)
 		set("n", "gi", "<cmd>FzfLua lsp_implementations<cr>", opts)
 		set("n", "go", "<cmd>FzfLua lsp_type_defs<cr>", opts)
 		set("n", "gr", "<cmd>FzfLua lsp_references<cr>", opts)
-		set("n", "gs", vim.lsp.buf.signature_help, opts)
-		set("n", "<leader>2", vim.lsp.buf.rename, opts)
-		set({ "n", "x" }, "<leader>3", vim.lsp.buf.format, opts)
-		set("n", "<leader>4", "<cmd>FzfLua lsp_code_actions<cr>", opts)
+		set("n", "gs", vim.lsp.buf.signature_help, { buffer = event.buf, desc = "Go to signature help" })
+		set("n", "<leader>2", vim.lsp.buf.rename, { buffer = event.buf, desc = "Rename reference" })
+		set({ "n", "x" }, "<leader>3", vim.lsp.buf.format, { buffer = event.buf, desc = "Format file" })
+		set("n", "<leader>4", "<cmd>FzfLua lsp_code_actions<cr>", { buffer = event.buf, desc = "Show code actions" })
 	end
 
 	local has_words_before = function()
@@ -170,7 +207,7 @@ do
 		["<tab>"] = {
 			function(cmp)
 				if has_words_before() and not cmp.is_visible() then
-					return cmp.show()
+					return cmp.show() and cmp.select_next()
 				elseif cmp.is_visible() then
 					return cmp.select_next()
 				end
@@ -238,7 +275,7 @@ do
 	vim.opt.rtp:prepend(lazypath)
 end
 
-require("lazy").setup(PLUGINS)
+require("lazy").setup({ spec = PLUGINS, ui = { border = "rounded" } })
 
 ----------------
 -- APPEARANCE --
@@ -586,18 +623,3 @@ mini_files.setup({
 	},
 })
 KEYMAPS.mini_files(mini_files)
-
-----------
--- NAMU --
-----------
-
-require("namu").setup({
-	namu_symbols = {
-		options = {
-			movement = {
-				next = { "<C-j>", "<DOWN>" },
-				previous = { "<C-k>", "<UP>" },
-			},
-		},
-	},
-})
