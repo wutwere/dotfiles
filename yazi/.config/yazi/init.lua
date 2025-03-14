@@ -16,7 +16,7 @@ require("githead"):setup()
 
 require("yaziline"):setup({
 	-- color = "#7aa2f7", -- main theme color
-	color = "#ea7277", -- main theme color
+	color = "#e4bebb", -- main theme color
 	separator_style = "angly", -- "angly" | "curvy" | "liney" | "empty"
 	-- separator_open = "",
 	-- separator_close = "",

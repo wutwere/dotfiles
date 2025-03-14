@@ -5,7 +5,6 @@
 -----------------
 
 local PLUGINS = {
-	{ "tomasr/molokai" },
 	{ "folke/tokyonight.nvim" },
 	{ "rose-pine/neovim", name = "rose-pine" },
 	{ "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons" } },
@@ -65,6 +64,7 @@ local PLUGINS = {
 		event = "VeryLazy",
 		opts = {
 			lsp = { signature = { enabled = false }, hover = { enabled = false } },
+			presets = { bottom_search = true },
 		},
 		dependencies = {
 			"MunifTanjim/nui.nvim",
@@ -85,7 +85,11 @@ local PLUGINS = {
 	{
 		"MeanderingProgrammer/render-markdown.nvim",
 		dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
-		opts = { completions = { lsp = { enabled = true } }, render_modes = { "n", "c", "t", "R", "i" } },
+		opts = {
+			completions = { lsp = { enabled = true } },
+			render_modes = { "n", "c", "t", "R", "i" },
+			heading = { width = "block" },
+		},
 	},
 	{
 		"karb94/neoscroll.nvim",
@@ -105,6 +109,7 @@ local PLUGINS = {
 			},
 		},
 	},
+	{ "norcalli/nvim-colorizer.lua", opts = {} },
 }
 
 local KEYMAPS = {}
@@ -248,6 +253,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "VimEnter" }, {
 		-- Reserve a space in the gutter
 		-- This will avoid an annoying layout shift in the screen
 		vim.opt.signcolumn = "yes" -- (lsp-zero told me to do this)
+		vim.cmd("ColorizerAttachToBuffer")
 	end,
 })
 
@@ -313,7 +319,7 @@ vim.api.nvim_create_autocmd("UILeave", {
 
 -- local theme = require("lualine.themes.tokyonight")
 local noice_status = require("noice").api.statusline
-local theme = require("lualine.themes.horizon")
+local theme = require("lualine.themes.rose-pine")
 theme.normal.c.bg = nil
 
 require("lualine").setup({
@@ -465,7 +471,7 @@ conform.setup({
 -- LSP --
 ---------
 
-require("mason").setup()
+require("mason").setup({ ui = { border = "rounded" } })
 require("mason-lspconfig").setup({
 	automatic_installation = true,
 })
@@ -596,14 +602,14 @@ require("nvim-treesitter.configs").setup({
 			lookahead = true,
 			keymaps = {
 				-- You can use the capture groups defined in textobjects.scm
-				["af"] = "@function.outer",
-				["if"] = "@function.inner",
-				["ac"] = "@class.outer",
+				["af"] = { query = "@function.outer", desc = "function" },
+				["if"] = { query = "@function.inner", desc = "inner function" },
+				["ac"] = { query = "@class.outer", desc = "class" },
 				-- You can optionally set descriptions to the mappings (used in the desc parameter of
 				-- nvim_buf_set_keymap) which plugins like which-key display
-				["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+				["ic"] = { query = "@class.inner", desc = "inner class" },
 				-- You can also use captures from other query groups like `locals.scm`
-				["al"] = { query = "@local.scope", query_group = "locals", desc = "Select language scope" },
+				["al"] = { query = "@local.scope", query_group = "locals", desc = "scope" },
 			},
 		},
 	},
