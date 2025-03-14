@@ -1,6 +1,6 @@
 # my dotfiles
 
-![preview](./demo.gif)
+![image](https://github.com/user-attachments/assets/f2bd657b-8e6a-4c62-8715-b9560ae89f99)
 
 # Setup
 
