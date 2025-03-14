@@ -51,7 +51,9 @@ local PLUGINS = {
 	{
 		"folke/noice.nvim",
 		event = "VeryLazy",
-		opts = { lsp = { signature = { enabled = false }, hover = { enabled = false } } },
+		opts = {
+			lsp = { signature = { enabled = false }, hover = { enabled = false } },
+		},
 		dependencies = {
 			"MunifTanjim/nui.nvim",
 			"rcarriga/nvim-notify",
@@ -67,6 +69,11 @@ local PLUGINS = {
 			vim.g.vimtex_callback_progpath = vim.fn.system("where nvim")
 			vim.g.vimtex_quickfix_mode = 0
 		end,
+	},
+	{
+		"MeanderingProgrammer/render-markdown.nvim",
+		dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
+		opts = { completions = { lsp = { enabled = true } }, render_modes = { "n", "c", "t", "R", "i" } },
 	},
 }
 
@@ -122,6 +129,8 @@ do
 		set("n", "<leader>gB", "<cmd>Gitsigns blame<cr>")
 
 		set("n", "<leader>n", "<cmd>Namu symbols<cr>")
+
+		set("n", "<bs>", "<cmd>NoiceDismiss<cr>")
 	end
 
 	KEYMAPS.mini_files = function(mini_files)
@@ -266,8 +275,10 @@ vim.api.nvim_create_autocmd("UILeave", {
 })
 
 -- local theme = require("lualine.themes.tokyonight")
+local noice_status = require("noice").api.statusline
 local theme = require("lualine.themes.horizon")
 theme.normal.c.bg = nil
+
 require("lualine").setup({
 	options = { theme = theme, always_show_tabline = false, globalstatus = true },
 	sections = {
@@ -280,7 +291,15 @@ require("lualine").setup({
 			"diagnostics",
 			"progress",
 		},
-		lualine_y = {},
+		lualine_y = {
+			{
+				noice_status.mode.get,
+				cond = function()
+					return noice_status.mode.has() and noice_status.mode.get():sub(1, 3) == "rec"
+				end,
+				color = { fg = "#ff9e64" },
+			},
+		},
 		lualine_z = { "location" },
 	},
 	tabline = { lualine_a = { { "tabs", mode = 2, use_mode_colors = true, max_length = vim.o.columns } } },
@@ -507,7 +526,7 @@ require("blink-cmp").setup({
 })
 
 require("blink-compat").setup({ impersonate_nvim_cmp = true })
-require("codeium").setup({})
+-- require("codeium").setup({})
 
 ----------------
 -- TREESITTER --

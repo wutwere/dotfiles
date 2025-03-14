@@ -88,7 +88,7 @@ local function with_alpha(color, alpha)
 	return (color & 0x00ffffff) | (math.floor(alpha * 255.0) << 24)
 end
 
-colors = mine_clear_light
+colors = mine
 colors.with_alpha = with_alpha
 
 colors.bar = {
