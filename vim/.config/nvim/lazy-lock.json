@@ -1,6 +1,5 @@
 {
   "blink.cmp": { "branch": "main", "commit": "18b352d12b35bca148427b607098df14b75a218f" },
-  "blink.compat": { "branch": "main", "commit": "b0c87b64f9c669d3bcfaea8a80396fbc16e0fcb5" },
   "codeium.nvim": { "branch": "main", "commit": "ebed4f7cc8a18184d8332d421ca10bed5f7d59a1" },
   "conform.nvim": { "branch": "master", "commit": "a6f5bdb78caa305496357d17e962bbc4c0b392e2" },
   "diffview.nvim": { "branch": "main", "commit": "4516612fe98ff56ae0415a259ff6361a89419b0a" },
@@ -17,6 +16,7 @@
   "molokai": { "branch": "master", "commit": "c67bdfcdb31415aa0ade7f8c003261700a885476" },
   "namu.nvim": { "branch": "main", "commit": "132a0ee123d6e05a4898533a4511dc0dd12a7e97" },
   "neogit": { "branch": "master", "commit": "8710d4f014f00262fd89f4067b3f9e6baa69ad2c" },
+  "neoscroll.nvim": { "branch": "master", "commit": "f957373912e88579e26fdaea4735450ff2ef5c9c" },
   "noice.nvim": { "branch": "main", "commit": "0427460c2d7f673ad60eb02b35f5e9926cf67c59" },
   "nui.nvim": { "branch": "main", "commit": "53e907ffe5eedebdca1cd503b00aa8692068ca46" },
   "nvim-lint": { "branch": "master", "commit": "6e9dd545a1af204c4022a8fcd99727ea41ffdcc8" },
@@ -30,5 +30,6 @@
   "rose-pine": { "branch": "main", "commit": "7718965bdd1526b233f082da17e88b8bde7a7e6e" },
   "tokyonight.nvim": { "branch": "main", "commit": "057ef5d260c1931f1dffd0f052c685dcd14100a3" },
   "vim-be-good": { "branch": "master", "commit": "0ae3de14eb8efc6effe7704b5e46495e91931cc5" },
-  "vimtex": { "branch": "master", "commit": "cf6b84775624582d7422715ee46b0a63b53cee38" }
+  "vimtex": { "branch": "master", "commit": "cf6b84775624582d7422715ee46b0a63b53cee38" },
+  "which-key.nvim": { "branch": "main", "commit": "370ec46f710e058c9c1646273e6b225acf47cbed" }
 }
