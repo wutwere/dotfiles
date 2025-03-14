@@ -15,6 +15,9 @@ window-padding-x = 10
 window-padding-y = 7
 window-padding-balance = true
 
+background-opacity = 0.9
+background-blur = 50
+
 confirm-close-surface = false
 
 copy-on-select = clipboard

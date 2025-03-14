@@ -323,7 +323,13 @@ local theme = require("lualine.themes.rose-pine")
 theme.normal.c.bg = nil
 
 require("lualine").setup({
-	options = { theme = theme, always_show_tabline = false, globalstatus = true },
+	options = {
+		theme = theme,
+		always_show_tabline = false,
+		globalstatus = true,
+		component_separators = { left = "", right = "" },
+		section_separators = { left = "", right = "" },
+	},
 	sections = {
 		lualine_a = { "mode" },
 		lualine_b = { { "buffers", use_mode_colors = true } },
