@@ -79,14 +79,13 @@ local PLUGINS = {
 			vim.g.tex_conceal = "abdmg"
 			vim.g.vimtex_view_method = "sioyek"
 			vim.g.vimtex_callback_progpath = vim.fn.system("where nvim")
-			vim.g.vimtex_quickfix_mode = 0
+			vim.g.vimtex_quickfix_open_on_warning = 0
 		end,
 	},
 	{
 		"MeanderingProgrammer/render-markdown.nvim",
 		dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
 		opts = {
-			completions = { lsp = { enabled = true } },
 			render_modes = { "n", "c", "t", "R", "i" },
 			heading = { width = "block" },
 		},
@@ -332,7 +331,7 @@ require("lualine").setup({
 	},
 	sections = {
 		lualine_a = { "mode" },
-		lualine_b = { { "buffers", use_mode_colors = true } },
+		lualine_b = { { "buffers", use_mode_colors = true, max_length = vim.o.columns / 2 } },
 		lualine_c = {},
 		lualine_x = { --[["encoding", "fileformat", "filetype",]]
 			"branch",
@@ -560,6 +559,7 @@ require("blink-cmp").setup({
 			"path",
 			"snippets",
 			"buffer", --[["cmdline"]]
+			"markdown",
 		},
 		providers = {
 			lsp = { score_offset = 90 },
@@ -569,6 +569,12 @@ require("blink-cmp").setup({
 				module = "blink.compat.source",
 				score_offset = 100,
 				async = true,
+			},
+			markdown = {
+				name = "RenderMarkdown",
+				module = "render-markdown.integ.blink",
+				score_offset = 91,
+				fallbacks = { "lsp" },
 			},
 		},
 	},

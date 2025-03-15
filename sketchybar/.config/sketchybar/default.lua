@@ -4,7 +4,7 @@ local colors = require("colors")
 -- Equivalent to the --default domain
 sbar.default({
 	updates = "when_shown",
-	blur_radius = 20,
+	blur_radius = 5,
 	icon = {
 		font = {
 			family = settings.font.text,

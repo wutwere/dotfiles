@@ -24,4 +24,5 @@ ya pack -i # yazi plugins
 
 # latex
 sudo tlmgr install latexmk
+tlmgr search --global --file <missing-file> # then install to fix compile errors
 ```

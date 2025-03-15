@@ -3,7 +3,7 @@ local colors = require("colors")
 -- Equivalent to the --bar domain
 sbar.bar({
 	topmost = false,
-	height = 37,
+	height = 34,
 	position = "top",
 	-- color = colors.with_alpha(colors.bar.bg, 0.5),
 	color = colors.with_alpha(colors.bar.bg, 0),
