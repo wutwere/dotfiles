@@ -55,3 +55,6 @@ keybind = super+s=text:\x00s
 
 # open sessionizer
 keybind = super+f=text:\x00f
+
+# go to last session
+keybind = super+l=text:\x00L
