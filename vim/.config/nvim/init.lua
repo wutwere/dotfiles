@@ -131,8 +131,11 @@ do
 		set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Show diagnostics at cursor" })
 		set("n", "<leader>w", "<cmd>tabc<cr>", { desc = "Close tab" })
 
-		-- terminal
-		set("n", "<leader>t", "<cmd>vs<cr><cmd>term<cr>a", { desc = "Open new terminal split" })
+		-- competitive programming
+		set("n", "<leader>t", function()
+			vim.cmd("vsplit +term\\ ./run\\ " .. vim.fn.expand("%:r"))
+			vim.cmd("startinsert!")
+		end, { desc = "Run program in terminal split" })
 		set("t", "<esc>", "<cmd>bd!<cr>")
 		set("t", "<c-n>", "<c-\\><c-n>")
 
@@ -156,7 +159,7 @@ do
 		set("n", "<leader>fz", "<cmd>FzfLua zoxide<cr>")
 		set("n", "<leader>fg", "<cmd>FzfLua live_grep<cr>")
 		set("n", "<leader>fl", "<cmd>FzfLua lines<cr>")
-		set("n", "<leader>fd", "<cmd>FzfLua document_diagnostics<cr>")
+		set("n", "<leader>fd", "<cmd>FzfLua diagnostics_document<cr>")
 		set("v", "<leader>fv", "<cmd>FzfLua grep_visual<cr>")
 
 		set("n", "<leader>r", "<cmd>GrugFar<cr>", { desc = "Search and replace all files" })
@@ -231,6 +234,7 @@ KEYMAPS.general()
 -- VIM OPTIONS --
 -----------------
 
+vim.opt.splitright = true
 vim.opt.cursorline = true
 vim.opt.wrap = false
 vim.opt.termguicolors = true
