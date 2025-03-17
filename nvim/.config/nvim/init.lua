@@ -13,12 +13,47 @@ local PLUGINS = {
 	{ "neovim/nvim-lspconfig" },
 	{ "williamboman/mason.nvim" },
 	{ "williamboman/mason-lspconfig.nvim" },
-	{ "mfussenegger/nvim-lint" },
-	{ "stevearc/conform.nvim" },
+	{
+		"mfussenegger/nvim-lint",
+		config = function()
+			local lint = require("lint")
+			lint.linters_by_ft = {
+				lua = { "selene" },
+				luau = { "selene" },
+			}
+			vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+				callback = function()
+					lint.try_lint()
+				end,
+			})
+		end,
+	},
+	{
+		"stevearc/conform.nvim",
+		opts = {
+			formatters_by_ft = {
+				lua = { "stylua" },
+				luau = { "stylua" },
+			},
+			format_on_save = {
+				timeout_ms = 500,
+				lsp_format = "fallback",
+			},
+		},
+	},
 	{
 		"ibhagwan/fzf-lua",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
-		opts = { previewers = { builtin = { syntax_limit_b = 100 * 1024 } } },
+		opts = {
+			previewers = { builtin = { syntax_limit_b = 100 * 1024 } },
+			grep = {
+				rg_opts = "--color=always --hidden --line-number --smart-case --no-heading --column",
+			},
+			files = {
+				fd_opts = "--color=never --type f --hidden --follow --exclude .git",
+				rg_opts = "--color=never --files --hidden --follow -g '!.git'",
+			},
+		},
 	},
 	{ "echasnovski/mini.files" },
 	{ "saghen/blink.cmp", version = "*" },
@@ -127,6 +162,7 @@ do
 			vim.fn.setreg("+", vim.fn.expand("%:p"))
 		end, { desc = "Copy file path to clipboard" })
 		set({ "n", "v" }, "<leader>p", '"+p', { desc = "Paste clipboard" })
+		set({ "n", "v" }, "<leader>P", '"+P', { desc = "Paste clipboard" })
 		set("n", "<leader>m", "<cmd>e $MYVIMRC<cr>", { desc = "Edit vim config" })
 		set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Show diagnostics at cursor" })
 		set("n", "<leader>w", "<cmd>tabc<cr>", { desc = "Close tab" })
@@ -321,13 +357,14 @@ vim.api.nvim_create_autocmd("UILeave", {
 })
 
 -- local theme = require("lualine.themes.tokyonight")
-local noice_status = require("noice").api.statusline
-local theme = require("lualine.themes.rose-pine")
-theme.normal.c.bg = nil
 
 require("lualine").setup({
 	options = {
-		theme = theme,
+		theme = (function()
+			local theme = require("lualine.themes.rose-pine")
+			theme.normal.c.bg = nil
+			return theme
+		end)(),
 		always_show_tabline = false,
 		globalstatus = true,
 		component_separators = { left = "", right = "" },
@@ -345,8 +382,9 @@ require("lualine").setup({
 		},
 		lualine_y = {
 			{
-				noice_status.mode.get,
+				require("noice").api.statusline.mode.get,
 				cond = function()
+					local noice_status = require("noice").api.statusline
 					return noice_status.mode.has() and noice_status.mode.get():sub(1, 3) == "rec"
 				end,
 				color = { fg = "#ff9e64" },
@@ -444,37 +482,6 @@ vim.cmd("colorscheme rose-pine")
 -- vim.cmd("colorscheme rose-pine-main")
 -- vim.cmd("colorscheme rose-pine-moon")
 -- vim.cmd("colorscheme rose-pine-dawn")
-
--------------
--- LINTING --
--------------
-
-local lint = require("lint")
-lint.linters_by_ft = {
-	lua = { "selene" },
-	luau = { "selene" },
-}
-vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-	callback = function()
-		lint.try_lint()
-	end,
-})
-
-----------------
--- FORMATTING --
-----------------
-
-local conform = require("conform")
-conform.setup({
-	formatters_by_ft = {
-		lua = { "stylua" },
-		luau = { "stylua" },
-	},
-	format_on_save = {
-		timeout_ms = 500,
-		lsp_format = "fallback",
-	},
-})
 
 ---------
 -- LSP --
