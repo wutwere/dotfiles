@@ -5,14 +5,61 @@
 -----------------
 
 local PLUGINS = {
-	{ "folke/tokyonight.nvim" },
-	{ "rose-pine/neovim", name = "rose-pine" },
-	{ "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons" } },
+	{ "folke/tokyonight.nvim", opts = { transparent = true, styles = { floats = "transparent" } } },
+	{
+		"rose-pine/neovim",
+		name = "rose-pine",
+		priority = 1000,
+	},
+	{
+		"nvim-lualine/lualine.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		config = function(_, opts)
+			require("lualine").setup({
+				options = {
+					theme = (function()
+						local theme = require("lualine.themes.rose-pine")
+						theme.normal.c.bg = nil
+						return theme
+					end)(),
+					always_show_tabline = false,
+					globalstatus = true,
+					component_separators = { left = "", right = "" },
+					section_separators = { left = "", right = "" },
+				},
+				sections = {
+					lualine_a = { "mode" },
+					lualine_b = { { "buffers", use_mode_colors = true, max_length = vim.o.columns / 2 } },
+					lualine_c = {},
+					lualine_x = { --[["encoding", "fileformat", "filetype",]]
+						"branch",
+						"diff",
+						"diagnostics",
+						"progress",
+					},
+					lualine_y = {
+						{
+							require("noice").api.statusline.mode.get,
+							cond = function()
+								local noice_status = require("noice").api.statusline
+								return noice_status.mode.has() and noice_status.mode.get():sub(1, 3) == "rec"
+							end,
+							color = { fg = "#ff9e64" },
+						},
+					},
+					lualine_z = { "location" },
+				},
+				tabline = { lualine_a = { { "tabs", mode = 2, use_mode_colors = true, max_length = vim.o.columns } } },
+			})
+		end,
+	},
 	{ "ThePrimeagen/vim-be-good" },
 	{ "nvim-treesitter/nvim-treesitter" },
 	{ "neovim/nvim-lspconfig" },
-	{ "williamboman/mason.nvim" },
-	{ "williamboman/mason-lspconfig.nvim" },
+	{ "williamboman/mason.nvim", opts = { ui = { border = "rounded" } } },
+	{ "williamboman/mason-lspconfig.nvim", opts = {
+		automatic_installation = true,
+	} },
 	{
 		"mfussenegger/nvim-lint",
 		config = function()
@@ -56,9 +103,84 @@ local PLUGINS = {
 		},
 	},
 	{ "echasnovski/mini.files" },
-	{ "saghen/blink.cmp", version = "*" },
-	{ "saghen/blink.compat", version = "*" },
-	{ "Exafunction/codeium.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
+	{
+		"saghen/blink.cmp",
+		version = "*",
+		opts = {
+			completion = {
+				documentation = { auto_show = true, auto_show_delay_ms = 0, window = { border = "rounded" } },
+				menu = {
+					-- auto_show = false,
+					border = "rounded",
+					draw = {
+						columns = {
+							{ "kind_icon" },
+							{ "label", "label_description", gap = 1 },
+							{ "source_name" },
+						},
+					},
+				},
+				list = {
+					selection = {
+						preselect = false,
+						auto_insert = false,
+					},
+				},
+				ghost_text = { enabled = true },
+			},
+			signature = {
+				enabled = true,
+				window = { border = "rounded" },
+			},
+			keymap = {
+				preset = "none",
+				["<cr>"] = { "accept", "fallback" },
+				["<tab>"] = {
+					function(cmp)
+						if has_words_before() and not cmp.is_visible() then
+							return cmp.show() and cmp.select_next()
+						elseif cmp.is_visible() then
+							return cmp.select_next()
+						end
+						return nil
+					end,
+					"fallback",
+				},
+				["<S-tab>"] = { "show", "select_prev", "fallback" },
+				["<C-j>"] = { "scroll_documentation_down" },
+				["<C-k>"] = { "scroll_documentation_up" },
+			},
+			sources = {
+				default = {
+					"lazydev",
+					"codeium",
+					"lsp",
+					"path",
+					"snippets",
+					"buffer", --[["cmdline"]]
+					"markdown",
+				},
+				providers = {
+					lsp = { score_offset = 90 },
+					lazydev = { name = "LazyDev", module = "lazydev.integrations.blink", score_offset = 91 },
+					codeium = {
+						name = "codeium",
+						module = "blink.compat.source",
+						score_offset = 100,
+						async = true,
+					},
+					markdown = {
+						name = "RenderMarkdown",
+						module = "render-markdown.integ.blink",
+						score_offset = 91,
+						fallbacks = { "lsp" },
+					},
+				},
+			},
+		},
+	},
+	{ "saghen/blink.compat", version = "*", opts = { impersonate_nvim_cmp = true } },
+	{ "Exafunction/codeium.nvim", dependencies = { "nvim-lua/plenary.nvim" }, opts = {} },
 	{
 		"folke/lazydev.nvim",
 		ft = "lua",
@@ -244,24 +366,7 @@ do
 		return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 	end
 
-	KEYMAPS.cmp = {
-		preset = "none",
-		["<cr>"] = { "accept", "fallback" },
-		["<tab>"] = {
-			function(cmp)
-				if has_words_before() and not cmp.is_visible() then
-					return cmp.show() and cmp.select_next()
-				elseif cmp.is_visible() then
-					return cmp.select_next()
-				end
-				return nil
-			end,
-			"fallback",
-		},
-		["<S-tab>"] = { "show", "select_prev", "fallback" },
-		["<C-j>"] = { "scroll_documentation_down" },
-		["<C-k>"] = { "scroll_documentation_up" },
-	}
+	-- KEYMAPS.cmp =
 end
 
 KEYMAPS.general()
@@ -280,7 +385,7 @@ vim.opt.cinoptions = { "N-s", "g0", "j1", "(s", "m1" }
 vim.opt.scrolloff = 5
 vim.opt.sidescrolloff = 10
 vim.opt.tabstop = 4
-vim.opt.shiftwidth = 2
+vim.opt.shiftwidth = 4
 -- vim.opt.laststatus = 3
 vim.opt.mouse = "nv"
 vim.g.netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
@@ -358,44 +463,6 @@ vim.api.nvim_create_autocmd("UILeave", {
 
 -- local theme = require("lualine.themes.tokyonight")
 
-require("lualine").setup({
-	options = {
-		theme = (function()
-			local theme = require("lualine.themes.rose-pine")
-			theme.normal.c.bg = nil
-			return theme
-		end)(),
-		always_show_tabline = false,
-		globalstatus = true,
-		component_separators = { left = "", right = "" },
-		section_separators = { left = "", right = "" },
-	},
-	sections = {
-		lualine_a = { "mode" },
-		lualine_b = { { "buffers", use_mode_colors = true, max_length = vim.o.columns / 2 } },
-		lualine_c = {},
-		lualine_x = { --[["encoding", "fileformat", "filetype",]]
-			"branch",
-			"diff",
-			"diagnostics",
-			"progress",
-		},
-		lualine_y = {
-			{
-				require("noice").api.statusline.mode.get,
-				cond = function()
-					local noice_status = require("noice").api.statusline
-					return noice_status.mode.has() and noice_status.mode.get():sub(1, 3) == "rec"
-				end,
-				color = { fg = "#ff9e64" },
-			},
-		},
-		lualine_z = { "location" },
-	},
-	tabline = { lualine_a = { { "tabs", mode = 2, use_mode_colors = true, max_length = vim.o.columns } } },
-})
-
-require("tokyonight").setup({ transparent = true, styles = { floats = "transparent" } })
 -- vim.cmd.colorscheme("tokyonight-night")
 
 require("rose-pine").setup({
@@ -487,10 +554,8 @@ vim.cmd("colorscheme rose-pine")
 -- LSP --
 ---------
 
-require("mason").setup({ ui = { border = "rounded" } })
-require("mason-lspconfig").setup({
-	automatic_installation = true,
-})
+-- require("mason").setup()
+-- require("mason-lspconfig").setup()
 local lspconfig = require("lspconfig")
 local default_config = {
 	capabilities = require("blink.cmp").get_lsp_capabilities(),
@@ -535,63 +600,7 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.s
 -- AUTOCOMPLETE --
 ------------------
 
-require("blink-cmp").setup({
-	completion = {
-		documentation = { auto_show = true, auto_show_delay_ms = 0, window = { border = "rounded" } },
-		menu = {
-			-- auto_show = false,
-			border = "rounded",
-			draw = {
-				columns = {
-					{ "kind_icon" },
-					{ "label", "label_description", gap = 1 },
-					{ "source_name" },
-				},
-			},
-		},
-		list = {
-			selection = {
-				preselect = false,
-				auto_insert = false,
-			},
-		},
-		ghost_text = { enabled = true },
-	},
-	signature = {
-		enabled = true,
-		window = { border = "rounded" },
-	},
-	keymap = KEYMAPS.cmp,
-	sources = {
-		default = {
-			"lazydev",
-			"codeium",
-			"lsp",
-			"path",
-			"snippets",
-			"buffer", --[["cmdline"]]
-			"markdown",
-		},
-		providers = {
-			lsp = { score_offset = 90 },
-			lazydev = { name = "LazyDev", module = "lazydev.integrations.blink", score_offset = 91 },
-			codeium = {
-				name = "codeium",
-				module = "blink.compat.source",
-				score_offset = 100,
-				async = true,
-			},
-			markdown = {
-				name = "RenderMarkdown",
-				module = "render-markdown.integ.blink",
-				score_offset = 91,
-				fallbacks = { "lsp" },
-			},
-		},
-	},
-})
-
-require("blink-compat").setup({ impersonate_nvim_cmp = true })
+-- require("blink-compat").setup()
 -- require("codeium").setup({})
 
 ----------------
