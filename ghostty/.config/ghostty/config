@@ -22,12 +22,11 @@ confirm-close-surface = false
 
 copy-on-select = clipboard
 
-########
-# TMUX #
-########
+
+
+### TMUX BINDS
 
 # switch tabs (aka windows)
-
 keybind = super+1=text:\x001
 keybind = super+2=text:\x002
 keybind = super+3=text:\x003
@@ -38,11 +37,18 @@ keybind = super+7=text:\x007
 keybind = super+8=text:\x008
 keybind = super+9=text:\x009
 
-# next tab
-keybind = super+n=text:\x00n
+# switch panes
+keybind = super+h=text:\x00h
+keybind = super+j=text:\x00j
+keybind = super+k=text:\x00k
+keybind = super+l=text:\x00l
 
-# prev tab
-keybind = super+p=text:\x00p
+# split panes
+keybind = super+shift+h=text:\x00H
+keybind = super+shift+j=text:\x00J
+keybind = super+shift+k=text:\x00K
+keybind = super+shift+l=text:\x00L
+keybind = super+x=text:\x00x
 
 # create tab
 keybind = super+t=text:\x00c
@@ -57,4 +63,4 @@ keybind = super+s=text:\x00s
 keybind = super+f=text:\x00f
 
 # go to last session
-keybind = super+l=text:\x00L
+keybind = super+b=text:\x00b
