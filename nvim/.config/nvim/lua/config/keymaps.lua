@@ -20,7 +20,8 @@ KEYMAPS.general = function()
 
 	-- competitive programming
 	vim.keymap.set("n", "<leader>t", function()
-		vim.cmd("vsplit +term\\ ./run\\ " .. vim.fn.expand("%:r"))
+		vim.cmd("update")
+		vim.cmd("vsplit +term\\ ./run\\ " .. vim.fn.expand("%:t:r"))
 		vim.cmd("startinsert!")
 	end, { desc = "Run program in terminal split" })
 	vim.keymap.set("t", "<esc>", "<cmd>bd!<cr>")
