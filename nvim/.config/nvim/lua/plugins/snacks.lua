@@ -69,7 +69,7 @@ return {
 				desc = "Grep",
 			},
 			{
-				"<leader>:",
+				"q:",
 				function()
 					Snacks.picker.command_history()
 				end,
@@ -378,25 +378,25 @@ return {
 				desc = "References",
 			},
 			{
-				"gI",
+				"gi",
 				function()
 					Snacks.picker.lsp_implementations()
 				end,
 				desc = "Goto Implementation",
 			},
 			{
-				"gy",
+				"go",
 				function()
 					Snacks.picker.lsp_type_definitions()
 				end,
-				desc = "Goto T[y]pe Definition",
+				desc = "Goto Type Definition",
 			},
 			{
 				"<leader>ss",
 				function()
-					Snacks.picker.lsp_symbols()
+					Snacks.picker()
 				end,
-				desc = "LSP Symbols",
+				desc = "All Snacks Pickers",
 			},
 			{
 				"<leader>sS",
