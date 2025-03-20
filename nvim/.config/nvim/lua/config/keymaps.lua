@@ -109,6 +109,7 @@ KEYMAPS.cmp = {
 			end
 			return nil
 		end,
+		"fallback",
 	},
 	["<S-tab>"] = { "show", "select_prev", "fallback" },
 	["<C-j>"] = { "scroll_documentation_down" },
