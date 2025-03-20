@@ -191,20 +191,6 @@ return {
 		},
 	},
 	{
-		"ibhagwan/fzf-lua",
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		opts = {
-			previewers = { builtin = { syntax_limit_b = 100 * 1024 } },
-			grep = {
-				rg_opts = "--color=always --hidden --line-number --smart-case --no-heading --column",
-			},
-			files = {
-				fd_opts = "--color=never --type f --hidden --follow --exclude .git",
-				rg_opts = "--color=never --files --hidden --follow -g '!.git'",
-			},
-		},
-	},
-	{
 		"echasnovski/mini.files",
 		config = function()
 			local mini_files = require("mini.files")
@@ -285,12 +271,6 @@ return {
 		ft = "lua",
 		opts = { library = { { path = "${3rd}/luv/library", words = { "vim%.uv" } } } },
 	},
-	-- {
-	--     "NeogitOrg/neogit",
-	--     dependencies = { "nvim-lua/plenary.nvim", "sindrets/diffview.nvim", "ibhagwan/fzf-lua" },
-	--     config = true,
-	--     opts = { kind = "floating", commit_editor = { kind = "floating" } },
-	-- },
 	{ "MagicDuck/grug-far.nvim", opts = { windowCreationCommand = "e" } },
 	{ "lewis6991/gitsigns.nvim", opts = { current_line_blame_opts = { delay = 0 } } },
 	{
@@ -346,14 +326,10 @@ return {
 			heading = { width = "block" },
 		},
 	},
-	-- {
-	--     "karb94/neoscroll.nvim",
-	--     opts = { duration_multiplier = 0.5 },
-	-- },
 	{
 		"folke/which-key.nvim",
 		event = "VeryLazy",
-		opts = { delay = 300 },
+		opts = { preset = "modern", delay = 300 },
 		keys = {
 			{
 				"<leader>?",

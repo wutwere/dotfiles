@@ -42,14 +42,14 @@ KEYMAPS.general = function()
 	-- plugins
 	-- vim.keymap.set("n", "<leader><space>", "<cmd>FzfLua files<cr>")
 	-- vim.keymap.set({ "n", "v" }, "<leader>ff", "<cmd>FzfLua<cr>")
-	vim.keymap.set("n", "<leader>fh", "<cmd>FzfLua helptags<cr>")
-	vim.keymap.set("n", "<leader>fj", "<cmd>FzfLua jumps<cr>")
-	vim.keymap.set("n", "<leader>fb", "<cmd>FzfLua buffers<cr>")
-	vim.keymap.set("n", "<leader>fz", "<cmd>FzfLua zoxide<cr>")
-	vim.keymap.set("n", "<leader>fg", "<cmd>FzfLua live_grep<cr>")
-	vim.keymap.set("n", "<leader>fl", "<cmd>FzfLua lines<cr>")
-	vim.keymap.set("n", "<leader>fd", "<cmd>FzfLua diagnostics_document<cr>")
-	vim.keymap.set("v", "<leader>fv", "<cmd>FzfLua grep_visual<cr>")
+	-- vim.keymap.set("n", "<leader>fh", "<cmd>FzfLua helptags<cr>")
+	-- vim.keymap.set("n", "<leader>fj", "<cmd>FzfLua jumps<cr>")
+	-- vim.keymap.set("n", "<leader>fb", "<cmd>FzfLua buffers<cr>")
+	-- vim.keymap.set("n", "<leader>fz", "<cmd>FzfLua zoxide<cr>")
+	-- vim.keymap.set("n", "<leader>fg", "<cmd>FzfLua live_grep<cr>")
+	-- vim.keymap.set("n", "<leader>fl", "<cmd>FzfLua lines<cr>")
+	-- vim.keymap.set("n", "<leader>fd", "<cmd>FzfLua diagnostics_document<cr>")
+	-- vim.keymap.set("v", "<leader>fv", "<cmd>FzfLua grep_visual<cr>")
 
 	vim.keymap.set("n", "<leader>r", "<cmd>GrugFar<cr>", { desc = "Search and replace all files" })
 
@@ -82,19 +82,14 @@ end
 KEYMAPS.lsp = function(event)
 	local opts = { buffer = event.buf }
 	vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = event.buf, desc = "Show LSP hover at cursor" })
-	vim.keymap.set("n", "gd", "<cmd>FzfLua lsp_definitions<cr>", opts)
-	vim.keymap.set("n", "gi", "<cmd>FzfLua lsp_implementations<cr>", opts)
-	vim.keymap.set("n", "go", "<cmd>FzfLua lsp_type_defs<cr>", opts)
-	vim.keymap.set("n", "gr", "<cmd>FzfLua lsp_references<cr>", opts)
+	-- vim.keymap.set("n", "gd", "<cmd>FzfLua lsp_definitions<cr>", opts)
+	-- vim.keymap.set("n", "gi", "<cmd>FzfLua lsp_implementations<cr>", opts)
+	-- vim.keymap.set("n", "go", "<cmd>FzfLua lsp_type_defs<cr>", opts)
+	-- vim.keymap.set("n", "gr", "<cmd>FzfLua lsp_references<cr>", opts)
 	vim.keymap.set("n", "gs", vim.lsp.buf.signature_help, { buffer = event.buf, desc = "Go to signature help" })
 	vim.keymap.set("n", "<leader>2", vim.lsp.buf.rename, { buffer = event.buf, desc = "Rename reference" })
 	vim.keymap.set({ "n", "x" }, "<leader>3", vim.lsp.buf.format, { buffer = event.buf, desc = "Format file" })
-	vim.keymap.set(
-		"n",
-		"<leader>4",
-		"<cmd>FzfLua lsp_code_actions<cr>",
-		{ buffer = event.buf, desc = "Show code actions" }
-	)
+	vim.keymap.set("n", "<leader>4", vim.lsp.buf.code_action, { buffer = event.buf, desc = "Show code actions" })
 end
 
 local has_words_before = function()
