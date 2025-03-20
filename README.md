@@ -15,14 +15,20 @@ stow vim # example, stow what you need
 # Packages
 
 ```sh
+# install brew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
 # generate Brewfile
 brew bundle dump
-# install from Brewfile
+# install from Brewfile (untested)
 brew bundle
 
-# yazi dependencies
-brew install yazi ffmpeg sevenzip jq poppler fd ripgrep fzf zoxide imagemagick font-symbols-only-nerd-font
-ya pack -i # yazi plugins
+# set fish as default shell (untested)
+sudo echo $(whereis fish) >> /etc/shells
+chsh -s $(whereis fish)
+
+# yazi plugins
+ya pack -i
 
 # latex
 sudo tlmgr install latexmk
