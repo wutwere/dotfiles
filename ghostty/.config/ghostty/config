@@ -16,7 +16,7 @@ window-padding-y = 7
 window-padding-balance = true
 
 background-opacity = 0.9
-background-blur = 50
+background-blur = 0
 
 confirm-close-surface = false
 
