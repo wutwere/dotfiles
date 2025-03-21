@@ -32,14 +32,14 @@ return {
 						"progress",
 					},
 					lualine_y = {
-						{
-							require("noice").api.statusline.mode.get,
-							cond = function()
-								local noice_status = require("noice").api.statusline
-								return noice_status.mode.has() and noice_status.mode.get():sub(1, 3) == "rec"
-							end,
-							color = { fg = "#ff9e64" },
-						},
+						-- {
+						-- 	require("noice").api.statusline.mode.get,
+						-- 	cond = function()
+						-- 		local noice_status = require("noice").api.statusline
+						-- 		return noice_status.mode.has() and noice_status.mode.get():sub(1, 3) == "rec"
+						-- 	end,
+						-- 	color = { fg = "#ff9e64" },
+						-- },
 					},
 					lualine_z = { "location" },
 				},

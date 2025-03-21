@@ -11,7 +11,10 @@ return {
 			dashboard = { enabled = true },
 			-- explorer = { enabled = true },
 			indent = { enabled = true },
-			input = { enabled = false },
+			input = {
+				enabled = true,
+				expand = false,
+			},
 			notifier = {
 				enabled = true,
 				timeout = 3000,
@@ -86,15 +89,15 @@ return {
 			},
 		},
 	},
-	{
-		"folke/noice.nvim",
-		event = "VeryLazy",
-		opts = {
-			lsp = { signature = { enabled = false }, hover = { enabled = false } },
-			presets = { bottom_search = true },
-		},
-		dependencies = {
-			"MunifTanjim/nui.nvim",
-		},
-	},
+	-- {
+	-- 	"folke/noice.nvim",
+	-- 	event = "VeryLazy",
+	-- 	opts = {
+	-- 		lsp = { signature = { enabled = false }, hover = { enabled = false } },
+	-- 		presets = { bottom_search = true },
+	-- 	},
+	-- 	dependencies = {
+	-- 		"MunifTanjim/nui.nvim",
+	-- 	},
+	-- },
 }
