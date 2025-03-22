@@ -39,6 +39,17 @@ KEYMAPS.general = function()
 	vim.keymap.set("n", "]c", "<cmd>cn<cr>")
 	vim.keymap.set("n", "[c", "<cmd>cp<cr>")
 
+	-- codeium
+	vim.keymap.set("i", "<right>", function()
+		return vim.fn["codeium#Accept"]()
+	end, { expr = true, silent = true })
+	vim.keymap.set("i", "<down>", function()
+		return vim.fn["codeium#CycleCompletions"](1)
+	end, { expr = true, silent = true })
+	vim.keymap.set("i", "<up>", function()
+		return vim.fn["codeium#CycleCompletions"](-1)
+	end, { expr = true, silent = true })
+
 	-- plugins
 	-- vim.keymap.set("n", "<leader><space>", "<cmd>FzfLua files<cr>")
 	-- vim.keymap.set({ "n", "v" }, "<leader>ff", "<cmd>FzfLua<cr>")
@@ -103,7 +114,7 @@ KEYMAPS.cmp = {
 	["<tab>"] = {
 		function(cmp)
 			if has_words_before() and not cmp.is_visible() then
-				return cmp.show() and cmp.select_next()
+				return cmp.show()
 			elseif cmp.is_visible() then
 				return cmp.select_next()
 			end

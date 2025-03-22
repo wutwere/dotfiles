@@ -21,10 +21,10 @@ return {
 				list = {
 					selection = {
 						preselect = false,
-						auto_insert = false,
+						auto_insert = true,
 					},
 				},
-				ghost_text = { enabled = true },
+				ghost_text = { enabled = false },
 			},
 			signature = {
 				enabled = true,
@@ -34,7 +34,6 @@ return {
 			sources = {
 				default = {
 					"lazydev",
-					"codeium",
 					"lsp",
 					"path",
 					"snippets",
@@ -44,12 +43,6 @@ return {
 				providers = {
 					lsp = { score_offset = 90 },
 					lazydev = { name = "LazyDev", module = "lazydev.integrations.blink", score_offset = 91 },
-					codeium = {
-						name = "codeium",
-						module = "blink.compat.source",
-						score_offset = 100,
-						async = true,
-					},
 					markdown = {
 						name = "RenderMarkdown",
 						module = "render-markdown.integ.blink",
@@ -61,7 +54,12 @@ return {
 		},
 	},
 	{ "saghen/blink.compat", version = "*", opts = { impersonate_nvim_cmp = true } },
-	{ "Exafunction/codeium.nvim", dependencies = { "nvim-lua/plenary.nvim" }, opts = {} },
+	{
+		"Exafunction/codeium.vim",
+		init = function()
+			vim.g.codeium_disable_bindings = 1
+		end,
+	},
 	{
 		"folke/lazydev.nvim",
 		ft = "lua",
