@@ -4,8 +4,12 @@ end
 # PATH
 fish_add_path ~/.aftman/bin
 
-# brew
-eval "$(/opt/homebrew/bin/brew shellenv)"
+switch (uname)
+    case "Darwin" # Code for macOS
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+    case "Linux" # Code for Linux
+    case "*" # Code for other OSs
+end
 
 # Abbreviations
 abbr -ag cd "z"
@@ -55,7 +59,9 @@ end
 zoxide init fish | source
 
 function fish_greeting
-    nerdfetch
+    if command -q nerdfetch
+        nerdfetch
+    end
     # new line
     echo
 end
