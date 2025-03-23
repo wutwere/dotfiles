@@ -6,6 +6,7 @@ fish_add_path ~/.aftman/bin
 
 switch (uname)
     case "Darwin" # Code for macOS
+        set -g MACOS 1
         eval "$(/opt/homebrew/bin/brew shellenv)"
     case "Linux" # Code for Linux
     case "*" # Code for other OSs
@@ -59,7 +60,7 @@ end
 zoxide init fish | source
 
 function fish_greeting
-    if command -q nerdfetch
+    if command -q nerdfetch && test -n "$MACOS"
         nerdfetch
     end
     # new line
