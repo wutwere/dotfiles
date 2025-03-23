@@ -14,6 +14,7 @@ abbr -ag n "nvim"
 abbr -ag v "nvim"
 
 # nvim
+set -gx XDG_CONFIG_HOME $HOME/.config
 set -gx EDITOR nvim
 set -gx ESCDELAY 0
 
