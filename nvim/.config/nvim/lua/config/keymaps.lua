@@ -30,6 +30,7 @@ KEYMAPS.general = function()
 	-- fast navigation
 	vim.keymap.set("n", "<c-e>", "7<c-e>")
 	vim.keymap.set("n", "<c-y>", "7<c-y>")
+	vim.keymap.set("n", "<leader>h", "<c-w>h", { desc = "Move to left pane" })
 	vim.keymap.set("n", "<leader>j", "<c-w>j", { desc = "Move to lower pane" })
 	vim.keymap.set("n", "<leader>k", "<c-w>k", { desc = "Move to upper pane" })
 	vim.keymap.set("n", "<leader>l", "<c-w>l", { desc = "Move to right pane" })
@@ -153,7 +154,7 @@ KEYMAPS.snacks = {
 		desc = "Grep",
 	},
 	{
-		"q:",
+		"<leader>:",
 		function()
 			Snacks.picker.command_history()
 		end,
@@ -369,13 +370,6 @@ KEYMAPS.snacks = {
 			Snacks.scratch.select()
 		end,
 		desc = "Select Scratch Buffer",
-	},
-	{
-		"<leader>un",
-		function()
-			Snacks.notifier.hide()
-		end,
-		desc = "Dismiss All Notifications",
 	},
 }
 
