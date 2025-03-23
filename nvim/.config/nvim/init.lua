@@ -1,5 +1,3 @@
----@diagnostic disable: missing-fields
-
 local KEYMAPS = require("config.keymaps")
 KEYMAPS.general()
 

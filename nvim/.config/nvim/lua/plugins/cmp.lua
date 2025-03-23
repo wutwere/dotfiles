@@ -60,9 +60,4 @@ return {
 			vim.g.codeium_disable_bindings = 1
 		end,
 	},
-	{
-		"folke/lazydev.nvim",
-		ft = "lua",
-		opts = { library = { { path = "${3rd}/luv/library", words = { "vim%.uv" } } } },
-	},
 }

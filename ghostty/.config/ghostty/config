@@ -9,14 +9,14 @@ window-decoration = auto
 macos-titlebar-style = hidden
 
 font-family = JetBrains Mono
-font-size = 12
+font-size = 18
 
 window-padding-x = 10
 window-padding-y = 7
 window-padding-balance = true
 
 background-opacity = 0.9
-background-blur = 0
+background-blur = 30
 
 confirm-close-surface = false
 
