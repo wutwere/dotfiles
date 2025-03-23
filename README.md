@@ -23,9 +23,8 @@ brew bundle dump
 # install from Brewfile (untested)
 brew bundle
 
-# set fish as default shell (untested)
-sudo echo $(whereis fish) >> /etc/shells
-chsh -s $(whereis fish)
+# set fish as default shell
+./setfish.sh
 
 # yazi plugins
 ya pack -i
