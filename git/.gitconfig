@@ -13,3 +13,5 @@
 [delta]
     line-numbers = true
     dark = true
+[pull]
+	rebase = true
