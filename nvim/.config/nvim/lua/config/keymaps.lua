@@ -65,12 +65,21 @@ KEYMAPS.general = function()
 	vim.keymap.set("n", "<leader>r", "<cmd>GrugFar<cr>", { desc = "Search and replace all files" })
 
 	-- vim.keymap.set("n", "<leader>gg", "<cmd>Neogit<cr>")
-	vim.keymap.set("n", "<leader>gd", "<cmd>DiffviewOpen<cr>")
+	-- vim.keymap.set("n", "<leader>gd", "<cmd>DiffviewOpen<cr>")
 	-- vim.keymap.set("n", "<leader>gb", "<cmd>Neogit branch<cr>")
 	-- vim.keymap.set("n", "<leader>gl", "<cmd>Gitsigns toggle_current_line_blame<cr>")
 	-- vim.keymap.set("n", "<leader>gL", "<cmd>Gitsigns blame<cr>")
 	vim.keymap.set("n", "<leader>gp", "<cmd>Gitsigns preview_hunk_inline<cr>")
 	vim.keymap.set("n", "<leader>gr", "<cmd>Gitsigns reset_hunk<cr>")
+
+	vim.keymap.set("n", "<leader>co", "<Plug>(git-conflict-ours)", { desc = "Merge choose ours" })
+	vim.keymap.set("n", "<leader>ct", "<Plug>(git-conflict-theirs)", { desc = "Merge choose theirs" })
+	vim.keymap.set("n", "<leader>cb", "<Plug>(git-conflict-both)", { desc = "Merge choose both" })
+	vim.keymap.set("n", "<leader>c0", "<Plug>(git-conflict-none)", { desc = "Merge choose none" })
+	vim.keymap.set("n", "<leader>cc", function()
+		vim.cmd("GitConflictRefresh")
+		vim.cmd("GitConflictListQf")
+	end, { desc = "Refresh and show conflicts" })
 
 	vim.keymap.set("n", "<leader>n", "<cmd>Namu symbols<cr>", { desc = "Open LSP search" })
 
