@@ -4,18 +4,19 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
-config.enable_tab_bar = false
+config.enable_tab_bar = true
 config.tab_bar_at_bottom = false
 config.show_new_tab_button_in_tab_bar = false
 config.tab_max_width = 32
 config.hide_tab_bar_if_only_one_tab = true
 config.use_fancy_tab_bar = false
 config.window_decorations = "RESIZE"
-config.initial_cols = 150
-config.initial_rows = 50
+config.initial_cols = 120
+config.initial_rows = 30
 -- config.color_scheme = "tokyonight"
 -- config.color_scheme = "catppuccin-macchiato"
 config.color_scheme = "rose-pine"
+config.max_fps = 144
 
 config.default_cursor_style = "BlinkingUnderline"
 config.cursor_blink_rate = 300
@@ -56,5 +57,15 @@ addTmuxKey("w", "&")
 addTmuxKey("s", "s")
 addTmuxKey("f", "f")
 addTmuxKey("b", "b")
+
+config.wsl_domains = {
+	{
+		name = "WSL:Arch",
+		distribution = "Arch",
+	},
+}
+
+--=== THIS IS FOR BASH/WSL ===--
+config.default_domain = "WSL:Arch"
 
 return config
