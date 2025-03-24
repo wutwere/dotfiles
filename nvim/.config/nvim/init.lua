@@ -5,21 +5,22 @@ KEYMAPS.general()
 -- VIM OPTIONS --
 -----------------
 
-vim.opt.smartcase = true
-vim.opt.splitright = true
-vim.opt.cursorline = true
-vim.opt.wrap = false
-vim.opt.termguicolors = true
-vim.opt.expandtab = true
+-- vim.opt.laststatus = 3
+vim.g.netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
 vim.opt.cindent = true
 vim.opt.cinoptions = { "N-s", "g0", "j1", "(s", "m1" }
-vim.opt.scrolloff = 5
-vim.opt.sidescrolloff = 10
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
--- vim.opt.laststatus = 3
+vim.opt.clipboard = "unnamedplus"
+vim.opt.cursorline = true
+vim.opt.expandtab = true
 vim.opt.mouse = "nv"
-vim.g.netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
+vim.opt.scrolloff = 5
+vim.opt.shiftwidth = 4
+vim.opt.sidescrolloff = 10
+vim.opt.smartcase = true
+vim.opt.splitright = true
+vim.opt.tabstop = 4
+vim.opt.termguicolors = true
+vim.opt.wrap = false
 vim.api.nvim_create_autocmd({ "BufEnter", "VimEnter" }, {
 	callback = function()
 		vim.opt.nu = true
