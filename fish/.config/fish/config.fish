@@ -2,6 +2,7 @@ if status is-interactive
 end
 
 # PATH
+fish_add_path ~/.local/bin
 fish_add_path ~/.aftman/bin
 
 switch (uname)

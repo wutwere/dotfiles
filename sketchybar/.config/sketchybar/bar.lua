@@ -11,7 +11,7 @@ sbar.bar({
 	padding_left = 3,
 	corner_radius = 5,
 	margin = 8,
-	y_offset = 3,
+	y_offset = 2,
 	-- border_width = 2,
 	-- border_color = colors.bar.border
 })
