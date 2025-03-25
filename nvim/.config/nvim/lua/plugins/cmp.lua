@@ -5,10 +5,31 @@ return {
 		"saghen/blink.cmp",
 		version = "*",
 		opts = {
+			cmdline = {
+				completion = {
+					menu = {
+						auto_show = true,
+						draw = {
+							columns = {
+								{ "kind_icon" },
+								{ "label", "label_description", gap = 1 },
+								{ "source_name" },
+							},
+						},
+					},
+					list = {
+						selection = {
+							preselect = false,
+							auto_insert = true,
+						},
+					},
+					ghost_text = { enabled = false },
+				},
+			},
 			completion = {
 				documentation = { auto_show = true, auto_show_delay_ms = 0, window = { border = "rounded" } },
 				menu = {
-					-- auto_show = false,
+					auto_show = true,
 					border = "rounded",
 					draw = {
 						columns = {
