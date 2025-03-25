@@ -21,19 +21,18 @@ local mine = {
 	transparent = 0x00000000,
 }
 
-local mine_clear_light = {
-	white = 0xff181926,
-	black = 0xffcdd6f4,
-	red = 0xffff229e,
-	green = 0xff40434d,
-	blue = 0xff7aa2f7,
+local rose_pine = {
+	white = 0xffe0def4,
+	black = 0xff191724,
+	red = 0xffeb6f92,
+	green = 0xffebbcba,
+	blue = 0xff31748f,
 	yellow = 0xffa6e3a1,
 	orange = 0xfffab387,
 	magenta = 0xffcba6f7,
-	grey = 0xff535a77,
+	grey = 0xffebbcba,
 	mauve = 0xff9cd399,
-	bg1 = 0x66ffffff,
-	-- bg2 = 0xff64697d,
+	bg1 = 0xff191724,
 	bg2 = 0x00000000,
 	transparent = 0x00000000,
 }
@@ -90,7 +89,7 @@ local function with_alpha(color, alpha)
 	return (color & 0x00ffffff) | (math.floor(alpha * 255.0) << 24)
 end
 
-colors = mine
+colors = rose_pine
 colors.with_alpha = with_alpha
 
 colors.bar = {
