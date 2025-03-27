@@ -14,11 +14,11 @@ vim.opt.cursorline = true
 vim.opt.expandtab = true
 vim.opt.mouse = "nv"
 vim.opt.scrolloff = 5
-vim.opt.shiftwidth = 4
+vim.opt.shiftwidth = 2
 vim.opt.sidescrolloff = 10
 vim.opt.smartcase = true
 vim.opt.splitright = true
-vim.opt.tabstop = 4
+vim.opt.tabstop = 2
 vim.opt.termguicolors = true
 vim.opt.wrap = false
 vim.api.nvim_create_autocmd({ "BufEnter", "VimEnter" }, {

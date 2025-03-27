@@ -28,6 +28,7 @@ return {
 				jsonls = {},
 				rust_analyzer = {},
 				texlab = {},
+				biome = {},
 			}
 
 			for lsp, config in pairs(custom_config) do
