@@ -1,13 +1,13 @@
 # my dotfiles
 
-![image](https://github.com/user-attachments/assets/39cc2680-314d-4918-b86e-58299ab6d495)
+![image](https://github.com/user-attachments/assets/b4cd7b8f-918c-436d-b948-751cb635fbc8)
 
 ## Install Sketchybar
 
 For those who just want my sketchybar config:
 
 1. Copy `sketchybar/.config/sketchybar` into your `~/.config/sketchybar` directory.
-2. Run `~/.config/sketchybar/helpers.install.sh`
+2. Run `~/.config/sketchybar/helpers/install.sh`
 3. Run `brew services restart sketchybar` to restart your sketchybar if it does not update.
 
 Note: My sketchybar config is made to work with [Yabai](https://github.com/koekeishiya/yabai).
