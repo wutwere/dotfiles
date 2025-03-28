@@ -17,6 +17,7 @@ KEYMAPS.general = function()
 	vim.keymap.set("n", "<leader>m", "<cmd>e $MYVIMRC<cr>", { desc = "Edit vim config" })
 	vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Show diagnostics at cursor" })
 	vim.keymap.set("n", "<leader>w", "<cmd>tabc<cr>", { desc = "Close tab" })
+	vim.keymap.set("n", "<cr>", "<cmd>checktime<cr>", { desc = "Reload file" })
 
 	-- competitive programming
 	vim.keymap.set("n", "<leader>t", function()
