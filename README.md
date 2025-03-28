@@ -1,10 +1,18 @@
 # my dotfiles
 
-![image](https://github.com/user-attachments/assets/f2bd657b-8e6a-4c62-8715-b9560ae89f99)
+![image](https://github.com/user-attachments/assets/39cc2680-314d-4918-b86e-58299ab6d495)
 
-# MacOS Setup
+## Install Sketchybar
 
-Managing dotfiles with stow:
+For those who just want my sketchybar config:
+
+1. Copy `sketchybar/.config/sketchybar` into your `~/.config/sketchybar` directory.
+2. Run `~/.config/sketchybar/helpers.install.sh`
+3. Run `brew services restart sketchybar` to restart your sketchybar if it does not update.
+
+Note: My sketchybar config is made to work with [Yabai](https://github.com/koekeishiya/yabai).
+
+## Personal Setup
 
 ```sh
 # install brew
@@ -19,11 +27,7 @@ stow nvim # example, stow what you need
 
 # set fish as default shell
 ./setfish.sh
-```
 
-# Packages
-
-```sh
 # to export packages
 brew bundle dump
 
@@ -43,7 +47,7 @@ sudo tlmgr install latexmk
 tlmgr search --global --file <missing-file> # then install to fix compile errors
 ```
 
-# I use Arch btw
+### I use Arch btw
 
 ```sh
 # to export packages
