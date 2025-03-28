@@ -9,7 +9,6 @@ KEYMAPS.general()
 vim.g.netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
 vim.opt.cindent = true
 vim.opt.cinoptions = { "N-s", "g0", "j1", "(s", "m1" }
-vim.opt.clipboard = "unnamedplus"
 vim.opt.cursorline = true
 vim.opt.expandtab = true
 vim.opt.mouse = "nv"
