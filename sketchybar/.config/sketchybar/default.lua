@@ -1,10 +1,10 @@
-local settings = require("settings")
 local colors = require("colors")
+local settings = require("settings")
 
 -- Equivalent to the --default domain
 sbar.default({
 	updates = "when_shown",
-	blur_radius = 5,
+	blur_radius = 20,
 	icon = {
 		font = {
 			family = settings.font.text,

@@ -32,7 +32,7 @@ local rose_pine = {
 	magenta = 0xffcba6f7,
 	grey = 0xffebbcba,
 	mauve = 0xff9cd399,
-	bg1 = 0xff191724,
+	bg1 = 0xaa191724,
 	bg2 = 0x00000000,
 	transparent = 0x00000000,
 }
