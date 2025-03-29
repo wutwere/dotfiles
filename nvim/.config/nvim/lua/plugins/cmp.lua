@@ -74,7 +74,7 @@ return {
 			},
 		},
 	},
-	{ "saghen/blink.compat", version = "*", opts = { impersonate_nvim_cmp = true } },
+	-- { "saghen/blink.compat", version = "*", opts = { impersonate_nvim_cmp = true } },
 	{
 		"Exafunction/codeium.vim",
 		init = function()
