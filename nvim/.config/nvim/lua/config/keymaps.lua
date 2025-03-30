@@ -14,7 +14,6 @@ KEYMAPS.general = function()
 	end, { desc = "Copy file path to clipboard" })
 	vim.keymap.set({ "n", "v" }, "<leader>p", '"+p', { desc = "Paste clipboard" })
 	vim.keymap.set({ "n", "v" }, "<leader>P", '"+P', { desc = "Paste clipboard" })
-	vim.keymap.set("n", "<leader>m", "<cmd>e $MYVIMRC<cr>", { desc = "Edit vim config" })
 	vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Show diagnostics at cursor" })
 	vim.keymap.set("n", "<leader>w", "<cmd>tabc<cr>", { desc = "Close tab" })
 	vim.keymap.set("n", "<cr>", "<cmd>checktime<cr>", { desc = "Reload file" })
@@ -38,8 +37,8 @@ KEYMAPS.general = function()
 	vim.keymap.set("n", "gb", "<cmd>b#<cr>")
 	vim.keymap.set("n", "]b", "<cmd>bn<cr>")
 	vim.keymap.set("n", "[b", "<cmd>bp<cr>")
-	vim.keymap.set("n", "]c", "<cmd>cn<cr>")
-	vim.keymap.set("n", "[c", "<cmd>cp<cr>")
+	vim.keymap.set("n", "]q", "<cmd>cn<cr>")
+	vim.keymap.set("n", "[q", "<cmd>cp<cr>")
 
 	-- codeium
 	vim.keymap.set("i", "<right>", function()
@@ -112,6 +111,46 @@ KEYMAPS.lsp = function(event)
 	vim.keymap.set("n", "<leader>2", vim.lsp.buf.rename, { buffer = event.buf, desc = "Rename reference" })
 	vim.keymap.set({ "n", "x" }, "<leader>3", vim.lsp.buf.format, { buffer = event.buf, desc = "Format file" })
 	vim.keymap.set("n", "<leader>4", vim.lsp.buf.code_action, { buffer = event.buf, desc = "Show code actions" })
+end
+
+KEYMAPS.multicursor = function(mc)
+	-- Add and remove cursors with control + left click.
+	vim.keymap.set("n", "<c-leftmouse>", mc.handleMouse)
+	vim.keymap.set("n", "<c-leftdrag>", mc.handleMouseDrag)
+	vim.keymap.set("n", "<c-leftrelease>", mc.handleMouseRelease)
+	vim.keymap.set({ "n", "x" }, "!", mc.toggleCursor, { desc = "Multicursor - Add/delete cursor" })
+	vim.keymap.set("x", "<leader>ms", mc.splitCursors, { desc = "Multicursor - Split selection by regex" })
+	vim.keymap.set("x", "<leader>mf", mc.matchCursors, { desc = "Multicursor - Match selection by regex" })
+	vim.keymap.set(
+		{ "n", "x" },
+		"<leader>ma",
+		mc.matchAllAddCursors,
+		{ desc = "Multicursor - Add cursor at every word/selection" }
+	)
+	vim.keymap.set({ "n", "x" }, "<leader>mx", mc.deleteCursor, { desc = "Multicursor - Delete cursor" })
+	vim.keymap.set({ "n", "x" }, "<leader>mn", function()
+		mc.matchAddCursor(1)
+	end, { desc = "Multicursor - Add next word/selection" })
+	vim.keymap.set({ "n", "x" }, "<leader>mN", function()
+		mc.matchAddCursor(-1)
+	end, { desc = "Multicursor - Add previous word/selection" })
+	vim.keymap.set("x", "I", mc.insertVisual)
+	vim.keymap.set("x", "A", mc.appendVisual)
+	-- Mappings defined in a keymap layer only apply when there are
+	-- multiple cursors. This lets you have overlapping mappings.
+	mc.addKeymapLayer(function(layerSet)
+		-- Select a different cursor as the main one.
+		layerSet({ "n", "x" }, "[m", mc.prevCursor)
+		layerSet({ "n", "x" }, "]m", mc.nextCursor)
+		-- Enable and clear cursors using escape.
+		layerSet("n", "<esc>", function()
+			if not mc.cursorsEnabled() then
+				mc.enableCursors()
+			else
+				mc.clearCursors()
+			end
+		end)
+	end)
 end
 
 local has_words_before = function()
