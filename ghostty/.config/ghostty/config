@@ -8,8 +8,10 @@ mouse-hide-while-typing = true
 window-decoration = auto
 macos-titlebar-style = hidden
 
-font-family = JetBrains Mono
-font-size = 13
+# font-family = JetBrainsMono Nerd Font Mono
+font-family = CaskaydiaCove Nerd Font Mono
+font-size = 14
+adjust-cell-height = 25%
 
 window-padding-x = 10
 window-padding-y = 7

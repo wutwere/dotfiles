@@ -3,6 +3,10 @@ local KEYMAPS = {}
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-------------
+-- GENERAL --
+-------------
+
 KEYMAPS.general = function()
 	-- editor
 	vim.keymap.set("i", "{<cr>", "{<cr>}<esc>O")
@@ -20,7 +24,7 @@ KEYMAPS.general = function()
 	vim.keymap.set(
 		"v",
 		"<c-r>",
-		'"hy:%s/<c-r>h//gc<left><left><left>',
+		'"hy:%s#<c-r>h##gc<left><left><left>',
 		{ desc = "Replace all occurrences of selection" }
 	)
 
@@ -36,6 +40,8 @@ KEYMAPS.general = function()
 	-- fast navigation
 	vim.keymap.set("n", "<c-e>", "7<c-e>")
 	vim.keymap.set("n", "<c-y>", "7<c-y>")
+	vim.keymap.set("n", "<c-h>", "20zh")
+	vim.keymap.set("n", "<c-l>", "20zl")
 	vim.keymap.set("n", "<leader>h", "<c-w>h", { desc = "Move to left pane" })
 	vim.keymap.set("n", "<leader>j", "<c-w>j", { desc = "Move to lower pane" })
 	vim.keymap.set("n", "<leader>k", "<c-w>k", { desc = "Move to upper pane" })
@@ -45,6 +51,8 @@ KEYMAPS.general = function()
 	vim.keymap.set("n", "[b", "<cmd>bp<cr>")
 	vim.keymap.set("n", "]q", "<cmd>cn<cr>")
 	vim.keymap.set("n", "[q", "<cmd>cp<cr>")
+
+	-- plugins
 
 	-- codeium
 	vim.keymap.set("i", "<right>", function()
@@ -57,7 +65,6 @@ KEYMAPS.general = function()
 		return vim.fn["codeium#CycleCompletions"](-1)
 	end, { expr = true, silent = true })
 
-	-- plugins
 	-- vim.keymap.set("n", "<leader><space>", "<cmd>FzfLua files<cr>")
 	-- vim.keymap.set({ "n", "v" }, "<leader>ff", "<cmd>FzfLua<cr>")
 	-- vim.keymap.set("n", "<leader>fh", "<cmd>FzfLua helptags<cr>")
@@ -93,6 +100,10 @@ KEYMAPS.general = function()
 	vim.keymap.set("n", "<bs>", "<cmd>NoiceDismiss<cr>")
 end
 
+--------------------------------
+-- MINI.FILES / FILE EXPLORER --
+--------------------------------
+
 KEYMAPS.mini_files = function(mini_files)
 	mini_files.config.mappings.close = "<esc>"
 	vim.keymap.set("n", "-", function()
@@ -106,6 +117,10 @@ KEYMAPS.mini_files = function(mini_files)
 	end, { desc = "Set working directory here" })
 end
 
+---------
+-- LSP --
+---------
+
 KEYMAPS.lsp = function(event)
 	local opts = { buffer = event.buf }
 	vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = event.buf, desc = "Show LSP hover at cursor" })
@@ -118,6 +133,10 @@ KEYMAPS.lsp = function(event)
 	vim.keymap.set({ "n", "x" }, "<leader>3", vim.lsp.buf.format, { buffer = event.buf, desc = "Format file" })
 	vim.keymap.set("n", "<leader>4", vim.lsp.buf.code_action, { buffer = event.buf, desc = "Show code actions" })
 end
+
+-----------------
+-- MULTICURSOR --
+-----------------
 
 KEYMAPS.multicursor = function(mc)
 	-- Add and remove cursors with control + left click.
@@ -164,6 +183,10 @@ local has_words_before = function()
 	return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
+--------------------
+-- AUTOCOMPLETION --
+--------------------
+
 KEYMAPS.cmp = {
 	preset = "none",
 	["<cr>"] = { "accept", "fallback" },
@@ -182,6 +205,10 @@ KEYMAPS.cmp = {
 	["<C-j>"] = { "scroll_documentation_down" },
 	["<C-k>"] = { "scroll_documentation_up" },
 }
+
+------------------------------
+-- SNACKS / QUALITY OF LIFE --
+------------------------------
 
 KEYMAPS.snacks = {
 	-- Top Pickers & Explorer
