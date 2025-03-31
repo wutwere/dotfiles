@@ -65,7 +65,7 @@ config.wsl_domains = {
 	},
 }
 
---=== THIS IS FOR BASH/WSL ===--
+--=== THIS IS FOR WSL ===--
 config.default_domain = "WSL:Arch"
 
 return config
