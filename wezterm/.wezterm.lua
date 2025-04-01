@@ -13,9 +13,18 @@ config.use_fancy_tab_bar = false
 config.window_decorations = "RESIZE"
 config.initial_cols = 120
 config.initial_rows = 30
+config.window_padding = {
+	left = 0,
+	right = 0,
+	top = 0,
+	bottom = 0,
+}
 -- config.color_scheme = "tokyonight"
 -- config.color_scheme = "catppuccin-macchiato"
 config.color_scheme = "rose-pine"
+config.font = wezterm.font("CaskaydiaMono Nerd Font Mono")
+config.font_antialias = "Subpixel"
+config.line_height = 1.3
 config.max_fps = 144
 
 config.default_cursor_style = "BlinkingUnderline"
