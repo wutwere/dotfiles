@@ -6,6 +6,9 @@ KEYMAPS.general()
 -----------------
 
 -- vim.opt.laststatus = 3
+if vim.loop.os_uname().sysname == "Linux" then
+	vim.opt.clipboard = "unnamedplus"
+end
 vim.g.netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
 vim.opt.cindent = true
 vim.opt.cinoptions = { "N-s", "g0", "j1", "(s", "m1" }
