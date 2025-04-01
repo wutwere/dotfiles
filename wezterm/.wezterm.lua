@@ -23,8 +23,7 @@ config.window_padding = {
 -- config.color_scheme = "catppuccin-macchiato"
 config.color_scheme = "rose-pine"
 config.font = wezterm.font("CaskaydiaMono Nerd Font Mono")
-config.font_antialias = "Subpixel"
-config.line_height = 1.3
+config.line_height = 1.12
 config.max_fps = 144
 
 config.default_cursor_style = "BlinkingUnderline"
