@@ -98,6 +98,14 @@ KEYMAPS.general = function()
 	vim.keymap.set("n", "<leader>n", "<cmd>Namu symbols<cr>", { desc = "Open LSP search" })
 
 	vim.keymap.set("n", "<bs>", "<cmd>NoiceDismiss<cr>")
+
+	vim.keymap.set("n", "<leader>aa", "<cmd>AIChatNew<cr>", { desc = "AI - New Chat" })
+	vim.keymap.set("n", "<leader>ac", ":AIAgent ", { desc = "AI - Change Model" })
+	vim.keymap.set("n", "<leader>at", "<cmd>AIChatToggle<cr>", { desc = "AI - Toggle Chat" })
+	vim.keymap.set("n", "<leader>af", "<cmd>AIChatFinder<cr>", { desc = "AI - Chat Finder" })
+	vim.keymap.set({ "n", "v", "x" }, "<leader>as", "<cmd>AIChatRespond<cr>", { desc = "AI - Send Message" })
+	vim.keymap.set({ "n", "v", "x" }, "<leader>ad", "<cmd>AIChatDelete<cr>", { desc = "AI - Delete Chat" })
+	vim.keymap.set({ "n", "v", "x" }, "<leader>aq", "<cmd>AIChatStop<cr>", { desc = "AI - Cancel Chat" })
 end
 
 --------------------------------
