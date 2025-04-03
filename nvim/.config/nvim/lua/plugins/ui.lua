@@ -1,9 +1,21 @@
 return {
-	{ "folke/tokyonight.nvim", opts = { transparent = true, styles = { floats = "transparent" } } },
+	-- { "folke/tokyonight.nvim", opts = { transparent = true, styles = { floats = "transparent" } } },
 	{
 		"rose-pine/neovim",
 		name = "rose-pine",
 		priority = 1000,
+		opts = {
+			variant = "moon", -- auto, main, moon, or dawn
+			dark_variant = "moon", -- main, moon, or dawn
+			dim_inactive_windows = false,
+			extend_background_behind_borders = true,
+
+			styles = {
+				bold = true,
+				italic = false,
+				transparency = true,
+			},
+		},
 	},
 	{
 		"nvim-lualine/lualine.nvim",
@@ -18,8 +30,10 @@ return {
 					end)(),
 					always_show_tabline = false,
 					globalstatus = true,
-					component_separators = { left = "", right = "" },
-					section_separators = { left = "", right = "" },
+					-- component_separators = { left = "", right = "" },
+					-- section_separators = { left = "", right = "" },
+					component_separators = { left = "", right = "" },
+					section_separators = { left = "", right = "" },
 				},
 				sections = {
 					lualine_a = { "mode" },
