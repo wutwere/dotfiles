@@ -1,4 +1,5 @@
-theme = rose-pine
+theme = rose-pine-moon
+background = #181524
 
 cursor-style = underline
 cursor-style-blink = true
@@ -9,16 +10,17 @@ window-decoration = auto
 macos-titlebar-style = hidden
 
 # font-family = JetBrainsMono Nerd Font Mono
-font-family = CaskaydiaCove Nerd Font Mono
-font-size = 14
-adjust-cell-height = 25%
+# font-family = CaskaydiaCove Nerd Font Mono
+font-family = FiraCode Nerd Font Mono
+font-size = 13
+adjust-cell-height = 20%
 
 window-padding-x = 10
 window-padding-y = 7
 window-padding-balance = true
 
-background-opacity = 0.8
-background-blur = 15
+background-opacity = 1.0
+background-blur = 10
 
 confirm-close-surface = false
 

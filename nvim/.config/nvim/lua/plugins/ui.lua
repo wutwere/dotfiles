@@ -12,7 +12,7 @@ return {
 			require("lualine").setup({
 				options = {
 					theme = (function()
-						local theme = require("lualine.themes.rose-pine")
+						local theme = require("lualine.themes.rose-pine-alt")
 						theme.normal.c.bg = nil
 						return theme
 					end)(),
