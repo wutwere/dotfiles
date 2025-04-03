@@ -108,18 +108,17 @@ Use $ for inline math expressions, and $$ for math blocks. This is Markdown.
           ]],
 				},
 			},
-			chat_user_prefix = "## You",
+			chat_user_prefix = "---",
 			-- chat assistant prompt prefix (static string or a table {static, template})
 			-- first string has to be static, second string can contain template {{agent}}
 			-- just a static string is legacy and the [{{agent}}] element is added automatically
 			-- if you really want just a static string, make it a table with one element { "🤖:" }
-			chat_assistant_prefix = { "## **", "[{{agent}}]**" },
+			chat_assistant_prefix = { "### **", "{{agent}}**" },
 			chat_template = [[
 # topic: ?
 - file: {{filename}}
-- <leader>as to submit message
-vim:wrap
----
+- type below and <leader>as to submit
+- vim:wrap
 
 {{user_prefix}}
 ]],
