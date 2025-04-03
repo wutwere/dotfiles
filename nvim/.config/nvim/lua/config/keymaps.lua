@@ -227,6 +227,13 @@ KEYMAPS.snacks = {
 		desc = "Smart Find Files",
 	},
 	{
+		"<leader>e",
+		function()
+			Snacks.explorer.open({ hidden = true })
+		end,
+		desc = "File Tree",
+	},
+	{
 		"<leader>/",
 		function()
 			Snacks.picker.grep({ hidden = true })
