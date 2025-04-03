@@ -217,247 +217,62 @@ KEYMAPS.cmp = {
 -- SNACKS / QUALITY OF LIFE --
 ------------------------------
 
-KEYMAPS.snacks = {
+local function func_wrap(func, opts)
+	return function()
+		func(opts)
+	end
+end
+
+KEYMAPS.snacks = function(Snacks)
 	-- Top Pickers & Explorer
-	{
-		"<leader><space>",
-		function()
-			Snacks.picker.smart()
-		end,
-		desc = "Smart Find Files",
-	},
-	{
-		"<leader>e",
-		function()
-			Snacks.explorer.open({ hidden = true })
-		end,
-		desc = "File Tree",
-	},
-	{
-		"<leader>/",
-		function()
-			Snacks.picker.grep({ hidden = true })
-		end,
-		desc = "Grep",
-	},
-	{
-		"<leader>:",
-		function()
-			Snacks.picker.command_history()
-		end,
-		desc = "Command History",
-	},
+	vim.keymap.set("n", "<leader><space>", Snacks.picker.smart, { desc = "Smart Find Files" })
+	vim.keymap.set("n", "<leader>e", func_wrap(Snacks.explorer.open, { hidden = true }), { desc = "File Tree" })
+	vim.keymap.set("n", "<leader>/", func_wrap(Snacks.picker.grep, { hidden = true }), { desc = "Grep" })
+	vim.keymap.set("n", "<leader>:", Snacks.picker.command_history, { desc = "Command History" })
 	-- git
-	{
-		"<leader>gB",
-		function()
-			Snacks.gitbrowse()
-		end,
-		desc = "Git Browse",
-		mode = { "n", "v" },
-	},
-	{
-		"<leader>gg",
-		function()
-			Snacks.lazygit()
-		end,
-		desc = "Lazygit",
-	},
-	{
-		"<leader>gb",
-		function()
-			Snacks.picker.git_branches()
-		end,
-		desc = "Git Branches",
-	},
-	{
-		"<leader>gl",
-		function()
-			Snacks.picker.git_log()
-		end,
-		desc = "Git Log",
-	},
-	{
-		"<leader>gL",
-		function()
-			Snacks.picker.git_log_line()
-		end,
-		desc = "Git Log Line",
-	},
-	{
-		"<leader>gf",
-		function()
-			Snacks.picker.git_log_file()
-		end,
-		desc = "Git Log File",
-	},
+	vim.keymap.set({ "n", "v" }, "<leader>gB", func_wrap(Snacks.gitbrowse, nil), { desc = "Git Browse" })
+	vim.keymap.set("n", "<leader>gg", func_wrap(Snacks.lazygit, nil), { desc = "Lazygit" })
+	vim.keymap.set("n", "<leader>gb", Snacks.picker.git_branches, { desc = "Git Branches" })
+	vim.keymap.set("n", "<leader>gl", Snacks.picker.git_log, { desc = "Git Log" })
+	vim.keymap.set("n", "<leader>gL", Snacks.picker.git_log_line, { desc = "Git Log Line" })
+	vim.keymap.set("n", "<leader>gf", Snacks.picker.git_log_file, { desc = "Git Log File" })
 	-- Grep
-	{
-		"<leader>sb",
-		function()
-			Snacks.picker.lines()
-		end,
-		desc = "Buffer Lines",
-	},
-	{
+	vim.keymap.set("n", "<leader>sb", Snacks.picker.lines, { desc = "Buffer Lines" })
+	vim.keymap.set(
+		"n",
 		"<leader>sB",
-		function()
-			Snacks.picker.grep_buffers({ hidden = true })
-		end,
-		desc = "Grep Open Buffers",
-	},
-	{
+		func_wrap(Snacks.picker.grep_buffers, { hidden = true }),
+		{ desc = "Grep Open Buffers" }
+	)
+	vim.keymap.set(
+		{ "n", "x" },
 		"<leader>sw",
-		function()
-			Snacks.picker.grep_word({ hidden = true })
-		end,
-		desc = "Visual selection or word",
-		mode = { "n", "x" },
-	},
+		func_wrap(Snacks.picker.grep_word, { hidden = true }),
+		{ desc = "Visual selection or word" }
+	)
 	-- search
-	{
-		'<leader>s"',
-		function()
-			Snacks.picker.registers()
-		end,
-		desc = "Registers",
-	},
-	{
-		"<leader>s/",
-		function()
-			Snacks.picker.search_history()
-		end,
-		desc = "Search History",
-	},
-	{
-		"<leader>sb",
-		function()
-			Snacks.picker.lines()
-		end,
-		desc = "Buffer Lines",
-	},
-	{
-		"<leader>sd",
-		function()
-			Snacks.picker.diagnostics()
-		end,
-		desc = "Diagnostics",
-	},
-	{
-		"<leader>sD",
-		function()
-			Snacks.picker.diagnostics_buffer()
-		end,
-		desc = "Buffer Diagnostics",
-	},
-	{
-		"<leader>sh",
-		function()
-			Snacks.picker.help()
-		end,
-		desc = "Help Pages",
-	},
-	{
-		"<leader>si",
-		function()
-			Snacks.picker.icons()
-		end,
-		desc = "Nerd Font Icons",
-	},
-	{
-		"<leader>sj",
-		function()
-			Snacks.picker.jumps()
-		end,
-		desc = "Jumps",
-	},
-	{
-		"<leader>sq",
-		function()
-			Snacks.picker.qflist()
-		end,
-		desc = "Quickfix List",
-	},
-	{
-		"<leader>sR",
-		function()
-			Snacks.picker.resume()
-		end,
-		desc = "Resume",
-	},
-	{
-		"<leader>su",
-		function()
-			Snacks.picker.undo()
-		end,
-		desc = "Undo History",
-	},
-	{
-		"<leader>sn",
-		function()
-			Snacks.notifier.show_history()
-		end,
-		desc = "Notification History",
-	},
-	{
-		"<leader>ss",
-		function()
-			Snacks.picker()
-		end,
-		desc = "All Snacks Pickers",
-	},
+	vim.keymap.set("n", '<leader>s"', Snacks.picker.registers, { desc = "Registers" })
+	vim.keymap.set("n", "<leader>s/", Snacks.picker.search_history, { desc = "Search History" })
+	vim.keymap.set("n", "<leader>sb", Snacks.picker.lines, { desc = "Buffer Lines" })
+	vim.keymap.set("n", "<leader>sd", Snacks.picker.diagnostics, { desc = "Diagnostics" })
+	vim.keymap.set("n", "<leader>sD", Snacks.picker.diagnostics_buffer, { desc = "Buffer Diagnostics" })
+	vim.keymap.set("n", "<leader>sh", Snacks.picker.help, { desc = "Help Pages" })
+	vim.keymap.set("n", "<leader>si", Snacks.picker.icons, { desc = "Nerd Font Icons" })
+	vim.keymap.set("n", "<leader>sj", Snacks.picker.jumps, { desc = "Jumps" })
+	vim.keymap.set("n", "<leader>sq", Snacks.picker.qflist, { desc = "Quickfix List" })
+	vim.keymap.set("n", "<leader>sR", Snacks.picker.resume, { desc = "Resume" })
+	vim.keymap.set("n", "<leader>su", Snacks.picker.undo, { desc = "Undo History" })
+	vim.keymap.set("n", "<leader>sn", Snacks.notifier.show_history, { desc = "Notification History" })
+	vim.keymap.set("n", "<leader>ss", func_wrap(Snacks.picker, nil), { desc = "All Snacks Pickers" })
 	-- LSP
-	{
-		"gd",
-		function()
-			Snacks.picker.lsp_definitions()
-		end,
-		desc = "Goto Definition",
-	},
-	{
-		"gD",
-		function()
-			Snacks.picker.lsp_declarations()
-		end,
-		desc = "Goto Declaration",
-	},
-	{
-		"gr",
-		function()
-			Snacks.picker.lsp_references()
-		end,
-		nowait = true,
-		desc = "References",
-	},
-	{
-		"gi",
-		function()
-			Snacks.picker.lsp_implementations()
-		end,
-		desc = "Goto Implementation",
-	},
-	{
-		"go",
-		function()
-			Snacks.picker.lsp_type_definitions()
-		end,
-		desc = "Goto Type Definition",
-	},
+	vim.keymap.set("n", "gd", Snacks.picker.lsp_definitions, { desc = "Goto Definition" })
+	vim.keymap.set("n", "gD", Snacks.picker.lsp_declarations, { desc = "Goto Declaration" })
+	vim.keymap.set("n", "gr", Snacks.picker.lsp_references, { desc = "References" })
+	vim.keymap.set("n", "gi", Snacks.picker.lsp_implementations, { desc = "Goto Implementation" })
+	vim.keymap.set("n", "go", Snacks.picker.lsp_type_definitions, { desc = "Goto Type Definition" })
 	-- Other
-	{
-		"<leader>.",
-		function()
-			Snacks.scratch()
-		end,
-		desc = "Toggle Scratch Buffer",
-	},
-	{
-		"<leader>S",
-		function()
-			Snacks.scratch.select()
-		end,
-		desc = "Select Scratch Buffer",
-	},
-}
+	vim.keymap.set("n", "<leader>.", func_wrap(Snacks.scratch, nil), { desc = "Toggle Scratch Buffer" })
+	vim.keymap.set("n", "<leader>S", Snacks.scratch.select, { desc = "Select Scratch Buffer" })
+end
 
 return KEYMAPS

@@ -50,7 +50,6 @@ return {
 				},
 			},
 		},
-		keys = KEYMAPS.snacks,
 		init = function()
 			vim.api.nvim_create_autocmd("User", {
 				pattern = "VeryLazy",
@@ -71,6 +70,8 @@ return {
 							Snacks.rename.on_rename_file(event.data.from, event.data.to)
 						end,
 					})
+
+					KEYMAPS.snacks(Snacks)
 				end,
 			})
 		end,
