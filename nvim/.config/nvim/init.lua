@@ -15,6 +15,8 @@ vim.opt.cinoptions = { "N-s", "g0", "j1", "(s", "m1" }
 vim.opt.cursorline = true
 vim.opt.expandtab = true
 vim.opt.mouse = "nv"
+vim.opt.nu = true
+vim.opt.rnu = true
 vim.opt.scrolloff = 5
 vim.opt.shiftwidth = 2
 vim.opt.sidescrolloff = 10
@@ -25,13 +27,10 @@ vim.opt.termguicolors = true
 vim.opt.wrap = false
 vim.api.nvim_create_autocmd({ "BufEnter", "VimEnter" }, {
 	callback = function()
-		vim.opt.nu = true
-		vim.opt.rnu = true
 		vim.cmd("hi cursorline guibg=NONE")
 		-- Reserve a space in the gutter
 		-- This will avoid an annoying layout shift in the screen
-		vim.opt.signcolumn = "yes" -- (lsp-zero told me to do this)
-		-- vim.cmd("ColorizerAttachToBuffer")
+		vim.opt.signcolumn = "yes"
 	end,
 })
 
