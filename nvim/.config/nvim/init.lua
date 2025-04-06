@@ -13,6 +13,7 @@ vim.opt.cindent = true
 vim.opt.cinoptions = { "N-s", "g0", "j1", "(s", "m1" }
 vim.opt.cursorline = true
 vim.opt.expandtab = true
+vim.opt.ignorecase = true
 vim.opt.mouse = "nv"
 vim.opt.nu = true
 vim.opt.rnu = true

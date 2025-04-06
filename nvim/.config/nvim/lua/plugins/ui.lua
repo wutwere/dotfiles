@@ -15,6 +15,10 @@ return {
 				italic = false,
 				transparency = true,
 			},
+
+			highlight_groups = {
+				["@markup.italic"] = { italic = true },
+			},
 		},
 	},
 	{
