@@ -17,8 +17,8 @@ return {
 					cmd = {
 						"luau-lsp",
 						"lsp",
-						"--definitions=~/roblox/globalTypes.d.luau",
-						"--docs=~/roblox/en-us.json",
+						"--definitions=~/.luau-lsp/globalTypes.d.luau",
+						"--docs=~/.luau-lsp/en-us.json",
 					},
 				},
 				lua_ls = { settings = { Lua = { diagnostics = { globals = { "vim" } } } } },
