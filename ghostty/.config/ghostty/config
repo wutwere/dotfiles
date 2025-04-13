@@ -72,3 +72,6 @@ keybind = super+f=text:\x00f
 
 # go to last session
 keybind = super+b=text:\x00b
+
+# select mode
+keybind = super+[=text:\x00[
