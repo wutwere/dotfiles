@@ -12,20 +12,22 @@ macos-titlebar-style = hidden
 # font-family = JetBrainsMono Nerd Font Mono
 # font-family = CaskaydiaCove Nerd Font Mono
 # font-family = FiraCode Nerd Font Mono
-font-family = Liga SFMono Nerd Font
+# font-family = Liga SFMono Nerd Font
 # font-family = MesloLGM Nerd Font Mono
-font-size = 14
-adjust-cell-height = 30%
-font-thicken = true
+font-family = Hack Nerd Font Mono
+font-size = 15
+adjust-cell-height = 35%
+# adjust-cell-width = -5%
+# font-thicken = true
 # 0 to 255
-font-thicken-strength = 100
+font-thicken-strength = 25
 
 window-padding-x = 10
 window-padding-y = 7
 window-padding-balance = true
 
-background-opacity = 1.0
-background-blur = 10
+background-opacity = 0.95
+background-blur = 35
 
 confirm-close-surface = false
 
