@@ -2,9 +2,10 @@
 
 options=(
   style=round
-  width=0.0
+  width=2.0
   hidpi=on
-  active_color=0xffbfa8e3
+  # active_color=0xffbfa8e3 # pink
+  active_color=0xffe99b97 # orange
   # active_color=0xffe1e3e4 # white
   inactive_color=0xff4a4d62
 )
