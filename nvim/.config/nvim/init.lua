@@ -9,6 +9,7 @@ if vim.loop.os_uname().sysname == "Linux" then
 	vim.opt.clipboard = "unnamedplus"
 end
 vim.g.netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
+vim.opt.breakindent = true
 vim.opt.cindent = true
 vim.opt.cinoptions = { "N-s", "g0", "j1", "(s", "m1" }
 vim.opt.cursorline = true
@@ -31,7 +32,7 @@ vim.opt.tabstop = 2
 vim.opt.termguicolors = true
 vim.opt.undofile = true
 vim.opt.virtualedit = "all"
-vim.opt.wrap = false
+vim.opt.wrap = true
 vim.api.nvim_create_autocmd({ "BufEnter", "VimEnter" }, {
 	callback = function()
 		vim.cmd("hi cursorline guibg=NONE")
