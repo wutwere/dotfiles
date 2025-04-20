@@ -17,22 +17,24 @@ vim.opt.fillchars = { eob = " " }
 vim.opt.ignorecase = true
 vim.opt.linebreak = true
 vim.opt.mouse = "nv"
-vim.opt.nu = true
-vim.opt.rnu = true
+vim.opt.number = true
+vim.opt.relativenumber = true
 vim.opt.scrolloff = 5
 vim.opt.shiftwidth = 2
+vim.opt.showmode = false
 vim.opt.sidescrolloff = 10
+vim.opt.signcolumn = "yes"
 vim.opt.smartcase = true
+vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.tabstop = 2
 vim.opt.termguicolors = true
+vim.opt.undofile = true
+vim.opt.virtualedit = "all"
 vim.opt.wrap = false
 vim.api.nvim_create_autocmd({ "BufEnter", "VimEnter" }, {
 	callback = function()
 		vim.cmd("hi cursorline guibg=NONE")
-		-- Reserve a space in the gutter
-		-- This will avoid an annoying layout shift in the screen
-		vim.opt.signcolumn = "yes"
 	end,
 })
 
