@@ -17,6 +17,8 @@ vim.opt.expandtab = true
 vim.opt.fillchars = { eob = " " }
 vim.opt.ignorecase = true
 vim.opt.linebreak = true
+vim.opt.list = true
+vim.opt.listchars = { tab = "  ▸", trail = "·", nbsp = "␣" }
 vim.opt.mouse = "nv"
 vim.opt.number = true
 vim.opt.relativenumber = true
