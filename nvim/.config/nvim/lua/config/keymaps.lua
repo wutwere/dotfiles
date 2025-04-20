@@ -111,6 +111,18 @@ end
 -----------------
 
 KEYMAPS.multicursor = function(mc)
+	vim.keymap.set({ "n", "x" }, "<up>", function()
+		mc.lineAddCursor(-1)
+	end, { desc = "Multicursor - Add cursor above" })
+	vim.keymap.set({ "n", "x" }, "<down>", function()
+		mc.lineAddCursor(1)
+	end, { desc = "Multicursor - Add cursor below" })
+	vim.keymap.set({ "n", "x" }, "<leader><up>", function()
+		mc.lineSkipCursor(-1)
+	end, { desc = "Multicursor - Skip cursor above" })
+	vim.keymap.set({ "n", "x" }, "<leader><down>", function()
+		mc.lineSkipCursor(1)
+	end, { desc = "Multicursor - Skip cursor below" })
 	-- Add and remove cursors with control + left click.
 	vim.keymap.set("n", "<c-leftmouse>", mc.handleMouse)
 	vim.keymap.set("n", "<c-leftdrag>", mc.handleMouseDrag)
@@ -131,8 +143,8 @@ KEYMAPS.multicursor = function(mc)
 	vim.keymap.set({ "n", "x" }, "<leader>mN", function()
 		mc.matchAddCursor(-1)
 	end, { desc = "Multicursor - Add previous word/selection" })
-	vim.keymap.set("x", "I", mc.insertVisual)
-	vim.keymap.set("x", "A", mc.appendVisual)
+	-- vim.keymap.set("x", "I", mc.insertVisual)
+	-- vim.keymap.set("x", "A", mc.appendVisual)
 	-- Mappings defined in a keymap layer only apply when there are
 	-- multiple cursors. This lets you have overlapping mappings.
 	mc.addKeymapLayer(function(layerSet)
