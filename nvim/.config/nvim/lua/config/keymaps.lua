@@ -9,6 +9,8 @@ vim.g.maplocalleader = " "
 
 KEYMAPS.general = function()
 	-- editor
+	vim.keymap.set("n", "j", "gj")
+	vim.keymap.set("n", "k", "gk")
 	vim.keymap.set("i", "{<cr>", "{<cr>}<esc>O")
 	vim.keymap.set("i", "{<s-cr>", "{<cr>}<esc>O")
 	vim.keymap.set("v", "<leader>y", '"+y', { desc = "Copy selected to clipboard" })
