@@ -90,17 +90,6 @@ return {
 			},
 		},
 	},
-	-- {
-	-- 	"folke/noice.nvim",
-	-- 	event = "VeryLazy",
-	-- 	opts = {
-	-- 		lsp = { signature = { enabled = false }, hover = { enabled = false } },
-	-- 		presets = { bottom_search = true },
-	-- 	},
-	-- 	dependencies = {
-	-- 		"MunifTanjim/nui.nvim",
-	-- 	},
-	-- },
 	{
 		"folke/lazydev.nvim",
 		ft = "lua",

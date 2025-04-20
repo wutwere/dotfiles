@@ -1,5 +1,4 @@
 return {
-	-- { "folke/tokyonight.nvim", opts = { transparent = true, styles = { floats = "transparent" } } },
 	{
 		"rose-pine/neovim",
 		name = "rose-pine",
@@ -34,8 +33,6 @@ return {
 					end)(),
 					always_show_tabline = false,
 					globalstatus = true,
-					-- component_separators = { left = "", right = "" },
-					-- section_separators = { left = "", right = "" },
 					component_separators = { left = "", right = "" },
 					section_separators = { left = "", right = "" },
 				},
@@ -43,22 +40,13 @@ return {
 					lualine_a = { "mode" },
 					lualine_b = { { "buffers", use_mode_colors = true, max_length = vim.o.columns / 2 } },
 					lualine_c = {},
-					lualine_x = { --[["encoding", "fileformat", "filetype",]]
+					lualine_x = {
 						"branch",
 						"diff",
 						"diagnostics",
 						"progress",
 					},
-					lualine_y = {
-						-- {
-						-- 	require("noice").api.statusline.mode.get,
-						-- 	cond = function()
-						-- 		local noice_status = require("noice").api.statusline
-						-- 		return noice_status.mode.has() and noice_status.mode.get():sub(1, 3) == "rec"
-						-- 	end,
-						-- 	color = { fg = "#ff9e64" },
-						-- },
-					},
+					lualine_y = {},
 					lualine_z = { "location" },
 				},
 				tabline = { lualine_a = { { "tabs", mode = 2, use_mode_colors = true, max_length = vim.o.columns } } },
