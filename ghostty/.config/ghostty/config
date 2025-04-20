@@ -14,13 +14,14 @@ macos-titlebar-style = hidden
 # font-family = FiraCode Nerd Font Mono
 # font-family = Liga SFMono Nerd Font
 # font-family = MesloLGM Nerd Font Mono
-font-family = Hack Nerd Font Mono
+# font-family = Hack Nerd Font Mono
+font-family = RobotoMono Nerd Font Mono
 font-size = 15
-adjust-cell-height = 35%
+adjust-cell-height = 20%
 # adjust-cell-width = -5%
-# font-thicken = true
+font-thicken = true
 # 0 to 255
-font-thicken-strength = 25
+font-thicken-strength = 30
 
 window-padding-x = 10
 window-padding-y = 7

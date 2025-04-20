@@ -99,7 +99,7 @@ cand = { fg = "#9ccfd8" }
 rest = { fg = "#9399b2" }
 desc = { fg = "#eb6f92" }
 separator = "  "
-separator_style = { fg = "#585b70" }
+separator_style = { fg = "#2A273F" }
 
 # : }}}
 

@@ -8,8 +8,9 @@ return {
 			local mini_files = require("mini.files")
 			mini_files.setup({
 				windows = {
+					max_number = 2,
 					preview = true,
-					width_preview = 30,
+					width_preview = 60,
 					width_nofocus = 30,
 					width_focus = 30,
 				},
@@ -50,16 +51,6 @@ return {
 			mc.setup()
 
 			KEYMAPS.multicursor(mc)
-
-			-- Customize how cursors look.
-			-- local hl = vim.api.nvim_set_hl
-			-- hl(0, "MultiCursorCursor", { link = "Cursor" })
-			-- hl(0, "MultiCursorVisual", { link = "Visual" })
-			-- hl(0, "MultiCursorSign", { link = "SignColumn" })
-			-- hl(0, "MultiCursorMatchPreview", { link = "Search" })
-			-- hl(0, "MultiCursorDisabledCursor", { link = "Visual" })
-			-- hl(0, "MultiCursorDisabledVisual", { link = "Visual" })
-			-- hl(0, "MultiCursorDisabledSign", { link = "SignColumn" })
 		end,
 	},
 }
