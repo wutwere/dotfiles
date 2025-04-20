@@ -34,7 +34,7 @@ vim.opt.tabstop = 2
 vim.opt.termguicolors = true
 vim.opt.undofile = true
 vim.opt.virtualedit = "all"
-vim.opt.wrap = true
+vim.opt.wrap = false
 vim.api.nvim_create_autocmd({ "BufEnter", "VimEnter" }, {
 	callback = function()
 		vim.cmd("hi cursorline guibg=NONE")
