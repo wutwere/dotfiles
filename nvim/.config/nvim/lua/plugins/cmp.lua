@@ -57,7 +57,7 @@ return {
 					"lsp",
 					"path",
 					"snippets",
-					"buffer", --[["cmdline"]]
+					"buffer",
 					"markdown",
 				},
 				providers = {
@@ -73,5 +73,4 @@ return {
 			},
 		},
 	},
-	-- { "saghen/blink.compat", version = "*", opts = { impersonate_nvim_cmp = true } },
 }

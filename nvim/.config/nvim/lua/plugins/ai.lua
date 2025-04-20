@@ -1,16 +1,10 @@
+local KEYMAPS = require("config.keymaps")
+
 return {
-	-- {
-	-- 	"Exafunction/codeium.vim",
-	-- 	init = function()
-	-- 		vim.g.codeium_disable_bindings = 1
-	-- 	end,
-	-- },
 	{
 		"supermaven-inc/supermaven-nvim",
 		opts = {
-			keymaps = {
-				accept_suggestion = "<right>",
-			},
+			keymaps = KEYMAPS.ai,
 			condition = function()
 				-- disable if file is too big
 				local max_filesize = 1024 * 1024
@@ -81,40 +75,4 @@ Use $ for inline math expressions, and $$ for math blocks. This is Markdown.
 			},
 		},
 	},
-	-- {
-	-- 	"olimorris/codecompanion.nvim",
-	-- 	dependencies = {
-	-- 		"nvim-lua/plenary.nvim",
-	-- 		"nvim-treesitter/nvim-treesitter",
-	-- 	},
-	-- 	opts = {
-	-- 		strategies = {
-	-- 			chat = { adapter = "gemini" },
-	-- 			inline = { adapter = "gemini" },
-	-- 			cmd = { adapter = "gemini" },
-	-- 		},
-	-- 		adapters = {
-	-- 			gemini = function()
-	-- 				return require("codecompanion.adapters").extend("gemini", {
-	-- 					env = {
-	-- 						api_key = "cmd:grep GEMINI_API_KEY ~/.env | cut -d'=' -f2",
-	-- 					},
-	-- 				})
-	-- 			end,
-	-- 			geminipro = function()
-	-- 				return require("codecompanion.adapters").extend("gemini", {
-	-- 					env = {
-	-- 						api_key = "cmd:grep GEMINI_API_KEY ~/.env | cut -d'=' -f2",
-	-- 					},
-	-- 					schema = {
-	-- 						model = {
-	-- 							default = "gemini-2.5-pro-exp-03-25",
-	-- 						},
-	-- 					},
-	-- 				})
-	-- 			end,
-	-- 		},
-	-- 		display = { chat = { auto_scroll = false } },
-	-- 	},
-	-- },
 }
