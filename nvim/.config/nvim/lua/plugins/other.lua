@@ -23,7 +23,12 @@ return {
 		"lervag/vimtex",
 		lazy = false,
 		init = function()
-			vim.opt.conceallevel = 1
+			vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+				pattern = { "*.tex" },
+				callback = function()
+					vim.opt_local.conceallevel = 2
+				end,
+			})
 			vim.g.tex_conceal = "abdmg"
 			vim.g.vimtex_view_method = "sioyek"
 			vim.g.vimtex_callback_progpath = vim.fn.system("where nvim")
