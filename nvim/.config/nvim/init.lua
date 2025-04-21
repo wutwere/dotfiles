@@ -38,7 +38,6 @@ vim.opt.wrap = false
 vim.api.nvim_create_autocmd({ "BufEnter", "VimEnter" }, {
 	callback = function()
 		vim.cmd("hi cursorline guibg=NONE")
-		vim.cmd("hi TreesitterContextLineNumberBottom gui=underline guisp=#E99C97")
 	end,
 })
 
