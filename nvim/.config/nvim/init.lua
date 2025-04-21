@@ -18,7 +18,7 @@ vim.opt.fillchars = { eob = " " }
 vim.opt.ignorecase = true
 vim.opt.linebreak = true
 vim.opt.list = true
-vim.opt.listchars = { tab = "  ▸", trail = "·", nbsp = "␣" }
+vim.opt.listchars = { tab = "▸ ", trail = "·", nbsp = "␣" }
 vim.opt.mouse = "nv"
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -38,6 +38,7 @@ vim.opt.wrap = false
 vim.api.nvim_create_autocmd({ "BufEnter", "VimEnter" }, {
 	callback = function()
 		vim.cmd("hi cursorline guibg=NONE")
+		vim.cmd("hi TreesitterContextLineNumberBottom gui=underline guisp=#E99C97")
 	end,
 })
 
