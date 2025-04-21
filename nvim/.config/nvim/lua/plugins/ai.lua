@@ -2,7 +2,7 @@ local KEYMAPS = require("config.keymaps")
 
 return {
 	{
-		"supermaven-inc/supermaven-nvim",
+		"wutwere/supermaven-nvim",
 		opts = {
 			keymaps = KEYMAPS.ai,
 			condition = function()
