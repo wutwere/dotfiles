@@ -18,7 +18,7 @@ return {
 			KEYMAPS.mini_files(mini_files)
 		end,
 	},
-	{ "MagicDuck/grug-far.nvim", opts = { windowCreationCommand = "e" } },
+	{ "MagicDuck/grug-far.nvim", opts = { windowCreationCommand = "e" }, version = "1.6.3" },
 	{
 		"lervag/vimtex",
 		lazy = false,
