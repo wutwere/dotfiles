@@ -9,16 +9,17 @@ mouse-hide-while-typing = true
 window-decoration = auto
 macos-titlebar-style = hidden
 
-# font-family = JetBrainsMono Nerd Font Mono
+font-family = JetBrainsMono Nerd Font Mono
 # font-family = CaskaydiaCove Nerd Font Mono
 # font-family = FiraCode Nerd Font Mono
 # font-family = Liga SFMono Nerd Font
 # font-family = MesloLGM Nerd Font Mono
 # font-family = Hack Nerd Font Mono
-font-family = RobotoMono Nerd Font Mono
+# font-family = RobotoMono Nerd Font Mono
+# font-family = VictorMono Nerd Font Mono
 font-size = 15
 adjust-cell-height = 20%
-# adjust-cell-width = -5%
+adjust-cell-width = 5%
 font-thicken = true
 # 0 to 255
 font-thicken-strength = 30
