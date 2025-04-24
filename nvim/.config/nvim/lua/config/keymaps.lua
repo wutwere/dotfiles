@@ -85,10 +85,13 @@ end
 -- MINI.FILES / FILE EXPLORER --
 --------------------------------
 
-KEYMAPS.mini_files = function(mini_files)
+KEYMAPS.mini_files = function()
+	local mini_files = require("mini.files")
 	mini_files.config.mappings.close = "<esc>"
 	vim.keymap.set("n", "-", function()
-		mini_files.open(vim.api.nvim_buf_get_name(0))
+		if mini_files.get_explorer_state() == nil then
+			mini_files.open(vim.api.nvim_buf_get_name(0))
+		end
 	end, { desc = "Open file explorer in current file" })
 	vim.keymap.set("n", "<leader>-", function()
 		mini_files.open()
