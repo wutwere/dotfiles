@@ -40,6 +40,13 @@ vim.api.nvim_create_autocmd({ "BufEnter", "VimEnter" }, {
 		vim.cmd("hi cursorline guibg=NONE")
 	end,
 })
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+	pattern = { "*.md" },
+	callback = function()
+		vim.opt_local.spell = true
+		vim.opt_local.wrap = true
+	end,
+})
 
 ---------------
 -- LAZY.NVIM --
