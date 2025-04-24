@@ -23,9 +23,9 @@ KEYMAPS.general = function()
 	vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Show diagnostics at cursor" })
 	vim.keymap.set("n", "<leader>w", "<cmd>tabc<cr>", { desc = "Close tab" })
 	vim.keymap.set(
-		"v",
+		"x",
 		"<c-r>",
-		'"hy:%s#<c-r>h##gc<left><left><left>',
+		'"hy:%s#\\V<c-r>h##gc<left><left><left>',
 		{ desc = "Replace all occurrences of selection" }
 	)
 
