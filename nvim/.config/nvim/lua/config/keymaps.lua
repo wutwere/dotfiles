@@ -9,6 +9,8 @@ vim.g.maplocalleader = " "
 
 KEYMAPS.general = function()
 	-- editor
+	vim.keymap.set({ "n", "x" }, "j", "gj", { silent = true, noremap = true })
+	vim.keymap.set({ "n", "x" }, "k", "gk", { silent = true, noremap = true })
 	vim.keymap.set("i", "{<cr>", "{<cr>}<esc>O")
 	vim.keymap.set("i", "{<s-cr>", "{<cr>}<esc>O")
 	vim.keymap.set("v", "<leader>y", '"+y', { desc = "Copy selected to clipboard" })
@@ -254,6 +256,7 @@ KEYMAPS.snacks = function(Snacks)
 	-- Other
 	vim.keymap.set("n", "<leader>.", func_wrap(Snacks.scratch, nil), { desc = "Toggle Scratch Buffer" })
 	vim.keymap.set("n", "<leader>S", Snacks.scratch.select, { desc = "Select Scratch Buffer" })
+	vim.keymap.set("n", "<leader>z", Snacks.zen.zen, { desc = "Enable Zen Mode" })
 end
 
 return KEYMAPS

@@ -49,6 +49,7 @@ return {
 					-- wo = { wrap = true } -- Wrap notifications
 				},
 			},
+			zen = { enabled = true },
 		},
 		init = function()
 			vim.api.nvim_create_autocmd("User", {
