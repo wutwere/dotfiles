@@ -10,7 +10,7 @@ return {
 			bigfile = { enabled = true },
 			dashboard = { enabled = true },
 			-- explorer = { enabled = true },
-			indent = { enabled = true },
+			indent = { enabled = true, animate = { enabled = false } },
 			input = {
 				enabled = true,
 				expand = false,
@@ -29,21 +29,9 @@ return {
 			},
 			quickfile = { enabled = true },
 			scope = { enabled = true },
-			scroll = {
-				enabled = false,
-				animate = {
-					duration = { step = 10, total = 150 },
-					easing = "linear",
-				},
-				-- faster animation when repeating scroll after delay
-				animate_repeat = {
-					delay = 10000000, -- delay in ms before using the repeat animation
-					duration = { step = 10, total = 150 },
-					easing = "linear",
-				},
-			},
+			-- scroll = { enabled = true },
 			statuscolumn = { enabled = true },
-			words = { enabled = true },
+			-- words = { enabled = true },
 			styles = {
 				notification = {
 					-- wo = { wrap = true } -- Wrap notifications

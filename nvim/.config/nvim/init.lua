@@ -35,11 +35,6 @@ vim.opt.termguicolors = true
 vim.opt.undofile = true
 vim.opt.virtualedit = "block"
 vim.opt.wrap = false
-vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
-	callback = function()
-		vim.cmd("hi cursorline guibg=NONE")
-	end,
-})
 vim.api.nvim_create_autocmd({ "FileType" }, {
 	pattern = { "markdown" },
 	callback = function()

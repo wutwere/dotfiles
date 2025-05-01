@@ -16,7 +16,9 @@ return {
 			},
 
 			highlight_groups = {
-				["@markup.italic"] = { italic = true },
+				["@markup.italic"] = { italic = true }, -- for markdown if i decide to disable global italic
+				["PmenuExtra"] = { bg = "NONE" }, -- for blink cmp
+				["CursorLine"] = { bg = "NONE" },
 			},
 		},
 	},
