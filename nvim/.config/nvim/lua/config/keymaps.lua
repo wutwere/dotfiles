@@ -39,6 +39,8 @@ KEYMAPS.general = function()
 	vim.keymap.set("t", "<c-n>", "<c-\\><c-n>")
 
 	-- fast navigation
+	-- vim.keymap.set("n", "<c-d>", "<c-d>zz")
+	-- vim.keymap.set("n", "<c-u>", "<c-u>zz")
 	vim.keymap.set("n", "<c-e>", "7<c-e>")
 	vim.keymap.set("n", "<c-y>", "7<c-y>")
 	vim.keymap.set("n", "<c-h>", "20zh")

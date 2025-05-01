@@ -19,8 +19,8 @@ font-family = JetBrainsMono Nerd Font Mono
 # font-family = RobotoMono Nerd Font Mono
 # font-family = VictorMono Nerd Font Mono
 font-size = 15
-adjust-cell-height = 15%
-adjust-cell-width = 5%
+adjust-cell-height = 12%
+# adjust-cell-width = 5%
 font-thicken = true
 # 0 to 255
 font-thicken-strength = 30
