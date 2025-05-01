@@ -30,7 +30,11 @@ return {
 				options = {
 					theme = (function()
 						local theme = require("lualine.themes.rose-pine-alt")
-						theme.normal.c.bg = nil
+						for _, mode in pairs(theme) do
+							for _, section in pairs(mode) do
+								section.bg = nil -- fully transparent background
+							end
+						end
 						return theme
 					end)(),
 					always_show_tabline = false,

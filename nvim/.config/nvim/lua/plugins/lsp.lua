@@ -81,9 +81,13 @@ return {
 				lua = { "stylua" },
 				luau = { "stylua" },
 			},
-			format_on_save = {
-				timeout_ms = 500,
+			-- format_on_save = {
+			-- 	timeout_ms = 500,
+			-- 	lsp_format = "fallback",
+			-- },
+			format_after_save = {
 				lsp_format = "fallback",
+				async = true,
 			},
 		},
 	},
