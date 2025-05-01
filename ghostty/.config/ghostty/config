@@ -1,5 +1,6 @@
 theme = rose-pine-moon
-background = #181524
+# background = #181524
+background = #000000
 
 cursor-style = underline
 cursor-style-blink = true
@@ -18,7 +19,7 @@ font-family = JetBrainsMono Nerd Font Mono
 # font-family = RobotoMono Nerd Font Mono
 # font-family = VictorMono Nerd Font Mono
 font-size = 15
-adjust-cell-height = 20%
+adjust-cell-height = 15%
 adjust-cell-width = 5%
 font-thicken = true
 # 0 to 255
@@ -28,7 +29,7 @@ window-padding-x = 10
 window-padding-y = 7
 window-padding-balance = true
 
-background-opacity = 0.95
+background-opacity = 0.85
 background-blur = 35
 
 confirm-close-surface = false
