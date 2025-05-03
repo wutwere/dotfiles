@@ -15,7 +15,7 @@ return {
 					width_focus = 30,
 				},
 			})
-			KEYMAPS.mini_files(mini_files)
+			KEYMAPS.mini_files()
 		end,
 	},
 	{ "MagicDuck/grug-far.nvim", opts = { windowCreationCommand = "e" }, version = "1.6.3" },
