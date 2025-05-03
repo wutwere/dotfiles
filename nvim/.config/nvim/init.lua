@@ -9,9 +9,8 @@ if vim.loop.os_uname().sysname == "Linux" then
 	vim.opt.clipboard = "unnamedplus"
 end
 vim.g.netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
+vim.opt.autoindent = true
 vim.opt.breakindent = true
-vim.opt.cindent = true
-vim.opt.cinoptions = { "N-s", "g0", "j1", "(s", "m1" }
 vim.opt.cursorline = true
 vim.opt.expandtab = true
 vim.opt.fillchars = { eob = " " }
@@ -28,12 +27,14 @@ vim.opt.showmode = false
 vim.opt.sidescrolloff = 10
 vim.opt.signcolumn = "yes"
 vim.opt.smartcase = true
+vim.opt.smartindent = true
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.tabstop = 2
 vim.opt.termguicolors = true
 vim.opt.undofile = true
 vim.opt.virtualedit = "block"
+vim.opt.winborder = "rounded"
 vim.opt.wrap = false
 vim.api.nvim_create_autocmd({ "FileType" }, {
 	pattern = { "markdown" },
@@ -81,8 +82,9 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 vim.diagnostic.config({
+	-- virtual_text = true,
+	virtual_lines = { current_line = true },
 	float = {
-		border = "rounded",
 		source = true,
 	},
 })

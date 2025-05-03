@@ -20,7 +20,7 @@ KEYMAPS.general = function()
 	end, { desc = "Copy file path to clipboard" })
 	vim.keymap.set({ "n", "v" }, "<leader>p", '"+p', { desc = "Paste clipboard" })
 	vim.keymap.set({ "n", "v" }, "<leader>P", '"+P', { desc = "Paste clipboard" })
-	vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Show diagnostics at cursor" })
+	vim.keymap.set("n", "<leader>d", vim.diagnostic.setqflist, { desc = "Show all diagnostics in quickfix list" })
 	vim.keymap.set("n", "<leader>w", "<cmd>tabc<cr>", { desc = "Close tab" })
 	vim.keymap.set(
 		"x",
@@ -50,10 +50,6 @@ KEYMAPS.general = function()
 	vim.keymap.set("n", "<leader>k", "<c-w>k", { desc = "Move to upper pane" })
 	vim.keymap.set("n", "<leader>l", "<c-w>l", { desc = "Move to right pane" })
 	vim.keymap.set("n", "gb", "<cmd>b#<cr>", { desc = "Go to alt buffer" })
-	vim.keymap.set("n", "]b", "<cmd>bn<cr>", { desc = "Next Buffer" })
-	vim.keymap.set("n", "[b", "<cmd>bp<cr>", { desc = "Previous Buffer" })
-	vim.keymap.set("n", "]q", "<cmd>cn<cr>", { desc = "Next Quickfix" })
-	vim.keymap.set("n", "[q", "<cmd>cp<cr>", { desc = "Previous Quickfix" })
 
 	-- plugins
 	vim.keymap.set("n", "<leader>r", "<cmd>GrugFar<cr>", { desc = "Search and replace all files" })
@@ -253,6 +249,7 @@ KEYMAPS.snacks = function(Snacks)
 	vim.keymap.set("n", "<leader>sR", Snacks.picker.resume, { desc = "Resume" })
 	vim.keymap.set("n", "<leader>su", Snacks.picker.undo, { desc = "Undo History" })
 	vim.keymap.set("n", "<leader>sm", Snacks.picker.marks, { desc = "Marks" })
+	vim.keymap.set("n", "<leader>sp", Snacks.picker.spelling, { desc = "Spelling Suggestions" })
 	vim.keymap.set("n", "<leader>sn", Snacks.notifier.show_history, { desc = "Notification History" })
 	vim.keymap.set("n", "<leader>ss", func_wrap(Snacks.picker, nil), { desc = "All Snacks Pickers" })
 	-- LSP
