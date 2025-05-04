@@ -20,7 +20,22 @@ KEYMAPS.general = function()
 	end, { desc = "Copy file path to clipboard" })
 	vim.keymap.set({ "n", "v" }, "<leader>p", '"+p', { desc = "Paste clipboard" })
 	vim.keymap.set({ "n", "v" }, "<leader>P", '"+P', { desc = "Paste clipboard" })
-	vim.keymap.set("n", "<leader>d", vim.diagnostic.setqflist, { desc = "Show all diagnostics in quickfix list" })
+	local virtual_lines_enabled = false
+	vim.keymap.set("n", "<leader>d", function()
+		if virtual_lines_enabled then
+			vim.diagnostic.config({
+				virtual_lines = {
+					current_line = true,
+					format = function(diagnostic)
+						return ("%s: %s [%s]"):format(diagnostic.source, diagnostic.message, tostring(diagnostic.code))
+					end,
+				},
+			})
+		else
+			vim.diagnostic.config({ virtual_lines = false })
+		end
+		virtual_lines_enabled = not virtual_lines_enabled
+	end, { desc = "Toggle diagnostic virtual_lines" })
 	vim.keymap.set("n", "<leader>w", "<cmd>tabc<cr>", { desc = "Close tab" })
 	vim.keymap.set(
 		"x",
