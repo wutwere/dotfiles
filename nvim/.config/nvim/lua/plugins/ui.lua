@@ -37,25 +37,29 @@ return {
 						end
 						return theme
 					end)(),
-					always_show_tabline = false,
+					always_show_tabline = true,
 					globalstatus = true,
 					component_separators = { left = "", right = "" },
 					section_separators = { left = "", right = "" },
 				},
 				sections = {
 					lualine_a = { "mode" },
-					lualine_b = { { "buffers", use_mode_colors = true, max_length = vim.o.columns / 2 } },
-					lualine_c = {},
-					lualine_x = {
+					lualine_b = {
 						"branch",
 						"diff",
+						{ "tabs", mode = 1, use_mode_colors = true, max_length = vim.o.columns / 2 },
+					},
+					lualine_c = {},
+					lualine_x = {
 						"diagnostics",
 						"progress",
 					},
 					lualine_y = {},
 					lualine_z = { "location" },
 				},
-				tabline = { lualine_a = { { "tabs", mode = 2, use_mode_colors = true, max_length = vim.o.columns } } },
+				tabline = {
+					lualine_a = { { "buffers", mode = 2, use_mode_colors = true, max_length = vim.o.columns } },
+				},
 			})
 		end,
 	},
