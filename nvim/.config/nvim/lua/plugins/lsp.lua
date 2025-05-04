@@ -26,7 +26,7 @@ return {
 				pyright = {},
 				vtsls = {},
 				jsonls = {},
-				rust_analyzer = {},
+				rust_analyzer = { settings = { ["rust-analyzer"] = { check = { command = "clippy" } } } },
 				texlab = {},
 				biome = {},
 			}
