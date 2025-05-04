@@ -82,8 +82,17 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 vim.diagnostic.config({
-	-- virtual_text = true,
-	virtual_lines = { current_line = true },
+	virtual_text = {
+		format = function(diagnostic)
+			return tostring(diagnostic.code)
+		end,
+	},
+	virtual_lines = {
+		current_line = true,
+		format = function(diagnostic)
+			return ("%s: %s"):format(diagnostic.source, diagnostic.message)
+		end,
+	},
 	float = {
 		source = true,
 	},
