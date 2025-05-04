@@ -38,7 +38,8 @@ return {
 					end,
 				},
 				incremental_selection = {
-					enable = true,
+					-- crashing with nvim 0.11.1
+					enable = false,
 					keymaps = {
 						node_incremental = "v",
 						node_decremental = "V",
@@ -59,6 +60,8 @@ return {
 							["ic"] = { query = "@class.inner", desc = "inner class" },
 							-- You can also use captures from other query groups like `locals.scm`
 							["al"] = { query = "@local.scope", query_group = "locals", desc = "scope" },
+							["aa"] = { query = "@parameter.outer", desc = "parameter" },
+							["ia"] = { query = "@parameter.inner", desc = "inner parameter" },
 						},
 					},
 				},
