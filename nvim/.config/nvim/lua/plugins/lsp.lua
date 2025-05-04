@@ -26,7 +26,7 @@ return {
 				pyright = {},
 				vtsls = {},
 				jsonls = {},
-				rust_analyzer = {},
+				rust_analyzer = { settings = { ["rust-analyzer"] = { check = { command = "clippy" } } } },
 				texlab = {},
 				biome = {},
 			}
@@ -46,10 +46,6 @@ return {
 					KEYMAPS.lsp(event)
 				end,
 			})
-
-			vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
-			vim.lsp.handlers["textDocument/signatureHelp"] =
-				vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
 		end,
 	},
 	{ "williamboman/mason.nvim", opts = { ui = { border = "rounded" } } },
@@ -81,9 +77,13 @@ return {
 				lua = { "stylua" },
 				luau = { "stylua" },
 			},
-			format_on_save = {
-				timeout_ms = 500,
+			-- format_on_save = {
+			-- 	timeout_ms = 500,
+			-- 	lsp_format = "fallback",
+			-- },
+			format_after_save = {
 				lsp_format = "fallback",
+				async = true,
 			},
 		},
 	},
@@ -99,5 +99,9 @@ return {
 				},
 			},
 		},
+	},
+	{
+		"j-hui/fidget.nvim",
+		opts = { notification = { window = { winblend = 0 } } },
 	},
 }

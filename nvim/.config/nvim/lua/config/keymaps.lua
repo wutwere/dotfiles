@@ -9,6 +9,8 @@ vim.g.maplocalleader = " "
 
 KEYMAPS.general = function()
 	-- editor
+	vim.keymap.set({ "n", "x" }, "j", "gj", { silent = true, noremap = true })
+	vim.keymap.set({ "n", "x" }, "k", "gk", { silent = true, noremap = true })
 	vim.keymap.set("i", "{<cr>", "{<cr>}<esc>O")
 	vim.keymap.set("i", "{<s-cr>", "{<cr>}<esc>O")
 	vim.keymap.set("v", "<leader>y", '"+y', { desc = "Copy selected to clipboard" })
@@ -18,12 +20,12 @@ KEYMAPS.general = function()
 	end, { desc = "Copy file path to clipboard" })
 	vim.keymap.set({ "n", "v" }, "<leader>p", '"+p', { desc = "Paste clipboard" })
 	vim.keymap.set({ "n", "v" }, "<leader>P", '"+P', { desc = "Paste clipboard" })
-	vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Show diagnostics at cursor" })
+	vim.keymap.set("n", "<leader>d", vim.diagnostic.setqflist, { desc = "Show all diagnostics in quickfix list" })
 	vim.keymap.set("n", "<leader>w", "<cmd>tabc<cr>", { desc = "Close tab" })
 	vim.keymap.set(
-		"v",
+		"x",
 		"<c-r>",
-		'"hy:%s#<c-r>h##gc<left><left><left>',
+		'"hy:%s#\\V<c-r>h##gc<left><left><left>',
 		{ desc = "Replace all occurrences of selection" }
 	)
 
@@ -37,6 +39,8 @@ KEYMAPS.general = function()
 	vim.keymap.set("t", "<c-n>", "<c-\\><c-n>")
 
 	-- fast navigation
+	-- vim.keymap.set("n", "<c-d>", "<c-d>zz")
+	-- vim.keymap.set("n", "<c-u>", "<c-u>zz")
 	vim.keymap.set("n", "<c-e>", "7<c-e>")
 	vim.keymap.set("n", "<c-y>", "7<c-y>")
 	vim.keymap.set("n", "<c-h>", "20zh")
@@ -45,23 +49,20 @@ KEYMAPS.general = function()
 	vim.keymap.set("n", "<leader>j", "<c-w>j", { desc = "Move to lower pane" })
 	vim.keymap.set("n", "<leader>k", "<c-w>k", { desc = "Move to upper pane" })
 	vim.keymap.set("n", "<leader>l", "<c-w>l", { desc = "Move to right pane" })
-	vim.keymap.set("n", "gb", "<cmd>b#<cr>")
-	vim.keymap.set("n", "]b", "<cmd>bn<cr>")
-	vim.keymap.set("n", "[b", "<cmd>bp<cr>")
-	vim.keymap.set("n", "]q", "<cmd>cn<cr>")
-	vim.keymap.set("n", "[q", "<cmd>cp<cr>")
+	vim.keymap.set("n", "gb", "<cmd>b#<cr>", { desc = "Go to alt buffer" })
 
 	-- plugins
 	vim.keymap.set("n", "<leader>r", "<cmd>GrugFar<cr>", { desc = "Search and replace all files" })
 
 	vim.keymap.set("n", "<leader>gp", "<cmd>Gitsigns preview_hunk_inline<cr>")
 	vim.keymap.set("n", "<leader>gr", "<cmd>Gitsigns reset_hunk<cr>")
+	vim.keymap.set("n", "<leader>gt", "<cmd>Gitsigns toggle_current_line_blame<cr>")
 
-	vim.keymap.set("n", "<leader>co", "<Plug>(git-conflict-ours)", { desc = "Merge choose ours" })
-	vim.keymap.set("n", "<leader>ct", "<Plug>(git-conflict-theirs)", { desc = "Merge choose theirs" })
-	vim.keymap.set("n", "<leader>cb", "<Plug>(git-conflict-both)", { desc = "Merge choose both" })
-	vim.keymap.set("n", "<leader>c0", "<Plug>(git-conflict-none)", { desc = "Merge choose none" })
-	vim.keymap.set("n", "<leader>cc", function()
+	vim.keymap.set("n", "<leader>gco", "<Plug>(git-conflict-ours)", { desc = "Merge choose ours" })
+	vim.keymap.set("n", "<leader>gct", "<Plug>(git-conflict-theirs)", { desc = "Merge choose theirs" })
+	vim.keymap.set("n", "<leader>gcb", "<Plug>(git-conflict-both)", { desc = "Merge choose both" })
+	vim.keymap.set("n", "<leader>gc0", "<Plug>(git-conflict-none)", { desc = "Merge choose none" })
+	vim.keymap.set("n", "<leader>gcc", function()
 		vim.cmd("GitConflictRefresh")
 		vim.cmd("GitConflictListQf")
 	end, { desc = "Refresh and show conflicts" })
@@ -83,10 +84,13 @@ end
 -- MINI.FILES / FILE EXPLORER --
 --------------------------------
 
-KEYMAPS.mini_files = function(mini_files)
+KEYMAPS.mini_files = function()
+	local mini_files = require("mini.files")
 	mini_files.config.mappings.close = "<esc>"
 	vim.keymap.set("n", "-", function()
-		mini_files.open(vim.fn.expand("%:p:h"), false)
+		if mini_files.get_explorer_state() == nil then
+			mini_files.open(vim.api.nvim_buf_get_name(0))
+		end
 	end, { desc = "Open file explorer in current file" })
 	vim.keymap.set("n", "<leader>-", function()
 		mini_files.open()
@@ -111,6 +115,18 @@ end
 -----------------
 
 KEYMAPS.multicursor = function(mc)
+	vim.keymap.set({ "n", "x" }, "<up>", function()
+		mc.lineAddCursor(-1)
+	end, { desc = "Multicursor - Add cursor above" })
+	vim.keymap.set({ "n", "x" }, "<down>", function()
+		mc.lineAddCursor(1)
+	end, { desc = "Multicursor - Add cursor below" })
+	vim.keymap.set({ "n", "x" }, "<leader><up>", function()
+		mc.lineSkipCursor(-1)
+	end, { desc = "Multicursor - Skip cursor above" })
+	vim.keymap.set({ "n", "x" }, "<leader><down>", function()
+		mc.lineSkipCursor(1)
+	end, { desc = "Multicursor - Skip cursor below" })
 	-- Add and remove cursors with control + left click.
 	vim.keymap.set("n", "<c-leftmouse>", mc.handleMouse)
 	vim.keymap.set("n", "<c-leftdrag>", mc.handleMouseDrag)
@@ -131,8 +147,8 @@ KEYMAPS.multicursor = function(mc)
 	vim.keymap.set({ "n", "x" }, "<leader>mN", function()
 		mc.matchAddCursor(-1)
 	end, { desc = "Multicursor - Add previous word/selection" })
-	vim.keymap.set("x", "I", mc.insertVisual)
-	vim.keymap.set("x", "A", mc.appendVisual)
+	-- vim.keymap.set("x", "I", mc.insertVisual)
+	-- vim.keymap.set("x", "A", mc.appendVisual)
 	-- Mappings defined in a keymap layer only apply when there are
 	-- multiple cursors. This lets you have overlapping mappings.
 	mc.addKeymapLayer(function(layerSet)
@@ -195,6 +211,7 @@ end
 KEYMAPS.snacks = function(Snacks)
 	-- Top Pickers & Explorer
 	vim.keymap.set("n", "<leader><space>", Snacks.picker.smart, { desc = "Smart Find Files" })
+	vim.keymap.set("n", "<leader>f", Snacks.picker.smart, { desc = "Smart Find Files" })
 	vim.keymap.set("n", "<leader>e", func_wrap(Snacks.explorer.open, { hidden = true }), { desc = "File Tree" })
 	vim.keymap.set("n", "<leader>/", func_wrap(Snacks.picker.grep, { hidden = true }), { desc = "Grep" })
 	vim.keymap.set("n", "<leader>:", Snacks.picker.command_history, { desc = "Command History" })
@@ -231,6 +248,8 @@ KEYMAPS.snacks = function(Snacks)
 	vim.keymap.set("n", "<leader>sq", Snacks.picker.qflist, { desc = "Quickfix List" })
 	vim.keymap.set("n", "<leader>sR", Snacks.picker.resume, { desc = "Resume" })
 	vim.keymap.set("n", "<leader>su", Snacks.picker.undo, { desc = "Undo History" })
+	vim.keymap.set("n", "<leader>sm", Snacks.picker.marks, { desc = "Marks" })
+	vim.keymap.set("n", "<leader>sp", Snacks.picker.spelling, { desc = "Spelling Suggestions" })
 	vim.keymap.set("n", "<leader>sn", Snacks.notifier.show_history, { desc = "Notification History" })
 	vim.keymap.set("n", "<leader>ss", func_wrap(Snacks.picker, nil), { desc = "All Snacks Pickers" })
 	-- LSP
@@ -242,6 +261,7 @@ KEYMAPS.snacks = function(Snacks)
 	-- Other
 	vim.keymap.set("n", "<leader>.", func_wrap(Snacks.scratch, nil), { desc = "Toggle Scratch Buffer" })
 	vim.keymap.set("n", "<leader>S", Snacks.scratch.select, { desc = "Select Scratch Buffer" })
+	vim.keymap.set("n", "<leader>z", Snacks.zen.zen, { desc = "Enable Zen Mode" })
 end
 
 return KEYMAPS

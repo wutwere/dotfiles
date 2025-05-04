@@ -9,30 +9,38 @@ if vim.loop.os_uname().sysname == "Linux" then
 	vim.opt.clipboard = "unnamedplus"
 end
 vim.g.netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
-vim.opt.cindent = true
-vim.opt.cinoptions = { "N-s", "g0", "j1", "(s", "m1" }
+vim.opt.autoindent = true
+vim.opt.breakindent = true
 vim.opt.cursorline = true
 vim.opt.expandtab = true
 vim.opt.fillchars = { eob = " " }
 vim.opt.ignorecase = true
 vim.opt.linebreak = true
+vim.opt.list = true
+vim.opt.listchars = { tab = "▸ ", trail = "·", nbsp = "␣" }
 vim.opt.mouse = "nv"
-vim.opt.nu = true
-vim.opt.rnu = true
+vim.opt.number = true
+vim.opt.relativenumber = true
 vim.opt.scrolloff = 5
 vim.opt.shiftwidth = 2
+vim.opt.showmode = false
 vim.opt.sidescrolloff = 10
+vim.opt.signcolumn = "yes"
 vim.opt.smartcase = true
+vim.opt.smartindent = true
+vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.tabstop = 2
 vim.opt.termguicolors = true
+vim.opt.undofile = true
+vim.opt.virtualedit = "block"
+vim.opt.winborder = "rounded"
 vim.opt.wrap = false
-vim.api.nvim_create_autocmd({ "BufEnter", "VimEnter" }, {
+vim.api.nvim_create_autocmd({ "FileType" }, {
+	pattern = { "markdown" },
 	callback = function()
-		vim.cmd("hi cursorline guibg=NONE")
-		-- Reserve a space in the gutter
-		-- This will avoid an annoying layout shift in the screen
-		vim.opt.signcolumn = "yes"
+		vim.opt_local.spell = true
+		vim.opt_local.wrap = true
 	end,
 })
 
@@ -74,8 +82,18 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 vim.diagnostic.config({
+	virtual_text = {
+		format = function(diagnostic)
+			return tostring(diagnostic.code)
+		end,
+	},
+	virtual_lines = {
+		current_line = true,
+		format = function(diagnostic)
+			return ("%s: %s"):format(diagnostic.source, diagnostic.message)
+		end,
+	},
 	float = {
-		border = "rounded",
 		source = true,
 	},
 })

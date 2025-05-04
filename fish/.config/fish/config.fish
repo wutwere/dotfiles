@@ -4,6 +4,7 @@ end
 # PATH
 fish_add_path ~/.local/bin
 fish_add_path ~/.aftman/bin
+fish_add_path ~/.cargo/bin
 
 switch (uname)
     case "Darwin" # Code for macOS

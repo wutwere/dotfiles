@@ -16,7 +16,9 @@ return {
 			},
 
 			highlight_groups = {
-				["@markup.italic"] = { italic = true },
+				["@markup.italic"] = { italic = true }, -- for markdown if i decide to disable global italic
+				["PmenuExtra"] = { bg = "NONE" }, -- for blink cmp
+				["CursorLine"] = { bg = "NONE" },
 			},
 		},
 	},
@@ -28,7 +30,11 @@ return {
 				options = {
 					theme = (function()
 						local theme = require("lualine.themes.rose-pine-alt")
-						theme.normal.c.bg = nil
+						for _, mode in pairs(theme) do
+							for _, section in pairs(mode) do
+								section.bg = nil -- fully transparent background
+							end
+						end
 						return theme
 					end)(),
 					always_show_tabline = false,
