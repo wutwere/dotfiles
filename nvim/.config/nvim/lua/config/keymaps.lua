@@ -238,7 +238,6 @@ KEYMAPS.snacks = function(Snacks)
 	vim.keymap.set("n", "<leader>gL", Snacks.picker.git_log_line, { desc = "Git Log Line" })
 	vim.keymap.set("n", "<leader>gf", Snacks.picker.git_log_file, { desc = "Git Log File" })
 	-- Grep
-	vim.keymap.set("n", "<leader>sb", Snacks.picker.lines, { desc = "Buffer Lines" })
 	vim.keymap.set(
 		"n",
 		"<leader>sB",
@@ -253,8 +252,8 @@ KEYMAPS.snacks = function(Snacks)
 	)
 	-- search
 	vim.keymap.set("n", '<leader>s"', Snacks.picker.registers, { desc = "Registers" })
-	vim.keymap.set("n", "<leader>s/", Snacks.picker.search_history, { desc = "Search History" })
-	vim.keymap.set("n", "<leader>sb", Snacks.picker.lines, { desc = "Buffer Lines" })
+	vim.keymap.set("n", "<leader>s/", Snacks.picker.lines, { desc = "Buffer Lines" })
+	vim.keymap.set("n", "<leader>sb", Snacks.picker.buffers, { desc = "Buffers" })
 	vim.keymap.set("n", "<leader>sd", Snacks.picker.diagnostics, { desc = "Diagnostics" })
 	vim.keymap.set("n", "<leader>sD", Snacks.picker.diagnostics_buffer, { desc = "Buffer Diagnostics" })
 	vim.keymap.set("n", "<leader>sh", Snacks.picker.help, { desc = "Help Pages" })

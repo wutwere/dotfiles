@@ -58,7 +58,15 @@ return {
 					lualine_z = { "location" },
 				},
 				tabline = {
-					lualine_a = { { "buffers", mode = 2, use_mode_colors = true, max_length = vim.o.columns } },
+					lualine_a = {
+						{
+							"buffers",
+							mode = 0,
+							show_filename_only = false,
+							use_mode_colors = true,
+							max_length = vim.o.columns,
+						},
+					},
 				},
 			})
 		end,
