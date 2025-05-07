@@ -22,7 +22,7 @@ KEYMAPS.general = function()
 	vim.keymap.set({ "n", "v" }, "<leader>P", '"+P', { desc = "Paste clipboard" })
 	local virtual_lines_enabled = false
 	vim.keymap.set("n", "<leader>d", function()
-		if virtual_lines_enabled then
+		if not virtual_lines_enabled then
 			vim.diagnostic.config({
 				virtual_lines = {
 					current_line = true,
