@@ -23,11 +23,11 @@ config.window_padding = {
 -- config.color_scheme = "catppuccin-macchiato"
 config.color_scheme = "rose-pine"
 config.colors = {
-  background = "#000000",
+	background = "#000000",
 }
 config.window_background_opacity = 0.9
 
--- config.font = wezterm.font("JetBrainsMono Nerd Font Mono")
+config.font = wezterm.font("JetBrainsMono Nerd Font Mono", { weight = "DemiBold" })
 config.font_size = 11
 config.line_height = 1.13
 config.max_fps = 144
@@ -84,4 +84,3 @@ config.wsl_domains = {
 config.default_domain = "WSL:Arch"
 
 return config
-eturn config
