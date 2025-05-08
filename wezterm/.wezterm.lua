@@ -22,9 +22,16 @@ config.window_padding = {
 -- config.color_scheme = "tokyonight"
 -- config.color_scheme = "catppuccin-macchiato"
 config.color_scheme = "rose-pine"
-config.font = wezterm.font("CaskaydiaMono Nerd Font Mono")
-config.line_height = 1.12
+config.colors = {
+  background = "#000000",
+}
+config.window_background_opacity = 0.9
+
+-- config.font = wezterm.font("JetBrainsMono Nerd Font Mono")
+config.font_size = 11
+config.line_height = 1.13
 config.max_fps = 144
+config.freetype_load_target = "HorizontalLcd"
 
 config.default_cursor_style = "BlinkingUnderline"
 config.cursor_blink_rate = 300
@@ -77,3 +84,4 @@ config.wsl_domains = {
 config.default_domain = "WSL:Arch"
 
 return config
+eturn config
