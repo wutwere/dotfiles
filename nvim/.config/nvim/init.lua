@@ -5,9 +5,6 @@ KEYMAPS.general()
 -- VIM OPTIONS --
 -----------------
 
-if vim.loop.os_uname().sysname == "Linux" then
-	vim.opt.clipboard = "unnamedplus"
-end
 vim.g.netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
 vim.opt.autoindent = true
 vim.opt.breakindent = true
