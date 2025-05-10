@@ -58,6 +58,10 @@ function cinit
     # <<< conda initialize <<<
 end
 
+function minit
+  ~/.local/bin/mise activate fish | source
+end
+
 # zoxide
 zoxide init fish | source
 

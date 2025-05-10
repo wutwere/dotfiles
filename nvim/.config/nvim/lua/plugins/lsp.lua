@@ -29,6 +29,9 @@ return {
 				rust_analyzer = { settings = { ["rust-analyzer"] = { check = { command = "clippy" } } } },
 				texlab = {},
 				biome = {},
+				ruby_lsp = {},
+				standardrb = {},
+				-- sorbet = { cmd = { "srb", "tc", "--lsp", "--disable-watchman", "." } },
 			}
 
 			for lsp, config in pairs(custom_config) do
