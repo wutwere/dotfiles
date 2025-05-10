@@ -64,7 +64,7 @@ return {
 							mode = 0,
 							show_filename_only = false,
 							use_mode_colors = true,
-							-- max_length = vim.o.columns,
+							max_length = vim.o.columns,
 						},
 					},
 				},

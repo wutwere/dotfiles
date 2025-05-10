@@ -4,6 +4,7 @@ end
 # PATH
 fish_add_path ~/.local/bin
 fish_add_path ~/.aftman/bin
+fish_add_path ~/.rokit/bin
 fish_add_path ~/.cargo/bin
 
 switch (uname)
@@ -17,7 +18,6 @@ end
 # Abbreviations
 abbr -ag cd "z"
 abbr -ag lg "lazygit"
-abbr -ag n "nvim"
 abbr -ag v "nvim"
 
 # nvim
