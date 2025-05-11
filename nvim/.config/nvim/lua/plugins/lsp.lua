@@ -20,6 +20,16 @@ return {
 						"--definitions=~/.luau-lsp/globalTypes.d.luau",
 						"--docs=~/.luau-lsp/en-us.json",
 					},
+					settings = {
+						["luau-lsp"] = {
+							completion = {
+								enableFragmentAutocomplete = true,
+								imports = {
+									enabled = true,
+								},
+							},
+						},
+					},
 				},
 				lua_ls = { settings = { Lua = { diagnostics = { globals = { "vim" } } } } },
 				clangd = {},
@@ -40,7 +50,9 @@ return {
 						config[k] = v
 					end
 				end
-				lspconfig[lsp].setup(config)
+				-- lspconfig[lsp].setup(config)
+				vim.lsp.config(lsp, config)
+				vim.lsp.enable(lsp)
 			end
 
 			vim.api.nvim_create_autocmd("LspAttach", {
