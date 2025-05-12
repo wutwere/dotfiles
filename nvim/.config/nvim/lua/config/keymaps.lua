@@ -20,22 +20,6 @@ KEYMAPS.general = function()
 	end, { desc = "Copy file path to clipboard" })
 	vim.keymap.set({ "n", "v" }, "<leader>p", '"+p', { desc = "Paste clipboard" })
 	vim.keymap.set({ "n", "v" }, "<leader>P", '"+P', { desc = "Paste clipboard" })
-	local virtual_lines_enabled = false
-	vim.keymap.set("n", "<leader>d", function()
-		if not virtual_lines_enabled then
-			vim.diagnostic.config({
-				virtual_lines = {
-					current_line = true,
-					format = function(diagnostic)
-						return ("%s: %s [%s]"):format(diagnostic.source, diagnostic.message, tostring(diagnostic.code))
-					end,
-				},
-			})
-		else
-			vim.diagnostic.config({ virtual_lines = false })
-		end
-		virtual_lines_enabled = not virtual_lines_enabled
-	end, { desc = "Toggle diagnostic virtual_lines" })
 	vim.keymap.set("n", "<leader>w", "<cmd>tabc<cr>", { desc = "Close tab" })
 	vim.keymap.set(
 		"x",
@@ -43,6 +27,26 @@ KEYMAPS.general = function()
 		'"hy:%s#\\V<c-r>h##gc<left><left><left>',
 		{ desc = "Replace all occurrences of selection" }
 	)
+
+	local virtual_lines_enabled = true
+	local function toggle_virtual_lines()
+		if not virtual_lines_enabled then
+			vim.diagnostic.config({
+				virtual_text = false,
+				virtual_lines = {
+					format = function(diagnostic)
+						return ("%s: %s [%s]"):format(diagnostic.source, diagnostic.message, tostring(diagnostic.code))
+					end,
+				},
+			})
+		else
+			vim.diagnostic.config({ virtual_text = true, virtual_lines = false })
+		end
+		virtual_lines_enabled = not virtual_lines_enabled
+	end
+	vim.keymap.set("n", "<leader>D", toggle_virtual_lines, { desc = "Toggle diagnostic virtual_lines" })
+	vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Open diagnostic float" })
+	toggle_virtual_lines()
 
 	-- competitive programming
 	vim.keymap.set("n", "<leader>t", function()
