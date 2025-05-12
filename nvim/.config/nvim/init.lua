@@ -14,7 +14,7 @@ vim.opt.fillchars = { eob = " " }
 vim.opt.ignorecase = true
 vim.opt.linebreak = true
 vim.opt.list = true
-vim.opt.listchars = { tab = "▸ ", trail = "·", nbsp = "␣" }
+vim.opt.listchars = { tab = "  ", trail = "·", nbsp = "␣" }
 vim.opt.mouse = "nv"
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -79,7 +79,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 vim.diagnostic.config({
-	virtual_text = true,
 	float = {
 		source = true,
 	},
