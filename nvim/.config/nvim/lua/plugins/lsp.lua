@@ -20,6 +20,16 @@ return {
 						"--definitions=~/.luau-lsp/globalTypes.d.luau",
 						"--docs=~/.luau-lsp/en-us.json",
 					},
+					settings = {
+						["luau-lsp"] = {
+							completion = {
+								enableFragmentAutocomplete = true,
+								imports = {
+									enabled = true,
+								},
+							},
+						},
+					},
 				},
 				lua_ls = { settings = { Lua = { diagnostics = { globals = { "vim" } } } } },
 				clangd = {},
@@ -29,6 +39,9 @@ return {
 				rust_analyzer = { settings = { ["rust-analyzer"] = { check = { command = "clippy" } } } },
 				texlab = {},
 				biome = {},
+				ruby_lsp = {},
+				standardrb = {},
+				-- sorbet = { cmd = { "srb", "tc", "--lsp", "--disable-watchman", "." } },
 			}
 
 			for lsp, config in pairs(custom_config) do
@@ -37,7 +50,9 @@ return {
 						config[k] = v
 					end
 				end
-				lspconfig[lsp].setup(config)
+				-- lspconfig[lsp].setup(config)
+				vim.lsp.config(lsp, config)
+				vim.lsp.enable(lsp)
 			end
 
 			vim.api.nvim_create_autocmd("LspAttach", {

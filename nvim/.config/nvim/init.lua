@@ -5,9 +5,6 @@ KEYMAPS.general()
 -- VIM OPTIONS --
 -----------------
 
-if vim.loop.os_uname().sysname == "Linux" then
-	vim.opt.clipboard = "unnamedplus"
-end
 vim.g.netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
 vim.opt.autoindent = true
 vim.opt.breakindent = true
@@ -17,7 +14,7 @@ vim.opt.fillchars = { eob = " " }
 vim.opt.ignorecase = true
 vim.opt.linebreak = true
 vim.opt.list = true
-vim.opt.listchars = { tab = "▸ ", trail = "·", nbsp = "␣" }
+vim.opt.listchars = { tab = "  ", trail = "·", nbsp = "␣" }
 vim.opt.mouse = "nv"
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -82,17 +79,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 vim.diagnostic.config({
-	virtual_text = {
-		format = function(diagnostic)
-			return tostring(diagnostic.code)
-		end,
-	},
-	virtual_lines = {
-		current_line = true,
-		format = function(diagnostic)
-			return ("%s: %s"):format(diagnostic.source, diagnostic.message)
-		end,
-	},
 	float = {
 		source = true,
 	},
