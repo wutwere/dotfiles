@@ -52,7 +52,7 @@ tlmgr search --global --file <missing-file> # then install to fix compile errors
 
 ```sh
 # to export packages
-yay -Qqe > arch.txt
+paru -Qqe > arch.txt
 # to install packages
-yay -S $(cat arch.txt)
+paru -S $(cat arch.txt)
 ```
