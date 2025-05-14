@@ -12,6 +12,12 @@ return {
 				-- 	client.server_capabilities.semanticTokensProvider = nil
 				-- end,
 			}
+			if default_config.capabilities.workspace == nil then
+				default_config.capabilities.workspace = {}
+			end
+			default_config.capabilities.workspace.didChangeWatchedFiles = {
+				dynamicRegistration = true,
+			}
 			local custom_config = {
 				luau_lsp = {
 					cmd = {
@@ -42,6 +48,11 @@ return {
 				ruby_lsp = {},
 				standardrb = {},
 				-- sorbet = { cmd = { "srb", "tc", "--lsp", "--disable-watchman", "." } },
+				jdtls = {
+					on_init = function(client, _)
+						client.server_capabilities.semanticTokensProvider = nil
+					end,
+				},
 			}
 
 			for lsp, config in pairs(custom_config) do
