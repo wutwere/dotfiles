@@ -1,6 +1,6 @@
-theme = rose-pine-moon
+theme = Monokai Remastered
 # background = #181524
-background = #000000
+background = #0b0b12
 
 cursor-style = underline
 cursor-style-blink = true
@@ -10,7 +10,7 @@ mouse-hide-while-typing = true
 window-decoration = auto
 macos-titlebar-style = hidden
 
-font-family = JetBrainsMono Nerd Font Mono
+# font-family = JetBrainsMono Nerd Font Mono
 # font-family = CaskaydiaCove Nerd Font Mono
 # font-family = FiraCode Nerd Font Mono
 # font-family = Liga SFMono Nerd Font
@@ -18,18 +18,21 @@ font-family = JetBrainsMono Nerd Font Mono
 # font-family = Hack Nerd Font Mono
 # font-family = RobotoMono Nerd Font Mono
 # font-family = VictorMono Nerd Font Mono
-font-size = 15
-adjust-cell-height = 12%
-# adjust-cell-width = 5%
-font-thicken = true
+font-family = Monaspace Neon
+font-family-italic = Monaspace Radon
+font-size = 14
+adjust-cell-height = 33%
+adjust-cell-width = -5%
 # 0 to 255
 font-thicken-strength = 30
+font-thicken = true
+font-feature = calt,liga,dlig,ss01,ss02,ss03,ss04,ss05,ss06,ss07,ss08
 
-window-padding-x = 10
-window-padding-y = 7
+window-padding-x = 0
+window-padding-y = 0
 window-padding-balance = true
 
-background-opacity = 0.85
+background-opacity = 1.85
 background-blur = 35
 
 confirm-close-surface = false

@@ -8,7 +8,7 @@ local mine = {
 	red = 0xffff229e,
 	-- green = 0xffe4bebb, -- light rose pine peach
 	-- green = 0xffbb9af7, -- purple
-	green = 0xffbfa8e3,
+	green = 0xffCBA6F7,
 	blue = 0xff7aa2f7,
 	yellow = 0xffa6e3a1,
 	orange = 0xfffab387,
@@ -89,7 +89,7 @@ local function with_alpha(color, alpha)
 	return (color & 0x00ffffff) | (math.floor(alpha * 255.0) << 24)
 end
 
-colors = rose_pine
+local colors = mine
 colors.with_alpha = with_alpha
 
 colors.bar = {
