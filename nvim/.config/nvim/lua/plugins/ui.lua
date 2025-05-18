@@ -13,6 +13,7 @@ local CUSTOM_HIGHLIGHTS = {
 	["TabLineFill"] = { bg = "NONE" },
 	["TreesitterContext"] = { bg = "NONE" },
 	["TreesitterContextLineNumber"] = { link = "Keyword" },
+	["SpellBad"] = { link = "NONE" },
 }
 
 return {
@@ -23,16 +24,6 @@ return {
 			transparent_background = true,
 			background_clear = {
 				"float_win",
-			},
-			styles = {
-				comment = { italic = true },
-				keyword = { italic = false, bold = true }, -- any other keyword
-				type = { italic = false }, -- (preferred) int, long, char, etc
-				storageclass = { italic = false }, -- static, register, volatile, etc
-				structure = { italic = false }, -- struct, union, enum, etc
-				parameter = { italic = false }, -- parameter pass in function
-				annotation = { italic = false },
-				tag_attribute = { italic = false }, -- attribute of tag in reactjs
 			},
 			override = function(c)
 				return CUSTOM_HIGHLIGHTS
@@ -85,6 +76,7 @@ return {
 				options = {
 					theme = (function()
 						local theme = require("lualine.themes.rose-pine-alt")
+						theme.normal.a.fg = "#FD971E"
 						for _, mode in pairs(theme) do
 							for k, section in pairs(mode) do
 								-- if k == "a" then

@@ -63,7 +63,7 @@ return {
 		opts = {
 			legacy_computing_symbols_support = true,
 			smear_between_neighbor_lines = false,
-			cursor_color = "#ffffff",
+			cursor_color = "#ff9900",
 		},
 	},
 }
