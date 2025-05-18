@@ -1,4 +1,63 @@
+local CUSTOM_HIGHLIGHTS = {
+	["@markup.italic"] = { italic = true }, -- for markdown if i decide to disable global italic
+	["Comment"] = { italic = true }, -- for markdown if i decide to disable global italic
+	["PmenuExtra"] = { bg = "NONE" }, -- for blink cmp
+	["Pmenu"] = { bg = "NONE" }, -- for blink cmp
+	["CursorLine"] = { bg = "NONE" },
+	["Directory"] = { bg = "NONE" },
+	["BlinkCmpMenu"] = { bg = "NONE" },
+	["BlinkCmpDoc"] = { bg = "NONE" },
+	["BlinkCmpDocSeparator"] = { bg = "NONE" },
+	["StatusLine"] = { bg = "NONE" },
+	["BufferLineFill"] = { bg = "NONE" },
+	["TabLineFill"] = { bg = "NONE" },
+	["TreesitterContext"] = { bg = "NONE" },
+	["TreesitterContextLineNumber"] = { link = "Keyword" },
+}
+
 return {
+	{
+		"loctvl842/monokai-pro.nvim",
+		priority = 1000,
+		opts = {
+			transparent_background = true,
+			background_clear = {
+				"float_win",
+			},
+			styles = {
+				comment = { italic = true },
+				keyword = { italic = false, bold = true }, -- any other keyword
+				type = { italic = false }, -- (preferred) int, long, char, etc
+				storageclass = { italic = false }, -- static, register, volatile, etc
+				structure = { italic = false }, -- struct, union, enum, etc
+				parameter = { italic = false }, -- parameter pass in function
+				annotation = { italic = false },
+				tag_attribute = { italic = false }, -- attribute of tag in reactjs
+			},
+			override = function(c)
+				return CUSTOM_HIGHLIGHTS
+			end,
+		},
+	},
+	{
+		"projekt0n/github-nvim-theme",
+		name = "github-theme",
+		lazy = false, -- make sure we load this during startup if it is your main colorscheme
+		priority = 1000, -- make sure to load this before all the other start plugins
+		opts = {
+			options = {
+				transparent = true,
+				styles = {
+					comments = "italic",
+					keywords = "bold",
+					types = "italic,bold",
+				},
+			},
+			groups = {
+				all = CUSTOM_HIGHLIGHTS,
+			},
+		},
+	},
 	{
 		"rose-pine/neovim",
 		name = "rose-pine",
@@ -11,15 +70,11 @@ return {
 
 			styles = {
 				bold = true,
-				italic = true,
+				italic = false,
 				transparency = true,
 			},
 
-			highlight_groups = {
-				["@markup.italic"] = { italic = true }, -- for markdown if i decide to disable global italic
-				["PmenuExtra"] = { bg = "NONE" }, -- for blink cmp
-				["CursorLine"] = { bg = "NONE" },
-			},
+			highlight_groups = CUSTOM_HIGHLIGHTS,
 		},
 	},
 	{
@@ -31,8 +86,11 @@ return {
 					theme = (function()
 						local theme = require("lualine.themes.rose-pine-alt")
 						for _, mode in pairs(theme) do
-							for _, section in pairs(mode) do
-								section.bg = nil -- fully transparent background
+							for k, section in pairs(mode) do
+								-- if k == "a" then
+								-- 	section.fg = section.bg
+								-- end
+								section.bg = "NONE" -- fully transparent background
 							end
 						end
 						return theme
@@ -62,8 +120,8 @@ return {
 						{
 							"buffers",
 							mode = 0,
-							show_filename_only = false,
-							use_mode_colors = true,
+							show_filename_only = true,
+							use_mode_colors = false,
 							max_length = vim.o.columns,
 						},
 					},
