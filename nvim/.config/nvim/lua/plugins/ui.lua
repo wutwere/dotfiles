@@ -25,6 +25,15 @@ return {
 			background_clear = {
 				"float_win",
 			},
+			styles = {
+				keyword = { italic = false }, -- any other keyword
+				type = { italic = false }, -- (preferred) int, long, char, etc
+				storageclass = { italic = false }, -- static, register, volatile, etc
+				structure = { italic = false }, -- struct, union, enum, etc
+				parameter = { italic = false }, -- parameter pass in function
+				annotation = { italic = false },
+				tag_attribute = { italic = false },
+			},
 			override = function(c)
 				return CUSTOM_HIGHLIGHTS
 			end,
