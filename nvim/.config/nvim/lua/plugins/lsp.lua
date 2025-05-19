@@ -75,12 +75,12 @@ return {
 		end,
 	},
 	{ "williamboman/mason.nvim", opts = { ui = { border = "rounded" } } },
-	{
-		"williamboman/mason-lspconfig.nvim",
-		opts = {
-			automatic_installation = true,
-		},
-	},
+	-- {
+	-- 	"williamboman/mason-lspconfig.nvim",
+	-- 	opts = {
+	-- 		automatic_installation = true,
+	-- 	},
+	-- },
 	{
 		"mfussenegger/nvim-lint",
 		config = function()

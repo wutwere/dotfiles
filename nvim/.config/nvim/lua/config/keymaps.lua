@@ -69,6 +69,7 @@ KEYMAPS.general = function()
 	vim.keymap.set("n", "<leader>k", "<c-w>k", { desc = "Move to upper pane" })
 	vim.keymap.set("n", "<leader>l", "<c-w>l", { desc = "Move to right pane" })
 	vim.keymap.set("n", "gb", "<cmd>b#<cr>", { desc = "Go to alt buffer" })
+	vim.keymap.set("n", "<bs>", "<cmd>bd<cr>")
 
 	-- plugins
 	vim.keymap.set("n", "<leader>r", "<cmd>GrugFar<cr>", { desc = "Search and replace all files" })
@@ -87,8 +88,6 @@ KEYMAPS.general = function()
 	end, { desc = "Refresh and show conflicts" })
 
 	vim.keymap.set("n", "<leader>n", "<cmd>Namu symbols<cr>", { desc = "Open LSP search" })
-
-	vim.keymap.set("n", "<bs>", "<cmd>NoiceDismiss<cr>")
 
 	vim.keymap.set("n", "<leader>aa", "<cmd>AIChatNew<cr>", { desc = "AI - New Chat" })
 	vim.keymap.set("n", "<leader>ac", ":AIAgent ", { desc = "AI - Change Model" })

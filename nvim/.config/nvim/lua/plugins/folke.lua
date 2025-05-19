@@ -15,8 +15,10 @@ return {
 				enabled = true,
 				expand = false,
 			},
+			image = { enabled = true },
 			notifier = {
 				enabled = true,
+				top_down = false,
 				timeout = 3000,
 			},
 			picker = {
