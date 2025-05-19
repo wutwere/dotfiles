@@ -14,6 +14,11 @@ local CUSTOM_HIGHLIGHTS = {
 	["TreesitterContext"] = { bg = "NONE" },
 	["TreesitterContextLineNumber"] = { link = "Keyword" },
 	["SpellBad"] = { link = "NONE" },
+	["SpellCap"] = { link = "NONE" },
+	["SpellLocal"] = { link = "NONE" },
+	["SpellRare"] = { link = "NONE" },
+	["ColorColumn"] = { bg = "NONE" },
+	["RenderMarkdownChecked"] = { fg = "#A7E22E" },
 }
 
 return {
@@ -39,25 +44,25 @@ return {
 			end,
 		},
 	},
-	{
-		"projekt0n/github-nvim-theme",
-		name = "github-theme",
-		lazy = false, -- make sure we load this during startup if it is your main colorscheme
-		priority = 1000, -- make sure to load this before all the other start plugins
-		opts = {
-			options = {
-				transparent = true,
-				styles = {
-					comments = "italic",
-					keywords = "bold",
-					types = "italic,bold",
-				},
-			},
-			groups = {
-				all = CUSTOM_HIGHLIGHTS,
-			},
-		},
-	},
+	-- {
+	-- 	"projekt0n/github-nvim-theme",
+	-- 	name = "github-theme",
+	-- 	lazy = false, -- make sure we load this during startup if it is your main colorscheme
+	-- 	priority = 1000, -- make sure to load this before all the other start plugins
+	-- 	opts = {
+	-- 		options = {
+	-- 			transparent = true,
+	-- 			styles = {
+	-- 				comments = "italic",
+	-- 				keywords = "bold",
+	-- 				types = "italic,bold",
+	-- 			},
+	-- 		},
+	-- 		groups = {
+	-- 			all = CUSTOM_HIGHLIGHTS,
+	-- 		},
+	-- 	},
+	-- },
 	{
 		"rose-pine/neovim",
 		name = "rose-pine",

@@ -8,6 +8,7 @@ KEYMAPS.general()
 vim.g.netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
 vim.opt.autoindent = true
 vim.opt.breakindent = true
+vim.opt.cmdheight = 0
 vim.opt.cursorline = true
 vim.opt.expandtab = true
 vim.opt.fillchars = { eob = " " }
