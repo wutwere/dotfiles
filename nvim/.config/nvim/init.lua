@@ -41,6 +41,11 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 		vim.opt_local.wrap = true
 	end,
 })
+vim.api.nvim_create_autocmd("BufEnter", {
+	callback = function()
+		vim.opt.formatoptions:remove({ "o", "r" })
+	end,
+})
 
 ---------------
 -- LAZY.NVIM --
