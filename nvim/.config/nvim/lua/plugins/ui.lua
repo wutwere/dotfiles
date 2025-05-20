@@ -17,7 +17,7 @@ local CUSTOM_HIGHLIGHTS = {
 	["SpellCap"] = { link = "NONE" },
 	["SpellLocal"] = { link = "NONE" },
 	["SpellRare"] = { link = "NONE" },
-	["ColorColumn"] = { bg = "NONE" },
+	["ColorColumn"] = { bg = "#0f0f1f" },
 	["RenderMarkdownChecked"] = { fg = "#A7E22E" },
 }
 
@@ -90,7 +90,7 @@ return {
 				options = {
 					theme = (function()
 						local theme = require("lualine.themes.rose-pine-alt")
-						theme.normal.a.fg = "#FD971E"
+						theme.normal.a.fg = "#F92572"
 						for _, mode in pairs(theme) do
 							for k, section in pairs(mode) do
 								-- if k == "a" then

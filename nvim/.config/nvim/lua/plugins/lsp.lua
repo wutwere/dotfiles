@@ -29,7 +29,6 @@ return {
 					settings = {
 						["luau-lsp"] = {
 							completion = {
-								enableFragmentAutocomplete = true,
 								imports = {
 									enabled = true,
 								},

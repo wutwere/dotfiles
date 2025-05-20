@@ -25,7 +25,7 @@ adjust-cell-height = 33%
 adjust-cell-width = -5%
 # 0 to 255
 font-thicken-strength = 30
-font-thicken = true
+font-thicken = false
 font-feature = calt,liga,dlig,ss01,ss02,ss03,ss04,ss05,ss06,ss07,ss08
 
 window-padding-x = 0
