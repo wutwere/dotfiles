@@ -64,6 +64,8 @@ return {
 			legacy_computing_symbols_support = true,
 			smear_between_neighbor_lines = false,
 			cursor_color = "#ff9900",
+			stiffness = 0.7, -- 0.6      [0, 1]
+			distance_stop_animating = 0.5, -- 0.1      > 0
 		},
 	},
 }

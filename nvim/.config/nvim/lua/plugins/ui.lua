@@ -1,24 +1,26 @@
 local CUSTOM_HIGHLIGHTS = {
 	["@markup.italic"] = { italic = true }, -- for markdown if i decide to disable global italic
-	["Comment"] = { italic = true }, -- for markdown if i decide to disable global italic
-	["PmenuExtra"] = { bg = "NONE" }, -- for blink cmp
-	["Pmenu"] = { bg = "NONE" }, -- for blink cmp
-	["CursorLine"] = { bg = "NONE" },
-	["Directory"] = { bg = "NONE" },
-	["BlinkCmpMenu"] = { bg = "NONE" },
 	["BlinkCmpDoc"] = { bg = "NONE" },
 	["BlinkCmpDocSeparator"] = { bg = "NONE" },
-	["StatusLine"] = { bg = "NONE" },
+	["BlinkCmpMenu"] = { bg = "NONE" },
 	["BufferLineFill"] = { bg = "NONE" },
-	["TabLineFill"] = { bg = "NONE" },
-	["TreesitterContext"] = { bg = "NONE" },
-	["TreesitterContextLineNumber"] = { link = "Keyword" },
+	["ColorColumn"] = { bg = "#0f0f1f" }, -- markdown code block
+	["Comment"] = { italic = true }, -- for markdown if i decide to disable global italic
+	["CursorLine"] = { bg = "NONE" },
+	["Directory"] = { bg = "NONE" },
+	["Pmenu"] = { bg = "NONE" }, -- for blink cmp
+	["PmenuExtra"] = { bg = "NONE" }, -- for blink cmp
+	["RenderMarkdownChecked"] = { fg = "#A7E22E" },
+	["Search"] = { bg = "NONE" },
+	["SignColumn"] = { bg = "NONE" },
 	["SpellBad"] = { link = "NONE" },
 	["SpellCap"] = { link = "NONE" },
 	["SpellLocal"] = { link = "NONE" },
 	["SpellRare"] = { link = "NONE" },
-	["ColorColumn"] = { bg = "#0f0f1f" },
-	["RenderMarkdownChecked"] = { fg = "#A7E22E" },
+	["StatusLine"] = { bg = "NONE" },
+	["TabLineFill"] = { bg = "NONE" },
+	["TreesitterContext"] = { bg = "NONE" },
+	["TreesitterContextLineNumber"] = { link = "Keyword" },
 }
 
 return {
@@ -76,7 +78,7 @@ return {
 			styles = {
 				bold = true,
 				italic = false,
-				transparency = true,
+				transparency = false,
 			},
 
 			highlight_groups = CUSTOM_HIGHLIGHTS,
@@ -91,6 +93,7 @@ return {
 					theme = (function()
 						local theme = require("lualine.themes.rose-pine-alt")
 						theme.normal.a.fg = "#F92572"
+						theme.inactive.a.gui = nil
 						for _, mode in pairs(theme) do
 							for k, section in pairs(mode) do
 								-- if k == "a" then
@@ -104,18 +107,24 @@ return {
 					always_show_tabline = true,
 					globalstatus = true,
 					component_separators = { left = "", right = "" },
-					section_separators = { left = "", right = "" },
+					section_separators = { left = "", right = "" },
 				},
 				sections = {
 					lualine_a = { "mode" },
-					lualine_b = {
+					lualine_b = {},
+					lualine_c = {
 						"branch",
 						"diff",
 						{ "tabs", mode = 1, use_mode_colors = true, max_length = vim.o.columns / 2 },
 					},
-					lualine_c = {},
 					lualine_x = {
+						function()
+							local reg = vim.fn.reg_recording()
+							return reg == "" and "" or "recording @" .. reg
+						end,
+						"searchcount",
 						"diagnostics",
+						"lsp_status",
 						"progress",
 					},
 					lualine_y = {},
