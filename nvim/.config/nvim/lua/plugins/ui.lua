@@ -8,6 +8,7 @@ local CUSTOM_HIGHLIGHTS = {
 	["Comment"] = { italic = true }, -- for markdown if i decide to disable global italic
 	["CursorLine"] = { bg = "NONE" },
 	["Directory"] = { bg = "NONE" },
+	["LazyNormal"] = { bg = "NONE" },
 	["Pmenu"] = { bg = "NONE" }, -- for blink cmp
 	["PmenuExtra"] = { bg = "NONE" }, -- for blink cmp
 	["RenderMarkdownChecked"] = { fg = "#A7E22E" },
@@ -128,7 +129,12 @@ return {
 						"progress",
 					},
 					lualine_y = {},
-					lualine_z = { "location" },
+					lualine_z = {
+						-- "location",
+						function()
+							return vim.fn.line("$") .. "L"
+						end,
+					},
 				},
 				tabline = {
 					lualine_a = {
