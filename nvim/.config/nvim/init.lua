@@ -17,8 +17,6 @@ vim.opt.linebreak = true
 vim.opt.list = true
 vim.opt.listchars = { tab = "  ", trail = "·", nbsp = "␣" }
 vim.opt.mouse = "nv"
-vim.opt.number = true
-vim.opt.relativenumber = true
 vim.opt.scrolloff = 5
 vim.opt.shiftwidth = 2
 vim.opt.showmode = false
@@ -44,6 +42,8 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 vim.api.nvim_create_autocmd("BufEnter", {
 	callback = function()
 		vim.opt.formatoptions:remove({ "o", "r" })
+		vim.opt.number = true
+		vim.opt.relativenumber = true
 	end,
 })
 
