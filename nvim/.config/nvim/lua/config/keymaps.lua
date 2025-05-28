@@ -9,8 +9,8 @@ vim.g.maplocalleader = " "
 
 KEYMAPS.general = function()
 	-- editor
-	vim.keymap.set({ "n", "x" }, "j", "gj", { silent = true, noremap = true })
-	vim.keymap.set({ "n", "x" }, "k", "gk", { silent = true, noremap = true })
+	vim.keymap.set({ "n", "x" }, "j", "gj", { noremap = true })
+	vim.keymap.set({ "n", "x" }, "k", "gk", { noremap = true })
 	vim.keymap.set("i", "{<cr>", "{<cr>}<esc>O")
 	vim.keymap.set("i", "{<s-cr>", "{<cr>}<esc>O")
 	vim.keymap.set("v", "<leader>y", '"+y', { desc = "Copy selected to clipboard" })
@@ -20,7 +20,6 @@ KEYMAPS.general = function()
 	end, { desc = "Copy file path to clipboard" })
 	vim.keymap.set({ "n", "v" }, "<leader>p", '"+p', { desc = "Paste clipboard" })
 	vim.keymap.set({ "n", "v" }, "<leader>P", '"+P', { desc = "Paste clipboard" })
-	vim.keymap.set("n", "<leader>w", "<cmd>tabc<cr>", { desc = "Close tab" })
 	vim.keymap.set(
 		"x",
 		"<c-r>",
