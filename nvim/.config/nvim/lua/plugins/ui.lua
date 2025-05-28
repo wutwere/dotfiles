@@ -4,7 +4,7 @@ local CUSTOM_HIGHLIGHTS = {
 	["BlinkCmpDocSeparator"] = { bg = "NONE" },
 	["BlinkCmpMenu"] = { bg = "NONE" },
 	["BufferLineFill"] = { bg = "NONE" },
-	["ColorColumn"] = { bg = "#0f0f1f" }, -- markdown code block
+	["ColorColumn"] = { bg = "#181C29" }, -- markdown code block
 	["Comment"] = { italic = true }, -- for markdown if i decide to disable global italic
 	["CursorLine"] = { bg = "NONE" },
 	["Directory"] = { bg = "NONE" },
@@ -12,7 +12,6 @@ local CUSTOM_HIGHLIGHTS = {
 	["Pmenu"] = { bg = "NONE" }, -- for blink cmp
 	["PmenuExtra"] = { bg = "NONE" }, -- for blink cmp
 	["RenderMarkdownChecked"] = { fg = "#A7E22E" },
-	["Search"] = { bg = "NONE" },
 	["SignColumn"] = { bg = "NONE" },
 	["SpellBad"] = { link = "NONE" },
 	["SpellCap"] = { link = "NONE" },
