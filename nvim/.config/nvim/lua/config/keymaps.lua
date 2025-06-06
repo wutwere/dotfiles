@@ -39,7 +39,21 @@ KEYMAPS.general = function()
 				},
 			})
 		else
-			vim.diagnostic.config({ virtual_text = true, virtual_lines = false })
+			local signs = {
+				ERROR = "",
+				WARN = "",
+				HINT = "󰌵",
+				INFO = "",
+			}
+			vim.diagnostic.config({
+				virtual_text = {
+					prefix = function(diagnostic)
+						return signs[vim.diagnostic.severity[diagnostic.severity]]
+					end,
+					spacing = 2,
+				},
+				virtual_lines = false,
+			})
 		end
 		virtual_lines_enabled = not virtual_lines_enabled
 	end

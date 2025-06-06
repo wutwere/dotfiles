@@ -32,9 +32,8 @@ return {
 					border = "rounded",
 					draw = {
 						columns = {
-							{ "kind_icon" },
-							{ "label", "label_description", gap = 1 },
-							{ "source_name" },
+							{ "kind_icon", "label", "label_description", gap = 1 },
+							{ "kind", "source_id", gap = 1 },
 						},
 					},
 				},

@@ -89,10 +89,10 @@ for i = 1, 9 do
 	addTmuxKey(tostring(i), tostring(i))
 end
 
-addTmuxKey("h", "h")
-addTmuxKey("j", "j")
-addTmuxKey("k", "k")
-addTmuxKey("l", "l")
+-- addTmuxKey("h", "h")
+-- addTmuxKey("j", "j")
+-- addTmuxKey("k", "k")
+-- addTmuxKey("l", "l")
 addTmuxKey("h", "H", "CTRL|SHIFT")
 addTmuxKey("j", "J", "CTRL|SHIFT")
 addTmuxKey("k", "K", "CTRL|SHIFT")
