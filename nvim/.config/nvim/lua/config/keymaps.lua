@@ -118,6 +118,9 @@ end
 KEYMAPS.mini_files = function()
 	local mini_files = require("mini.files")
 	mini_files.config.mappings.close = "<esc>"
+	mini_files.config.mappings.synchronize = "<cr>"
+	mini_files.config.mappings.go_in = "L"
+	mini_files.config.mappings.go_in_plus = "l"
 	vim.keymap.set("n", "-", function()
 		if mini_files.get_explorer_state() == nil then
 			mini_files.open(vim.api.nvim_buf_get_name(0))
@@ -239,9 +242,9 @@ local function func_wrap(func, opts)
 	end
 end
 
-KEYMAPS.snacks = function(Snacks)
+KEYMAPS.snacks = function()
+	local Snacks = require("snacks")
 	-- Top Pickers & Explorer
-	vim.keymap.set("n", "<leader><space>", Snacks.picker.smart, { desc = "Smart Find Files" })
 	vim.keymap.set("n", "<leader>f", Snacks.picker.smart, { desc = "Smart Find Files" })
 	vim.keymap.set("n", "<leader>e", func_wrap(Snacks.explorer.open, { hidden = true }), { desc = "File Tree" })
 	vim.keymap.set("n", "<leader>/", func_wrap(Snacks.picker.grep, { hidden = true }), { desc = "Grep" })
@@ -292,6 +295,57 @@ KEYMAPS.snacks = function(Snacks)
 	vim.keymap.set("n", "<leader>.", func_wrap(Snacks.scratch, nil), { desc = "Toggle Scratch Buffer" })
 	vim.keymap.set("n", "<leader>S", Snacks.scratch.select, { desc = "Select Scratch Buffer" })
 	vim.keymap.set("n", "<leader>z", Snacks.zen.zen, { desc = "Enable Zen Mode" })
+
+	-- Custom pick + edit directory
+	local function get_directories()
+		local directories = {}
+
+		local handle = io.popen("fd . --type directory")
+		if handle then
+			for line in handle:lines() do
+				table.insert(directories, line)
+			end
+			handle:close()
+		else
+			print("Failed to execute fd command")
+		end
+
+		return directories
+	end
+
+	vim.keymap.set("n", "<leader><leader>", function()
+		local dirs = get_directories()
+
+		return Snacks.picker({
+			title = "Directories",
+			finder = function()
+				local items = {}
+				for i, item in ipairs(dirs) do
+					table.insert(items, {
+						idx = i,
+						file = item,
+						text = item,
+					})
+				end
+				return items
+			end,
+			format = function(item, _)
+				local file = item.file
+				local ret = {}
+				local a = Snacks.picker.util.align
+				local icon, icon_hl = Snacks.util.icon(file.ft, "directory")
+				ret[#ret + 1] = { a(icon, 3), icon_hl }
+				ret[#ret + 1] = { " " }
+				ret[#ret + 1] = { a(file, 20) }
+
+				return ret
+			end,
+			confirm = function(picker, item)
+				picker:close()
+				vim.cmd("e " .. item.file)
+			end,
+		})
+	end, { desc = "Directories" })
 end
 
 return KEYMAPS

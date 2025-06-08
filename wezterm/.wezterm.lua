@@ -104,5 +104,6 @@ addTmuxKey("w", "&")
 addTmuxKey("s", "s")
 addTmuxKey("f", "f")
 addTmuxKey("b", "b")
+addTmuxKey("[", "[")
 
 return config

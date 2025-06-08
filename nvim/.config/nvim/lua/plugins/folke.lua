@@ -62,7 +62,7 @@ return {
 						end,
 					})
 
-					KEYMAPS.snacks(Snacks)
+					KEYMAPS.snacks()
 				end,
 			})
 		end,

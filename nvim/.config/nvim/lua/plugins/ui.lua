@@ -13,6 +13,7 @@ local CUSTOM_HIGHLIGHTS = {
 	["PmenuExtra"] = { bg = "NONE" }, -- for blink cmp
 	["RenderMarkdownChecked"] = { fg = "#A7E22E" },
 	["SignColumn"] = { bg = "NONE" },
+	["SnippetTabstop"] = { link = "NONE" },
 	["SpellBad"] = { link = "NONE" },
 	["SpellCap"] = { link = "NONE" },
 	["SpellLocal"] = { link = "NONE" },

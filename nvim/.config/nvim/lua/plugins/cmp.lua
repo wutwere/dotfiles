@@ -26,7 +26,7 @@ return {
 				},
 			},
 			completion = {
-				documentation = { auto_show = true, auto_show_delay_ms = 0, window = { border = "rounded" } },
+				documentation = { auto_show = true, auto_show_delay_ms = 100, window = { border = "rounded" } },
 				menu = {
 					auto_show = true,
 					border = "rounded",
@@ -44,6 +44,7 @@ return {
 					},
 				},
 				ghost_text = { enabled = false },
+				accept = { auto_brackets = { enabled = false } },
 			},
 			signature = {
 				enabled = true,

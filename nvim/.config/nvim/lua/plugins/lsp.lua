@@ -36,7 +36,14 @@ return {
 						},
 					},
 				},
-				lua_ls = { settings = { Lua = { diagnostics = { globals = { "vim" } } } } },
+				lua_ls = {
+					settings = {
+						Lua = {
+							diagnostics = { globals = { "vim" } },
+							hover = { enumsLimit = 100, previewFields = 100 },
+						},
+					},
+				},
 				clangd = {},
 				pyright = {},
 				vtsls = {},
