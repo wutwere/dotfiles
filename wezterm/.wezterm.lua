@@ -100,7 +100,7 @@ addTmuxKey("l", "L", "CTRL|SHIFT")
 addTmuxKey("x", "x")
 
 addTmuxKey("t", "c")
-addTmuxKey("w", "&")
+addTmuxKey("w", "&", "CTRL|SHIFT")
 addTmuxKey("s", "s")
 addTmuxKey("f", "f")
 addTmuxKey("b", "b")
