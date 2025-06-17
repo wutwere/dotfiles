@@ -68,4 +68,15 @@ return {
 			distance_stop_animating = 0.5, -- 0.1      > 0
 		},
 	},
+	{
+		"norcalli/nvim-colorizer.lua",
+		opts = {},
+		init = function()
+			vim.api.nvim_create_autocmd({ "BufEnter" }, {
+				callback = function()
+					vim.cmd("ColorizerAttachToBuffer")
+				end,
+			})
+		end,
+	},
 }
