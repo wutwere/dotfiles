@@ -12,7 +12,7 @@ config.enable_tab_bar = false
 -- config.window_decorations = "RESIZE"
 config.initial_cols = 120
 config.initial_rows = 30
-config.window_padding = { left = 2, right = 2, top = 2, bottom = 2 }
+config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
 -- config.color_scheme = "tokyonight"
 -- config.color_scheme = "catppuccin-macchiato"
 config.color_scheme = "Monokai Remastered"
@@ -71,7 +71,13 @@ config.font_rules = {
 
 local act = wezterm.action
 
-config.keys = {}
+config.keys = {
+	{
+		key = "v",
+		mods = "CTRL",
+		action = wezterm.action.PasteFrom("Clipboard"),
+	},
+}
 
 local function addTmuxKey(want, tmux, mods)
 	mods = mods or "CTRL"
@@ -99,8 +105,8 @@ addTmuxKey("k", "K", "CTRL|SHIFT")
 addTmuxKey("l", "L", "CTRL|SHIFT")
 addTmuxKey("x", "x")
 
-addTmuxKey("t", "c")
-addTmuxKey("w", "&", "CTRL|SHIFT")
+addTmuxKey("t", "t")
+addTmuxKey("w", "w", "CTRL|SHIFT")
 addTmuxKey("s", "s")
 addTmuxKey("f", "f")
 addTmuxKey("b", "b")
