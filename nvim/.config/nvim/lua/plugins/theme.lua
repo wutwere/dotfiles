@@ -32,6 +32,7 @@ return {
 			transparent_background = true,
 			background_clear = {
 				"float_win",
+				"which-key",
 			},
 			styles = {
 				keyword = { italic = false }, -- any other keyword

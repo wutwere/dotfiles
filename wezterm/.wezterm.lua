@@ -18,7 +18,7 @@ config.window_padding = { left = 2, right = 2, top = 2, bottom = 2 }
 config.color_scheme = "Monokai Remastered"
 config.colors = { background = "#0b0b12" }
 config.window_background_opacity = 1.0
-config.max_fps = 144
+config.max_fps = 288
 config.default_cursor_style = "BlinkingUnderline"
 config.cursor_blink_rate = 300
 config.animation_fps = 60
@@ -37,16 +37,16 @@ config.default_domain = "WSL:Arch"
 ----------
 
 config.freetype_load_target = "HorizontalLcd"
--- config.font = wezterm.font("JetBrainsMono Nerd Font Mono", { weight = "Regular" })
+config.font = wezterm.font("JetBrainsMono Nerd Font Mono", { weight = "DemiBold" })
 -- config.font_size = 11
 -- config.line_height = 1.13
-config.font = wezterm.font("Monaspace Argon")
+-- config.font = wezterm.font("Monaspace Argon")
+-- config.harfbuzz_features = { "calt", "liga", "dlig", "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07", "ss08" }
 -- config.freetype_load_target = "Light"
 config.freetype_render_target = "HorizontalLcd"
 config.font_size = 9
 config.line_height = 1.22
 config.cell_width = 0.95
-config.harfbuzz_features = { "calt", "liga", "dlig", "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07", "ss08" }
 config.font_rules = {
 	{
 		intensity = "Normal",

@@ -9,6 +9,7 @@ vim.g.maplocalleader = " "
 
 KEYMAPS.general = function()
 	-- editor
+	vim.keymap.set("n", "<esc>", "<cmd>noh<cr>")
 	vim.keymap.set({ "n", "x" }, "j", "gj", { noremap = true })
 	vim.keymap.set({ "n", "x" }, "k", "gk", { noremap = true })
 	vim.keymap.set("i", "{<cr>", "{<cr>}<esc>O")
@@ -71,10 +72,6 @@ KEYMAPS.general = function()
 	vim.keymap.set("t", "<c-n>", "<c-\\><c-n>")
 
 	-- fast navigation
-	-- vim.keymap.set("n", "<c-d>", "<c-d>zz")
-	-- vim.keymap.set("n", "<c-u>", "<c-u>zz")
-	vim.keymap.set("n", "<c-e>", "7<c-e>")
-	vim.keymap.set("n", "<c-y>", "7<c-y>")
 	vim.keymap.set("n", "<c-h>", "20zh")
 	vim.keymap.set("n", "<c-l>", "20zl")
 	vim.keymap.set("n", "<leader>h", "<c-w>h", { desc = "Move to left pane" })
@@ -101,14 +98,6 @@ KEYMAPS.general = function()
 	end, { desc = "Refresh and show conflicts" })
 
 	vim.keymap.set("n", "<leader>n", "<cmd>Namu symbols<cr>", { desc = "Open LSP search" })
-
-	vim.keymap.set("n", "<leader>aa", "<cmd>AIChatNew<cr>", { desc = "AI - New Chat" })
-	vim.keymap.set("n", "<leader>ac", ":AIAgent ", { desc = "AI - Change Model" })
-	vim.keymap.set("n", "<leader>at", "<cmd>AIChatToggle<cr>", { desc = "AI - Toggle Chat" })
-	vim.keymap.set("n", "<leader>af", "<cmd>AIChatFinder<cr>", { desc = "AI - Chat Finder" })
-	vim.keymap.set({ "n", "v", "x" }, "<leader>as", "<cmd>AIChatRespond<cr>", { desc = "AI - Send Message" })
-	vim.keymap.set({ "n", "v", "x" }, "<leader>ad", "<cmd>AIChatDelete<cr>", { desc = "AI - Delete Chat" })
-	vim.keymap.set({ "n", "v", "x" }, "<leader>aq", "<cmd>AIChatStop<cr>", { desc = "AI - Cancel Chat" })
 end
 
 --------------------------------
@@ -136,7 +125,6 @@ end
 ---------
 
 KEYMAPS.lsp = function(event)
-	local opts = { buffer = event.buf }
 	vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = event.buf, desc = "Show LSP hover at cursor" })
 	vim.keymap.set("n", "gs", vim.lsp.buf.signature_help, { buffer = event.buf, desc = "Go to signature help" })
 	vim.keymap.set("n", "<leader>2", vim.lsp.buf.rename, { buffer = event.buf, desc = "Rename reference" })
@@ -200,14 +188,14 @@ KEYMAPS.multicursor = function(mc)
 	end)
 end
 
+--------------------
+-- AUTOCOMPLETION --
+--------------------
+
 local has_words_before = function()
 	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
 	return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
-
---------------------
--- AUTOCOMPLETION --
---------------------
 
 KEYMAPS.cmp = {
 	preset = "none",
