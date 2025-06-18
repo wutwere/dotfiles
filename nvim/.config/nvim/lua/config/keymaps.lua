@@ -234,12 +234,7 @@ KEYMAPS.snacks = function()
 	local Snacks = require("snacks")
 	-- Top Pickers & Explorer
 	vim.keymap.set("n", "<leader>f", Snacks.picker.smart, { desc = "Smart Find Files" })
-	vim.keymap.set(
-		"n",
-		"<leader>e",
-		func_wrap(Snacks.picker.explorer, { auto_close = true, hidden = true }),
-		{ desc = "File Tree" }
-	)
+	vim.keymap.set("n", "<leader>e", func_wrap(Snacks.picker.explorer, { hidden = true }), { desc = "File Tree" })
 	vim.keymap.set("n", "<leader>/", func_wrap(Snacks.picker.grep, { hidden = true }), { desc = "Grep" })
 	vim.keymap.set("n", "<leader>:", Snacks.picker.command_history, { desc = "Command History" })
 	-- git
