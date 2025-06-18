@@ -27,6 +27,9 @@ return {
 					files = {
 						hidden = true,
 					},
+					explorer = {
+						layout = { layout = { position = "right" } },
+					},
 				},
 			},
 			quickfile = { enabled = true },
@@ -70,7 +73,7 @@ return {
 	{
 		"folke/which-key.nvim",
 		event = "VeryLazy",
-		opts = { preset = "modern", delay = 300 },
+		opts = { preset = "helix", delay = 300, win = { border = "rounded" } },
 		keys = {
 			{
 				"<leader>?",
@@ -85,5 +88,10 @@ return {
 		"folke/lazydev.nvim",
 		ft = "lua",
 		opts = { library = { { path = "${3rd}/luv/library", words = { "vim%.uv" } } } },
+	},
+	{
+		"folke/todo-comments.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		opts = {},
 	},
 }

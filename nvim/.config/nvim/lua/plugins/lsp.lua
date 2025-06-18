@@ -124,10 +124,25 @@ return {
 		opts = {
 			namu_symbols = {
 				options = {
+					AllowKinds = {
+						default = {
+							"Function",
+							"Method",
+							"Class",
+							"Module",
+							"Property",
+							"Constant",
+							"Enum",
+							"Interface",
+							"Field",
+							"Struct",
+						},
+					},
 					movement = {
 						next = { "<C-j>", "<DOWN>" },
 						previous = { "<C-k>", "<UP>" },
 					},
+					row_position = "top10_right",
 				},
 			},
 		},
