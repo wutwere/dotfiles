@@ -18,7 +18,7 @@ config.window_padding = { left = 2, right = 2, top = 2, bottom = 2 }
 config.color_scheme = "Monokai Remastered"
 config.colors = { background = "#0b0b12" }
 config.window_background_opacity = 1.0
-config.max_fps = 288
+config.max_fps = 255
 config.default_cursor_style = "BlinkingUnderline"
 config.cursor_blink_rate = 300
 config.animation_fps = 60
