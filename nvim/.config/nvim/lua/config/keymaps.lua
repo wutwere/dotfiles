@@ -14,13 +14,10 @@ KEYMAPS.general = function()
 	vim.keymap.set({ "n", "x" }, "k", "gk", { noremap = true })
 	vim.keymap.set("i", "{<cr>", "{<cr>}<esc>O")
 	vim.keymap.set("i", "{<s-cr>", "{<cr>}<esc>O")
-	vim.keymap.set("v", "<leader>y", '"+y', { desc = "Copy selected to clipboard" })
-	vim.keymap.set("n", "<leader>y", "<cmd>%y+<cr>", { desc = "Copy entire file contents to clipboard" })
-	vim.keymap.set("n", "<leader>Y", function()
+	vim.keymap.set("n", "<leader>y", function()
 		vim.fn.setreg("+", vim.fn.expand("%:p"))
+		print("Copied file path to clipboard")
 	end, { desc = "Copy file path to clipboard" })
-	vim.keymap.set({ "n", "v" }, "<leader>p", '"+p', { desc = "Paste clipboard" })
-	vim.keymap.set({ "n", "v" }, "<leader>P", '"+P', { desc = "Paste clipboard" })
 	vim.keymap.set(
 		"x",
 		"<c-r>",
@@ -233,7 +230,12 @@ end
 KEYMAPS.snacks = function()
 	local Snacks = require("snacks")
 	-- Top Pickers & Explorer
-	vim.keymap.set("n", "<leader>f", Snacks.picker.smart, { desc = "Smart Find Files" })
+	vim.keymap.set(
+		"n",
+		"<leader>f",
+		func_wrap(Snacks.picker.smart, { multi = { "buffers", "files" } }),
+		{ desc = "Smart Find Files" }
+	)
 	vim.keymap.set("n", "<leader>e", func_wrap(Snacks.picker.explorer, { hidden = true }), { desc = "File Tree" })
 	vim.keymap.set("n", "<leader>/", func_wrap(Snacks.picker.grep, { hidden = true }), { desc = "Grep" })
 	vim.keymap.set("n", "<leader>:", Snacks.picker.command_history, { desc = "Command History" })
