@@ -11,13 +11,6 @@ window-decoration = auto
 macos-titlebar-style = hidden
 
 # font-family = JetBrainsMono Nerd Font Mono
-# font-family = CaskaydiaCove Nerd Font Mono
-# font-family = FiraCode Nerd Font Mono
-# font-family = Liga SFMono Nerd Font
-# font-family = MesloLGM Nerd Font Mono
-# font-family = Hack Nerd Font Mono
-# font-family = RobotoMono Nerd Font Mono
-# font-family = VictorMono Nerd Font Mono
 font-family = Monaspace Argon
 font-family-italic = Monaspace Radon
 font-size = 12
@@ -38,8 +31,6 @@ background-blur = 0
 confirm-close-surface = false
 
 copy-on-select = clipboard
-
-
 
 ### TMUX BINDS
 
@@ -68,10 +59,10 @@ keybind = super+shift+l=text:\x00L
 keybind = super+x=text:\x00x
 
 # create tab
-keybind = super+t=text:\x00c
+keybind = super+t=text:\x00t
 
 # close tab
-keybind = super+w=text:\x00&
+keybind = super+w=text:\x00w
 
 # open sessions
 keybind = super+s=text:\x00s
