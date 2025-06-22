@@ -71,13 +71,7 @@ config.font_rules = {
 
 local act = wezterm.action
 
-config.keys = {
-	{
-		key = "v",
-		mods = "CTRL",
-		action = wezterm.action.PasteFrom("Clipboard"),
-	},
-}
+config.keys = {}
 
 local function addTmuxKey(want, tmux, mods)
 	mods = mods or "CTRL"
