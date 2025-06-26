@@ -1,6 +1,5 @@
 theme = Monokai Remastered
 background = #0b0b12
-# background = #0C0E13
 
 cursor-style = underline
 cursor-style-blink = true
@@ -10,19 +9,19 @@ mouse-hide-while-typing = true
 window-decoration = auto
 macos-titlebar-style = hidden
 
-# font-family = JetBrainsMono Nerd Font Mono
-font-family = Monaspace Argon
+font-family = JetBrainsMono Nerd Font Mono
+# font-family = Monaspace Argon
+# font-feature = calt,liga,dlig,ss01,ss02,ss03,ss04,ss05,ss06,ss07,ss08
 font-family-italic = Monaspace Radon
 font-size = 12
-adjust-cell-height = 33%
+adjust-cell-height = 5%
 adjust-cell-width = -5%
 # 0 to 255
 font-thicken-strength = 30
 font-thicken = true
-font-feature = calt,liga,dlig,ss01,ss02,ss03,ss04,ss05,ss06,ss07,ss08
 
-window-padding-x = 2
-window-padding-y = 2
+window-padding-x = 0
+window-padding-y = 0
 window-padding-balance = true
 
 background-opacity = 1
