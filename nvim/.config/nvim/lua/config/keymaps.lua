@@ -10,14 +10,29 @@ vim.g.maplocalleader = " "
 KEYMAPS.general = function()
 	-- editor
 	vim.keymap.set("n", "<esc>", "<cmd>noh<cr>")
+
 	vim.keymap.set({ "n", "x" }, "j", "gj", { noremap = true })
 	vim.keymap.set({ "n", "x" }, "k", "gk", { noremap = true })
+
 	vim.keymap.set("i", "{<cr>", "{<cr>}<esc>O")
 	vim.keymap.set("i", "{<s-cr>", "{<cr>}<esc>O")
+
+	-- delay isn't as bad in WSL if i sync clipboard like this
+	vim.keymap.set({ "n", "v" }, "y", '"+y', { silent = true, noremap = true })
+	vim.keymap.set({ "n", "v" }, "p", '"+p', { silent = true, noremap = true })
+	vim.keymap.set({ "n", "v" }, "d", '"+d', { silent = true, noremap = true })
+	vim.keymap.set({ "n", "v" }, "c", '"+c', { silent = true, noremap = true })
+	vim.keymap.set({ "n", "v" }, "x", '"+x', { silent = true, noremap = true })
+	vim.keymap.set({ "n", "v" }, "Y", '"+Y', { silent = true, noremap = true })
+	vim.keymap.set({ "n", "v" }, "P", '"+P', { silent = true, noremap = true })
+	vim.keymap.set({ "n", "v" }, "D", '"+D', { silent = true, noremap = true })
+	vim.keymap.set({ "n", "v" }, "C", '"+C', { silent = true, noremap = true })
+	vim.keymap.set({ "n", "v" }, "X", '"+X', { silent = true, noremap = true })
 	vim.keymap.set("n", "<leader>y", function()
 		vim.fn.setreg("+", vim.fn.expand("%:p"))
 		print("Copied file path to clipboard")
 	end, { desc = "Copy file path to clipboard" })
+
 	vim.keymap.set(
 		"x",
 		"<c-r>",
