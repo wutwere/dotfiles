@@ -29,8 +29,17 @@ KEYMAPS.general = function()
 	vim.keymap.set({ "n", "v" }, "C", '"+C', { silent = true, noremap = true })
 	vim.keymap.set({ "n", "v" }, "X", '"+X', { silent = true, noremap = true })
 	vim.keymap.set("n", "<leader>y", function()
-		vim.fn.setreg("+", vim.fn.expand("%:p"))
-		print("Copied file path to clipboard")
+		local path = vim.fn.expand("%:p")
+		if path ~= "" then
+			-- local home = vim.fn.expand("$HOME")
+			-- if path:sub(1, #home) == home then
+			-- 	path = "~" .. path:sub(#home + 1)
+			-- end
+			vim.fn.setreg("+", path)
+			require("snacks").notify.notify("Copied file path to clipboard.")
+		else
+			require("snacks").notify.error("No file path found.")
+		end
 	end, { desc = "Copy file path to clipboard" })
 
 	vim.keymap.set(
@@ -347,7 +356,9 @@ KEYMAPS.snacks = function()
 			end,
 			confirm = function(picker, item)
 				picker:close()
-				vim.cmd("e " .. item.file)
+				if item then
+					vim.cmd("e " .. item.file)
+				end
 			end,
 		})
 	end, { desc = "Directories" })

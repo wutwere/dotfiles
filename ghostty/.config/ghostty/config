@@ -20,8 +20,8 @@ adjust-cell-width = -5%
 font-thicken-strength = 30
 font-thicken = true
 
-window-padding-x = 0
-window-padding-y = 0
+window-padding-x = 3
+window-padding-y = 3
 window-padding-balance = true
 
 background-opacity = 1
