@@ -18,16 +18,21 @@ KEYMAPS.general = function()
 	vim.keymap.set("i", "{<s-cr>", "{<cr>}<esc>O")
 
 	-- delay isn't as bad in WSL if i sync clipboard like this
-	vim.keymap.set({ "n", "v" }, "y", '"+y', { silent = true, noremap = true })
-	vim.keymap.set({ "n", "v" }, "p", '"+p', { silent = true, noremap = true })
-	vim.keymap.set({ "n", "v" }, "d", '"+d', { silent = true, noremap = true })
-	vim.keymap.set({ "n", "v" }, "c", '"+c', { silent = true, noremap = true })
-	vim.keymap.set({ "n", "v" }, "x", '"+x', { silent = true, noremap = true })
-	vim.keymap.set({ "n", "v" }, "Y", '"+Y', { silent = true, noremap = true })
-	vim.keymap.set({ "n", "v" }, "P", '"+P', { silent = true, noremap = true })
-	vim.keymap.set({ "n", "v" }, "D", '"+D', { silent = true, noremap = true })
-	vim.keymap.set({ "n", "v" }, "C", '"+C', { silent = true, noremap = true })
-	vim.keymap.set({ "n", "v" }, "X", '"+X', { silent = true, noremap = true })
+	if vim.fn.has("wsl") == 0 then
+		vim.opt.clipboard = "unnamedplus"
+	else
+		vim.keymap.set({ "n", "v" }, "y", '"+y', { silent = true, noremap = true })
+		vim.keymap.set({ "n", "v" }, "p", '"+p', { silent = true, noremap = true })
+		vim.keymap.set({ "n", "v" }, "d", '"+d', { silent = true, noremap = true })
+		vim.keymap.set({ "n", "v" }, "c", '"+c', { silent = true, noremap = true })
+		vim.keymap.set({ "n", "v" }, "x", '"+x', { silent = true, noremap = true })
+		vim.keymap.set({ "n", "v" }, "Y", '"+Y', { silent = true, noremap = true })
+		vim.keymap.set({ "n", "v" }, "P", '"+P', { silent = true, noremap = true })
+		vim.keymap.set({ "n", "v" }, "D", '"+D', { silent = true, noremap = true })
+		vim.keymap.set({ "n", "v" }, "C", '"+C', { silent = true, noremap = true })
+		vim.keymap.set({ "n", "v" }, "X", '"+X', { silent = true, noremap = true })
+	end
+
 	vim.keymap.set("n", "<leader>y", function()
 		local path = vim.fn.expand("%:p")
 		if path ~= "" then
@@ -99,7 +104,15 @@ KEYMAPS.general = function()
 	vim.keymap.set("n", "<leader>j", "<c-w>j", { desc = "Move to lower pane" })
 	vim.keymap.set("n", "<leader>k", "<c-w>k", { desc = "Move to upper pane" })
 	vim.keymap.set("n", "<leader>l", "<c-w>l", { desc = "Move to right pane" })
-	vim.keymap.set("n", "gb", "<cmd>b#<cr>", { desc = "Go to alt buffer" })
+	vim.keymap.set("n", "gb", function()
+		-- `gb` for alt buffer
+		-- or `Xgb` where X is a number to go to X-th buffer
+		if vim.v.count ~= 0 then
+			vim.cmd("LualineBuffersJump " .. tostring(vim.v.count))
+		else
+			vim.cmd("b#")
+		end
+	end, { desc = "Go to alt buffer" })
 	vim.keymap.set("n", "<bs>", "<cmd>bd<cr>")
 
 	-- plugins
@@ -300,6 +313,7 @@ KEYMAPS.snacks = function()
 	vim.keymap.set("n", "<leader>sn", Snacks.notifier.show_history, { desc = "Notification History" })
 	vim.keymap.set("n", "<leader>ss", func_wrap(Snacks.picker, nil), { desc = "All Snacks Pickers" })
 	-- LSP
+	vim.keymap.set("n", "gw", Snacks.picker.lsp_workspace_symbols, { desc = "Goto Workspace Symbol" })
 	vim.keymap.set("n", "gd", Snacks.picker.lsp_definitions, { desc = "Goto Definition" })
 	vim.keymap.set("n", "gD", Snacks.picker.lsp_declarations, { desc = "Goto Declaration" })
 	vim.keymap.set("n", "gr", Snacks.picker.lsp_references, { desc = "References" })
