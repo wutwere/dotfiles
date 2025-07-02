@@ -59,11 +59,14 @@ return {
 		end,
 	},
 	{
-		"sphamba/smear-cursor.nvim",
-		opts = {
-			legacy_computing_symbols_support = true,
-			smear_between_neighbor_lines = false,
-			cursor_color = "#ffffff",
-		},
+		"norcalli/nvim-colorizer.lua",
+		opts = {},
+		init = function()
+			vim.api.nvim_create_autocmd({ "BufEnter" }, {
+				callback = function()
+					vim.cmd("ColorizerAttachToBuffer")
+				end,
+			})
+		end,
 	},
 }

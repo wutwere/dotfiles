@@ -26,15 +26,14 @@ return {
 				},
 			},
 			completion = {
-				documentation = { auto_show = true, auto_show_delay_ms = 0, window = { border = "rounded" } },
+				documentation = { auto_show = true, auto_show_delay_ms = 100, window = { border = "rounded" } },
 				menu = {
 					auto_show = true,
 					border = "rounded",
 					draw = {
 						columns = {
-							{ "kind_icon" },
-							{ "label", "label_description", gap = 1 },
-							{ "source_name" },
+							{ "kind_icon", "label", "label_description", gap = 1 },
+							{ "kind", "source_id", gap = 1 },
 						},
 					},
 				},
@@ -45,6 +44,7 @@ return {
 					},
 				},
 				ghost_text = { enabled = false },
+				accept = { auto_brackets = { enabled = false } },
 			},
 			signature = {
 				enabled = true,
