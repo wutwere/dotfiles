@@ -9,18 +9,44 @@ vim.g.maplocalleader = " "
 
 KEYMAPS.general = function()
 	-- editor
-	vim.keymap.set({ "n", "x" }, "j", "gj", { silent = true, noremap = true })
-	vim.keymap.set({ "n", "x" }, "k", "gk", { silent = true, noremap = true })
+	vim.keymap.set("n", "<esc>", "<cmd>noh<cr>")
+
+	vim.keymap.set({ "n", "x" }, "j", "gj", { noremap = true })
+	vim.keymap.set({ "n", "x" }, "k", "gk", { noremap = true })
+
 	vim.keymap.set("i", "{<cr>", "{<cr>}<esc>O")
 	vim.keymap.set("i", "{<s-cr>", "{<cr>}<esc>O")
-	vim.keymap.set("v", "<leader>y", '"+y', { desc = "Copy selected to clipboard" })
-	vim.keymap.set("n", "<leader>y", "<cmd>%y+<cr>", { desc = "Copy entire file contents to clipboard" })
-	vim.keymap.set("n", "<leader>Y", function()
-		vim.fn.setreg("+", vim.fn.expand("%:p"))
+
+	-- delay isn't as bad in WSL if i sync clipboard like this
+	if vim.fn.has("wsl") == 0 then
+		vim.opt.clipboard = "unnamedplus"
+	else
+		vim.keymap.set({ "n", "v" }, "y", '"+y', { silent = true, noremap = true })
+		vim.keymap.set({ "n", "v" }, "p", '"+p', { silent = true, noremap = true })
+		vim.keymap.set({ "n", "v" }, "d", '"+d', { silent = true, noremap = true })
+		vim.keymap.set({ "n", "v" }, "c", '"+c', { silent = true, noremap = true })
+		vim.keymap.set({ "n", "v" }, "x", '"+x', { silent = true, noremap = true })
+		vim.keymap.set({ "n", "v" }, "Y", '"+Y', { silent = true, noremap = true })
+		vim.keymap.set({ "n", "v" }, "P", '"+P', { silent = true, noremap = true })
+		vim.keymap.set({ "n", "v" }, "D", '"+D', { silent = true, noremap = true })
+		vim.keymap.set({ "n", "v" }, "C", '"+C', { silent = true, noremap = true })
+		vim.keymap.set({ "n", "v" }, "X", '"+X', { silent = true, noremap = true })
+	end
+
+	vim.keymap.set("n", "<leader>y", function()
+		local path = vim.fn.expand("%:p")
+		if path ~= "" then
+			-- local home = vim.fn.expand("$HOME")
+			-- if path:sub(1, #home) == home then
+			-- 	path = "~" .. path:sub(#home + 1)
+			-- end
+			vim.fn.setreg("+", path)
+			require("snacks").notify.notify("Copied file path to clipboard.")
+		else
+			require("snacks").notify.error("No file path found.")
+		end
 	end, { desc = "Copy file path to clipboard" })
-	vim.keymap.set({ "n", "v" }, "<leader>p", '"+p', { desc = "Paste clipboard" })
-	vim.keymap.set({ "n", "v" }, "<leader>P", '"+P', { desc = "Paste clipboard" })
-	vim.keymap.set("n", "<leader>w", "<cmd>tabc<cr>", { desc = "Close tab" })
+
 	vim.keymap.set(
 		"x",
 		"<c-r>",
@@ -40,7 +66,21 @@ KEYMAPS.general = function()
 				},
 			})
 		else
-			vim.diagnostic.config({ virtual_text = true, virtual_lines = false })
+			local signs = {
+				ERROR = "",
+				WARN = "",
+				HINT = "󰌵",
+				INFO = "",
+			}
+			vim.diagnostic.config({
+				virtual_text = {
+					prefix = function(diagnostic)
+						return signs[vim.diagnostic.severity[diagnostic.severity]]
+					end,
+					spacing = 2,
+				},
+				virtual_lines = false,
+			})
 		end
 		virtual_lines_enabled = not virtual_lines_enabled
 	end
@@ -58,17 +98,22 @@ KEYMAPS.general = function()
 	vim.keymap.set("t", "<c-n>", "<c-\\><c-n>")
 
 	-- fast navigation
-	-- vim.keymap.set("n", "<c-d>", "<c-d>zz")
-	-- vim.keymap.set("n", "<c-u>", "<c-u>zz")
-	vim.keymap.set("n", "<c-e>", "7<c-e>")
-	vim.keymap.set("n", "<c-y>", "7<c-y>")
 	vim.keymap.set("n", "<c-h>", "20zh")
 	vim.keymap.set("n", "<c-l>", "20zl")
 	vim.keymap.set("n", "<leader>h", "<c-w>h", { desc = "Move to left pane" })
 	vim.keymap.set("n", "<leader>j", "<c-w>j", { desc = "Move to lower pane" })
 	vim.keymap.set("n", "<leader>k", "<c-w>k", { desc = "Move to upper pane" })
 	vim.keymap.set("n", "<leader>l", "<c-w>l", { desc = "Move to right pane" })
-	vim.keymap.set("n", "gb", "<cmd>b#<cr>", { desc = "Go to alt buffer" })
+	vim.keymap.set("n", "gb", function()
+		-- `gb` for alt buffer
+		-- or `Xgb` where X is a number to go to X-th buffer
+		if vim.v.count ~= 0 then
+			vim.cmd("LualineBuffersJump " .. tostring(vim.v.count))
+		else
+			vim.cmd("b#")
+		end
+	end, { desc = "Go to alt buffer" })
+	vim.keymap.set("n", "<bs>", "<cmd>bd<cr>")
 
 	-- plugins
 	vim.keymap.set("n", "<leader>r", "<cmd>GrugFar<cr>", { desc = "Search and replace all files" })
@@ -87,16 +132,6 @@ KEYMAPS.general = function()
 	end, { desc = "Refresh and show conflicts" })
 
 	vim.keymap.set("n", "<leader>n", "<cmd>Namu symbols<cr>", { desc = "Open LSP search" })
-
-	vim.keymap.set("n", "<bs>", "<cmd>NoiceDismiss<cr>")
-
-	vim.keymap.set("n", "<leader>aa", "<cmd>AIChatNew<cr>", { desc = "AI - New Chat" })
-	vim.keymap.set("n", "<leader>ac", ":AIAgent ", { desc = "AI - Change Model" })
-	vim.keymap.set("n", "<leader>at", "<cmd>AIChatToggle<cr>", { desc = "AI - Toggle Chat" })
-	vim.keymap.set("n", "<leader>af", "<cmd>AIChatFinder<cr>", { desc = "AI - Chat Finder" })
-	vim.keymap.set({ "n", "v", "x" }, "<leader>as", "<cmd>AIChatRespond<cr>", { desc = "AI - Send Message" })
-	vim.keymap.set({ "n", "v", "x" }, "<leader>ad", "<cmd>AIChatDelete<cr>", { desc = "AI - Delete Chat" })
-	vim.keymap.set({ "n", "v", "x" }, "<leader>aq", "<cmd>AIChatStop<cr>", { desc = "AI - Cancel Chat" })
 end
 
 --------------------------------
@@ -106,6 +141,9 @@ end
 KEYMAPS.mini_files = function()
 	local mini_files = require("mini.files")
 	mini_files.config.mappings.close = "<esc>"
+	mini_files.config.mappings.synchronize = "<cr>"
+	mini_files.config.mappings.go_in = "L"
+	mini_files.config.mappings.go_in_plus = "l"
 	vim.keymap.set("n", "-", function()
 		if mini_files.get_explorer_state() == nil then
 			mini_files.open(vim.api.nvim_buf_get_name(0))
@@ -121,7 +159,6 @@ end
 ---------
 
 KEYMAPS.lsp = function(event)
-	local opts = { buffer = event.buf }
 	vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = event.buf, desc = "Show LSP hover at cursor" })
 	vim.keymap.set("n", "gs", vim.lsp.buf.signature_help, { buffer = event.buf, desc = "Go to signature help" })
 	vim.keymap.set("n", "<leader>2", vim.lsp.buf.rename, { buffer = event.buf, desc = "Rename reference" })
@@ -185,14 +222,14 @@ KEYMAPS.multicursor = function(mc)
 	end)
 end
 
+--------------------
+-- AUTOCOMPLETION --
+--------------------
+
 local has_words_before = function()
 	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
 	return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
-
---------------------
--- AUTOCOMPLETION --
---------------------
 
 KEYMAPS.cmp = {
 	preset = "none",
@@ -227,11 +264,16 @@ local function func_wrap(func, opts)
 	end
 end
 
-KEYMAPS.snacks = function(Snacks)
+KEYMAPS.snacks = function()
+	local Snacks = require("snacks")
 	-- Top Pickers & Explorer
-	vim.keymap.set("n", "<leader><space>", Snacks.picker.smart, { desc = "Smart Find Files" })
-	vim.keymap.set("n", "<leader>f", Snacks.picker.smart, { desc = "Smart Find Files" })
-	vim.keymap.set("n", "<leader>e", func_wrap(Snacks.explorer.open, { hidden = true }), { desc = "File Tree" })
+	vim.keymap.set(
+		"n",
+		"<leader>f",
+		func_wrap(Snacks.picker.smart, { multi = { "buffers", "files" } }),
+		{ desc = "Smart Find Files" }
+	)
+	vim.keymap.set("n", "<leader>e", func_wrap(Snacks.picker.explorer, { hidden = true }), { desc = "File Tree" })
 	vim.keymap.set("n", "<leader>/", func_wrap(Snacks.picker.grep, { hidden = true }), { desc = "Grep" })
 	vim.keymap.set("n", "<leader>:", Snacks.picker.command_history, { desc = "Command History" })
 	-- git
@@ -271,6 +313,7 @@ KEYMAPS.snacks = function(Snacks)
 	vim.keymap.set("n", "<leader>sn", Snacks.notifier.show_history, { desc = "Notification History" })
 	vim.keymap.set("n", "<leader>ss", func_wrap(Snacks.picker, nil), { desc = "All Snacks Pickers" })
 	-- LSP
+	vim.keymap.set("n", "gw", Snacks.picker.lsp_workspace_symbols, { desc = "Goto Workspace Symbol" })
 	vim.keymap.set("n", "gd", Snacks.picker.lsp_definitions, { desc = "Goto Definition" })
 	vim.keymap.set("n", "gD", Snacks.picker.lsp_declarations, { desc = "Goto Declaration" })
 	vim.keymap.set("n", "gr", Snacks.picker.lsp_references, { desc = "References" })
@@ -280,6 +323,59 @@ KEYMAPS.snacks = function(Snacks)
 	vim.keymap.set("n", "<leader>.", func_wrap(Snacks.scratch, nil), { desc = "Toggle Scratch Buffer" })
 	vim.keymap.set("n", "<leader>S", Snacks.scratch.select, { desc = "Select Scratch Buffer" })
 	vim.keymap.set("n", "<leader>z", Snacks.zen.zen, { desc = "Enable Zen Mode" })
+
+	-- Custom pick + edit directory
+	local function get_directories()
+		local directories = {}
+
+		local handle = io.popen("fd . -H --type directory --exclude .git")
+		if handle then
+			for line in handle:lines() do
+				table.insert(directories, line)
+			end
+			handle:close()
+		else
+			print("Failed to execute fd command")
+		end
+
+		return directories
+	end
+
+	vim.keymap.set("n", "<leader><leader>", function()
+		local dirs = get_directories()
+
+		return Snacks.picker({
+			title = "Directories",
+			finder = function()
+				local items = {}
+				for i, item in ipairs(dirs) do
+					table.insert(items, {
+						idx = i,
+						file = item,
+						text = item,
+					})
+				end
+				return items
+			end,
+			format = function(item, _)
+				local file = item.file
+				local ret = {}
+				local a = Snacks.picker.util.align
+				local icon, icon_hl = Snacks.util.icon(file.ft, "directory")
+				ret[#ret + 1] = { a(icon, 3), icon_hl }
+				ret[#ret + 1] = { " " }
+				ret[#ret + 1] = { a(file, 20) }
+
+				return ret
+			end,
+			confirm = function(picker, item)
+				picker:close()
+				if item then
+					vim.cmd("e " .. item.file)
+				end
+			end,
+		})
+	end, { desc = "Directories" })
 end
 
 return KEYMAPS

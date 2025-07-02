@@ -1,10 +1,54 @@
 local KEYMAPS = require("config.keymaps")
 
+local custom_config = {
+	luau_lsp = {
+		cmd = {
+			"luau-lsp",
+			"lsp",
+			"--definitions=~/.luau-lsp/globalTypes.d.luau",
+			"--docs=~/.luau-lsp/en-us.json",
+		},
+		settings = {
+			["luau-lsp"] = {
+				completion = {
+					imports = {
+						enabled = true,
+					},
+				},
+			},
+		},
+	},
+	lua_ls = {
+		settings = {
+			Lua = {
+				diagnostics = { globals = { "vim" } },
+				hover = { enumsLimit = 100, previewFields = 100 },
+			},
+		},
+	},
+	clangd = {},
+	pyright = {},
+	vtsls = {},
+	jsonls = {},
+	rust_analyzer = { settings = { ["rust-analyzer"] = { check = { command = "clippy" } } } },
+	texlab = {},
+	biome = {},
+	ruby_lsp = {},
+	standardrb = {},
+	-- sorbet = { cmd = { "srb", "tc", "--lsp", "--disable-watchman", "." } },
+	jdtls = {
+		on_init = function(client, _)
+			client.server_capabilities.semanticTokensProvider = nil
+		end,
+	},
+}
+
 return {
 	{
 		"neovim/nvim-lspconfig",
 		config = function()
 			local lspconfig = require("lspconfig")
+
 			local default_config = {
 				capabilities = require("blink.cmp").get_lsp_capabilities(),
 				flags = { debounce_text_changes = 1000 },
@@ -12,36 +56,11 @@ return {
 				-- 	client.server_capabilities.semanticTokensProvider = nil
 				-- end,
 			}
-			local custom_config = {
-				luau_lsp = {
-					cmd = {
-						"luau-lsp",
-						"lsp",
-						"--definitions=~/.luau-lsp/globalTypes.d.luau",
-						"--docs=~/.luau-lsp/en-us.json",
-					},
-					settings = {
-						["luau-lsp"] = {
-							completion = {
-								enableFragmentAutocomplete = true,
-								imports = {
-									enabled = true,
-								},
-							},
-						},
-					},
-				},
-				lua_ls = { settings = { Lua = { diagnostics = { globals = { "vim" } } } } },
-				clangd = {},
-				pyright = {},
-				vtsls = {},
-				jsonls = {},
-				rust_analyzer = { settings = { ["rust-analyzer"] = { check = { command = "clippy" } } } },
-				texlab = {},
-				biome = {},
-				ruby_lsp = {},
-				standardrb = {},
-				-- sorbet = { cmd = { "srb", "tc", "--lsp", "--disable-watchman", "." } },
+			if default_config.capabilities.workspace == nil then
+				default_config.capabilities.workspace = {}
+			end
+			default_config.capabilities.workspace.didChangeWatchedFiles = {
+				dynamicRegistration = true,
 			}
 
 			for lsp, config in pairs(custom_config) do
@@ -50,7 +69,6 @@ return {
 						config[k] = v
 					end
 				end
-				-- lspconfig[lsp].setup(config)
 				vim.lsp.config(lsp, config)
 				vim.lsp.enable(lsp)
 			end
@@ -64,12 +82,6 @@ return {
 		end,
 	},
 	{ "williamboman/mason.nvim", opts = { ui = { border = "rounded" } } },
-	{
-		"williamboman/mason-lspconfig.nvim",
-		opts = {
-			automatic_installation = true,
-		},
-	},
 	{
 		"mfussenegger/nvim-lint",
 		config = function()
@@ -92,10 +104,6 @@ return {
 				lua = { "stylua" },
 				luau = { "stylua" },
 			},
-			-- format_on_save = {
-			-- 	timeout_ms = 500,
-			-- 	lsp_format = "fallback",
-			-- },
 			format_after_save = {
 				lsp_format = "fallback",
 				async = true,
@@ -107,10 +115,25 @@ return {
 		opts = {
 			namu_symbols = {
 				options = {
+					AllowKinds = {
+						default = {
+							"Function",
+							"Method",
+							"Class",
+							"Module",
+							"Property",
+							"Constant",
+							"Enum",
+							"Interface",
+							"Field",
+							"Struct",
+						},
+					},
 					movement = {
 						next = { "<C-j>", "<DOWN>" },
 						previous = { "<C-k>", "<UP>" },
 					},
+					row_position = "top10_right",
 				},
 			},
 		},

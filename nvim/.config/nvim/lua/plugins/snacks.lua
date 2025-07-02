@@ -15,8 +15,10 @@ return {
 				enabled = true,
 				expand = false,
 			},
+			image = { enabled = true },
 			notifier = {
 				enabled = true,
+				top_down = false,
 				timeout = 3000,
 			},
 			picker = {
@@ -25,12 +27,15 @@ return {
 					files = {
 						hidden = true,
 					},
+					explorer = {
+						layout = { layout = { position = "right" } },
+					},
 				},
 			},
 			quickfile = { enabled = true },
 			scope = { enabled = true },
 			-- scroll = { enabled = true },
-			statuscolumn = { enabled = true, left = {} },
+			statuscolumn = { enabled = true, left = { "fold", "git" }, right = {} },
 			-- words = { enabled = true },
 			styles = {
 				notification = {
@@ -60,7 +65,7 @@ return {
 						end,
 					})
 
-					KEYMAPS.snacks(Snacks)
+					KEYMAPS.snacks()
 				end,
 			})
 		end,
@@ -68,7 +73,7 @@ return {
 	{
 		"folke/which-key.nvim",
 		event = "VeryLazy",
-		opts = { preset = "modern", delay = 300 },
+		opts = { preset = "helix", delay = 300, win = { border = "rounded" } },
 		keys = {
 			{
 				"<leader>?",
@@ -83,5 +88,10 @@ return {
 		"folke/lazydev.nvim",
 		ft = "lua",
 		opts = { library = { { path = "${3rd}/luv/library", words = { "vim%.uv" } } } },
+	},
+	{
+		"folke/todo-comments.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		opts = {},
 	},
 }

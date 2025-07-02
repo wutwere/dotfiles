@@ -1,6 +1,5 @@
-theme = rose-pine-moon
-# background = #181524
-background = #000000
+theme = Monokai Remastered
+background = #0b0b12
 
 cursor-style = underline
 cursor-style-blink = true
@@ -11,32 +10,26 @@ window-decoration = auto
 macos-titlebar-style = hidden
 
 font-family = JetBrainsMono Nerd Font Mono
-# font-family = CaskaydiaCove Nerd Font Mono
-# font-family = FiraCode Nerd Font Mono
-# font-family = Liga SFMono Nerd Font
-# font-family = MesloLGM Nerd Font Mono
-# font-family = Hack Nerd Font Mono
-# font-family = RobotoMono Nerd Font Mono
-# font-family = VictorMono Nerd Font Mono
-font-size = 15
-adjust-cell-height = 12%
-# adjust-cell-width = 5%
-font-thicken = true
+# font-family = Monaspace Argon
+# font-feature = calt,liga,dlig,ss01,ss02,ss03,ss04,ss05,ss06,ss07,ss08
+font-family-italic = Monaspace Radon
+font-size = 12
+adjust-cell-height = 5%
+adjust-cell-width = -5%
 # 0 to 255
 font-thicken-strength = 30
+font-thicken = true
 
-window-padding-x = 10
-window-padding-y = 7
+window-padding-x = 3
+window-padding-y = 3
 window-padding-balance = true
 
-background-opacity = 0.85
-background-blur = 35
+background-opacity = 1
+background-blur = 0
 
 confirm-close-surface = false
 
 copy-on-select = clipboard
-
-
 
 ### TMUX BINDS
 
@@ -65,10 +58,10 @@ keybind = super+shift+l=text:\x00L
 keybind = super+x=text:\x00x
 
 # create tab
-keybind = super+t=text:\x00c
+keybind = super+t=text:\x00t
 
 # close tab
-keybind = super+w=text:\x00&
+keybind = super+w=text:\x00w
 
 # open sessions
 keybind = super+s=text:\x00s

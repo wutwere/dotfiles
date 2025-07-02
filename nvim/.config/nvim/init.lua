@@ -8,6 +8,7 @@ KEYMAPS.general()
 vim.g.netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
 vim.opt.autoindent = true
 vim.opt.breakindent = true
+vim.opt.cmdheight = 0
 vim.opt.cursorline = true
 vim.opt.expandtab = true
 vim.opt.fillchars = { eob = " " }
@@ -16,8 +17,6 @@ vim.opt.linebreak = true
 vim.opt.list = true
 vim.opt.listchars = { tab = "  ", trail = "·", nbsp = "␣" }
 vim.opt.mouse = "nv"
-vim.opt.number = true
-vim.opt.relativenumber = true
 vim.opt.scrolloff = 5
 vim.opt.shiftwidth = 2
 vim.opt.showmode = false
@@ -38,6 +37,14 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 	callback = function()
 		vim.opt_local.spell = true
 		vim.opt_local.wrap = true
+	end,
+})
+vim.api.nvim_create_autocmd("BufEnter", {
+	callback = function()
+		vim.opt.formatoptions:remove({ "o", "r" })
+		vim.opt.number = true
+		vim.opt.relativenumber = true
+		require("lualine").refresh()
 	end,
 })
 
@@ -84,4 +91,5 @@ vim.diagnostic.config({
 	},
 })
 
-vim.cmd("colorscheme rose-pine-moon")
+-- vim.cmd("colorscheme rose-pine-moon")
+vim.cmd("colorscheme monokai-pro-classic")

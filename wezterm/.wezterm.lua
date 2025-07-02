@@ -4,45 +4,77 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
-config.enable_tab_bar = true
-config.tab_bar_at_bottom = false
-config.show_new_tab_button_in_tab_bar = false
-config.tab_max_width = 32
-config.hide_tab_bar_if_only_one_tab = true
-config.use_fancy_tab_bar = false
-config.window_decorations = "RESIZE"
+-------------
+-- GENERAL --
+-------------
+
+config.enable_tab_bar = false
+-- config.window_decorations = "RESIZE"
 config.initial_cols = 120
 config.initial_rows = 30
-config.window_padding = {
-	left = 0,
-	right = 0,
-	top = 0,
-	bottom = 0,
-}
+config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
 -- config.color_scheme = "tokyonight"
 -- config.color_scheme = "catppuccin-macchiato"
-config.color_scheme = "rose-pine"
-config.colors = {
-	background = "#000000",
-}
-config.window_background_opacity = 0.9
-
-config.font = wezterm.font("JetBrainsMono Nerd Font Mono", { weight = "DemiBold" })
-config.font_size = 11
-config.line_height = 1.13
-config.max_fps = 144
-config.freetype_load_target = "HorizontalLcd"
-
+config.color_scheme = "Monokai Remastered"
+config.colors = { background = "#0b0b12" }
+config.window_background_opacity = 1.0
+config.max_fps = 255
 config.default_cursor_style = "BlinkingUnderline"
 config.cursor_blink_rate = 300
 config.animation_fps = 60
+
+config.wsl_domains = {
+	{
+		name = "WSL:Arch",
+		distribution = "Arch",
+	},
+}
+
+config.default_domain = "WSL:Arch"
+
+----------
+-- FONT --
+----------
+
+config.freetype_load_target = "HorizontalLcd"
+config.font = wezterm.font("JetBrainsMono Nerd Font Mono", { weight = "DemiBold" })
+-- config.font_size = 11
+-- config.line_height = 1.13
+-- config.font = wezterm.font("Monaspace Argon")
+-- config.harfbuzz_features = { "calt", "liga", "dlig", "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07", "ss08" }
+-- config.freetype_load_target = "Light"
+config.freetype_render_target = "HorizontalLcd"
+config.font_size = 9
+config.line_height = 1.22
+config.cell_width = 0.95
+config.font_rules = {
+	{
+		intensity = "Normal",
+		italic = true,
+		font = wezterm.font("Monaspace Radon", { weight = "Regular" }),
+	},
+	{
+		intensity = "Bold",
+		italic = false,
+		font = wezterm.font("Monaspace Neon", { weight = "ExtraBold" }),
+	},
+	{
+		intensity = "Bold",
+		italic = true,
+		font = wezterm.font("Monaspace Radon", { weight = "ExtraBold" }),
+	},
+}
+
+-----------------
+-- KEYBINDINGS --
+-----------------
 
 local act = wezterm.action
 
 config.keys = {}
 
 local function addTmuxKey(want, tmux, mods)
-	mods = mods or "ALT"
+	mods = mods or "CTRL"
 	table.insert(config.keys, {
 		key = want,
 		mods = mods,
@@ -57,30 +89,21 @@ for i = 1, 9 do
 	addTmuxKey(tostring(i), tostring(i))
 end
 
-addTmuxKey("h", "h")
-addTmuxKey("j", "j")
-addTmuxKey("k", "k")
-addTmuxKey("l", "l")
-addTmuxKey("h", "H", "ALT|SHIFT")
-addTmuxKey("j", "J", "ALT|SHIFT")
-addTmuxKey("k", "K", "ALT|SHIFT")
-addTmuxKey("l", "L", "ALT|SHIFT")
+-- addTmuxKey("h", "h")
+-- addTmuxKey("j", "j")
+-- addTmuxKey("k", "k")
+-- addTmuxKey("l", "l")
+addTmuxKey("h", "H", "CTRL|SHIFT")
+addTmuxKey("j", "J", "CTRL|SHIFT")
+addTmuxKey("k", "K", "CTRL|SHIFT")
+addTmuxKey("l", "L", "CTRL|SHIFT")
 addTmuxKey("x", "x")
 
-addTmuxKey("t", "c")
-addTmuxKey("w", "&")
+addTmuxKey("t", "t")
+addTmuxKey("w", "w", "CTRL|SHIFT")
 addTmuxKey("s", "s")
 addTmuxKey("f", "f")
 addTmuxKey("b", "b")
-
-config.wsl_domains = {
-	{
-		name = "WSL:Arch",
-		distribution = "Arch",
-	},
-}
-
---=== THIS IS FOR WSL ===--
-config.default_domain = "WSL:Arch"
+addTmuxKey("[", "[")
 
 return config
