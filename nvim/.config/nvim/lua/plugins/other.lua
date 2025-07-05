@@ -69,4 +69,20 @@ return {
 			})
 		end,
 	},
+	{
+		"otavioschwanck/arrow.nvim",
+		dependencies = {
+			{ "nvim-tree/nvim-web-devicons" },
+		},
+		opts = {
+			show_icons = true,
+			hide_handbook = true,
+			leader_key = KEYMAPS.arrow.leader_key,
+			separate_save_and_remove = true,
+			mappings = KEYMAPS.arrow.mappings,
+			window = {
+				border = "rounded",
+			},
+		},
+	},
 }
