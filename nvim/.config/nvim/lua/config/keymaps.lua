@@ -283,6 +283,7 @@ KEYMAPS.snacks = function()
 	vim.keymap.set("n", "<leader>gl", Snacks.picker.git_log, { desc = "Git Log" })
 	vim.keymap.set("n", "<leader>gL", Snacks.picker.git_log_line, { desc = "Git Log Line" })
 	vim.keymap.set("n", "<leader>gf", Snacks.picker.git_log_file, { desc = "Git Log File" })
+	vim.keymap.set("n", "<leader>gd", Snacks.picker.git_diff, { desc = "Git Diff" })
 	-- Grep
 	vim.keymap.set(
 		"n",
@@ -299,7 +300,7 @@ KEYMAPS.snacks = function()
 	-- search
 	vim.keymap.set("n", '<leader>s"', Snacks.picker.registers, { desc = "Registers" })
 	vim.keymap.set("n", "<leader>s/", Snacks.picker.lines, { desc = "Buffer Lines" })
-	vim.keymap.set("n", "<leader>sb", Snacks.picker.buffers, { desc = "Buffers" })
+	vim.keymap.set("n", "<leader>b", Snacks.picker.buffers, { desc = "Buffers" })
 	vim.keymap.set("n", "<leader>sd", Snacks.picker.diagnostics, { desc = "Diagnostics" })
 	vim.keymap.set("n", "<leader>sD", Snacks.picker.diagnostics_buffer, { desc = "Buffer Diagnostics" })
 	vim.keymap.set("n", "<leader>sh", Snacks.picker.help, { desc = "Help Pages" })
@@ -321,8 +322,6 @@ KEYMAPS.snacks = function()
 	vim.keymap.set("n", "go", Snacks.picker.lsp_type_definitions, { desc = "Goto Type Definition" })
 	-- Other
 	vim.keymap.set("n", "<leader>.", func_wrap(Snacks.scratch, nil), { desc = "Toggle Scratch Buffer" })
-	vim.keymap.set("n", "<leader>S", Snacks.scratch.select, { desc = "Select Scratch Buffer" })
-	vim.keymap.set("n", "<leader>z", Snacks.zen.zen, { desc = "Enable Zen Mode" })
 
 	-- Custom pick + edit directory
 	local function get_directories()
@@ -341,7 +340,7 @@ KEYMAPS.snacks = function()
 		return directories
 	end
 
-	vim.keymap.set("n", "<leader><leader>", function()
+	vim.keymap.set("n", "<leader>o", function()
 		local dirs = get_directories()
 
 		return Snacks.picker({
@@ -377,5 +376,19 @@ KEYMAPS.snacks = function()
 		})
 	end, { desc = "Directories" })
 end
+
+-----------
+-- ARROW --
+-----------
+
+KEYMAPS.arrow = {
+	leader_key = "\\",
+	mappings = {
+		edit = "e",
+		delete_mode = "d",
+		clear_all_items = "C",
+		toggle = "\\",
+	},
+}
 
 return KEYMAPS

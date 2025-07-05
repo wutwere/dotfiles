@@ -31,6 +31,12 @@ return {
 						layout = { layout = { position = "right" } },
 					},
 				},
+				previewers = {
+					diff = {
+						builtin = false,
+						cmd = { "delta", "--paging=never" },
+					},
+				},
 			},
 			quickfile = { enabled = true },
 			scope = { enabled = true },
