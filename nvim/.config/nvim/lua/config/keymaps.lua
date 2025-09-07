@@ -17,22 +17,6 @@ KEYMAPS.general = function()
 	vim.keymap.set("i", "{<cr>", "{<cr>}<esc>O")
 	vim.keymap.set("i", "{<s-cr>", "{<cr>}<esc>O")
 
-	-- delay isn't as bad in WSL if i sync clipboard like this
-	if vim.fn.has("wsl") == 0 then
-		vim.opt.clipboard = "unnamedplus"
-	else
-		vim.keymap.set({ "n", "v" }, "y", '"+y', { silent = true, noremap = true })
-		vim.keymap.set({ "n", "v" }, "p", '"+p', { silent = true, noremap = true })
-		vim.keymap.set({ "n", "v" }, "d", '"+d', { silent = true, noremap = true })
-		vim.keymap.set({ "n", "v" }, "c", '"+c', { silent = true, noremap = true })
-		vim.keymap.set({ "n", "v" }, "x", '"+x', { silent = true, noremap = true })
-		vim.keymap.set({ "n", "v" }, "Y", '"+Y', { silent = true, noremap = true })
-		vim.keymap.set({ "n", "v" }, "P", '"+P', { silent = true, noremap = true })
-		vim.keymap.set({ "n", "v" }, "D", '"+D', { silent = true, noremap = true })
-		vim.keymap.set({ "n", "v" }, "C", '"+C', { silent = true, noremap = true })
-		vim.keymap.set({ "n", "v" }, "X", '"+X', { silent = true, noremap = true })
-	end
-
 	vim.keymap.set("n", "<leader>y", function()
 		local path = vim.fn.expand("%:p")
 		if path ~= "" then

@@ -5,25 +5,10 @@ KEYMAPS.general()
 -- VIM OPTIONS --
 -----------------
 
-if vim.fn.has("wsl") == 1 then
-	vim.g.clipboard = {
-		name = "WslClipboard",
-		copy = {
-			["+"] = "clip.exe",
-			["*"] = "clip.exe",
-		},
-		paste = {
-			-- remember scoop install win32yank
-			["+"] = "win32yank.exe -o --lf",
-			["*"] = "win32yank.exe -o --lf",
-		},
-		cache_enabled = 0,
-	}
-end
-
 vim.g.netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
 vim.opt.autoindent = true
 vim.opt.breakindent = true
+vim.opt.clipboard = "unnamedplus" -- on windows, install win32yank
 vim.opt.cmdheight = 0
 vim.opt.cursorline = true
 vim.opt.expandtab = true
