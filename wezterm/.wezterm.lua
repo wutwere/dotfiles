@@ -45,7 +45,7 @@ config.font = wezterm.font("JetBrainsMono Nerd Font Mono", { weight = "DemiBold"
 -- config.freetype_load_target = "Light"
 config.freetype_render_target = "HorizontalLcd"
 config.font_size = 9
-config.line_height = 1.22
+config.line_height = 1.23
 config.cell_width = 0.95
 config.font_rules = {
 	{
@@ -74,7 +74,7 @@ local act = wezterm.action
 config.keys = {}
 
 local function addTmuxKey(want, tmux, mods)
-	mods = mods or "CTRL"
+	mods = mods or "ALT"
 	table.insert(config.keys, {
 		key = want,
 		mods = mods,
@@ -93,14 +93,14 @@ end
 -- addTmuxKey("j", "j")
 -- addTmuxKey("k", "k")
 -- addTmuxKey("l", "l")
-addTmuxKey("h", "H", "CTRL|SHIFT")
-addTmuxKey("j", "J", "CTRL|SHIFT")
-addTmuxKey("k", "K", "CTRL|SHIFT")
-addTmuxKey("l", "L", "CTRL|SHIFT")
+addTmuxKey("h", "H", "ALT|SHIFT")
+addTmuxKey("j", "J", "ALT|SHIFT")
+addTmuxKey("k", "K", "ALT|SHIFT")
+addTmuxKey("l", "L", "ALT|SHIFT")
 addTmuxKey("x", "x")
 
 addTmuxKey("t", "t")
-addTmuxKey("w", "w", "CTRL|SHIFT")
+addTmuxKey("w", "w")
 addTmuxKey("s", "s")
 addTmuxKey("f", "f")
 addTmuxKey("b", "b")
