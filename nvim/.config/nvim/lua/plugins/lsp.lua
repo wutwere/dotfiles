@@ -41,6 +41,27 @@ local custom_config = {
 			client.server_capabilities.semanticTokensProvider = nil
 		end,
 	},
+	nixd = {
+		settings = {
+			nixd = {
+				nixpkgs = {
+					expr = "import <nixpkgs> { }",
+				},
+				formatting = {
+					command = { "nixfmt" },
+				},
+				options = {
+					nixos = {
+						expr = '(builtins.getFlake ("git+file://" + toString ./.)).nixosConfigurations.k-on.options',
+					},
+					home_manager = {
+						expr = '(builtins.getFlake ("git+file://" + toString ./.)).homeConfigurations."ruixi@k-on".options',
+					},
+				},
+			},
+		},
+	},
+	gopls = {},
 }
 
 return {
@@ -103,6 +124,7 @@ return {
 			formatters_by_ft = {
 				lua = { "stylua" },
 				luau = { "stylua" },
+				nix = { "alejandra" },
 			},
 			format_after_save = {
 				lsp_format = "fallback",
