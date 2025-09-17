@@ -15,7 +15,7 @@ return {
 				enabled = true,
 				expand = false,
 			},
-			image = { enabled = true },
+			-- image = { enabled = true },
 			notifier = {
 				enabled = true,
 				top_down = false,

@@ -6,7 +6,7 @@ local CUSTOM_HIGHLIGHTS = {
 	["BufferLineFill"] = { bg = "NONE" },
 	["ColorColumn"] = { bg = "#181C29" }, -- markdown code block
 	["Comment"] = { italic = true }, -- for markdown if i decide to disable global italic
-	["CursorLine"] = { bg = "NONE" },
+	-- ["CursorLine"] = { bg = "NONE" },
 	["Directory"] = { bg = "NONE" },
 	["LazyNormal"] = { bg = "NONE" },
 	["Pmenu"] = { bg = "NONE" }, -- for blink cmp
@@ -25,6 +25,16 @@ local CUSTOM_HIGHLIGHTS = {
 }
 
 return {
+	{
+		"ellisonleao/gruvbox.nvim",
+		priority = 1000,
+		opts = {
+			contrast = "hard",
+			transparent_mode = true,
+			terminal_colors = true,
+			overrides = CUSTOM_HIGHLIGHTS,
+		},
+	},
 	{
 		"loctvl842/monokai-pro.nvim",
 		priority = 1000,
