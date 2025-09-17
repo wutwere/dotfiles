@@ -6,8 +6,8 @@ return {
 			require("lualine").setup({
 				options = {
 					theme = (function()
-						local theme = require("lualine.themes.rose-pine-alt")
-						theme.normal.a.fg = "#F92572"
+						local theme = require("lualine.themes.gruvbox_light")
+						theme.normal.a.fg = "#f6c177"
 						theme.inactive.a.gui = nil
 						for _, mode in pairs(theme) do
 							for k, section in pairs(mode) do
@@ -40,7 +40,8 @@ return {
 						"searchcount",
 						"diagnostics",
 						"lsp_status",
-						"progress",
+						-- "progress",
+						"location",
 					},
 					lualine_y = {},
 					lualine_z = {

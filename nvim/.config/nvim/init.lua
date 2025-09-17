@@ -93,4 +93,5 @@ vim.diagnostic.config({
 })
 
 -- vim.cmd("colorscheme rose-pine-moon")
-vim.cmd("colorscheme monokai-pro-classic")
+-- vim.cmd("colorscheme monokai-pro-classic")
+vim.cmd("colorscheme gruvbox")

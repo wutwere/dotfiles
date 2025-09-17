@@ -1,5 +1,7 @@
-theme = Monokai Remastered
-background = #0b0b12
+shell-integration = none
+
+theme = Gruvbox Dark Hard
+# background = #0b0b12
 
 cursor-style = underline
 cursor-style-blink = true
@@ -43,6 +45,16 @@ keybind = super+6=text:\x006
 keybind = super+7=text:\x007
 keybind = super+8=text:\x008
 keybind = super+9=text:\x009
+# new ghostty version or something needs this
+keybind = super+digit_1=text:\x001
+keybind = super+digit_2=text:\x002
+keybind = super+digit_3=text:\x003
+keybind = super+digit_4=text:\x004
+keybind = super+digit_5=text:\x005
+keybind = super+digit_6=text:\x006
+keybind = super+digit_7=text:\x007
+keybind = super+digit_8=text:\x008
+keybind = super+digit_9=text:\x009
 
 # switch panes
 keybind = super+h=text:\x00h
@@ -73,4 +85,7 @@ keybind = super+f=text:\x00f
 keybind = super+b=text:\x00b
 
 # select mode
-keybind = super+[=text:\x00[
+keybind = super+left_bracket=text:\x00[
+
+# stripe shift+enter for newline
+keybind = shift+enter=text:\x1b\r
