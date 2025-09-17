@@ -15,8 +15,8 @@ config.initial_rows = 30
 config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
 -- config.color_scheme = "tokyonight"
 -- config.color_scheme = "catppuccin-macchiato"
-config.color_scheme = "Monokai Remastered"
-config.colors = { background = "#0b0b12" }
+config.color_scheme = "GruvboxDarkHard"
+-- config.colors = { background = "#000000" }
 config.window_background_opacity = 1.0
 config.max_fps = 255
 config.default_cursor_style = "BlinkingUnderline"
@@ -28,9 +28,13 @@ config.wsl_domains = {
 		name = "WSL:Arch",
 		distribution = "Arch",
 	},
+	{
+		name = "WSL:NixOS",
+		distribution = "NixOS",
+	},
 }
 
-config.default_domain = "WSL:Arch"
+config.default_domain = "WSL:NixOS"
 
 ----------
 -- FONT --
