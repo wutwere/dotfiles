@@ -20,7 +20,7 @@ adjust-cell-height = 5%
 adjust-cell-width = -5%
 # 0 to 255
 font-thicken-strength = 30
-font-thicken = true
+font-thicken = false
 
 window-padding-x = 3
 window-padding-y = 3

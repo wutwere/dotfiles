@@ -62,6 +62,8 @@ local custom_config = {
 		},
 	},
 	gopls = {},
+	buf_ls = {},
+	ruff = {},
 }
 
 return {
@@ -108,8 +110,10 @@ return {
 		config = function()
 			local lint = require("lint")
 			lint.linters_by_ft = {
+				go = { "golangcilint" },
 				lua = { "selene" },
 				luau = { "selene" },
+				proto = { "buf_lint" },
 			}
 			vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 				callback = function()
@@ -126,10 +130,15 @@ return {
 				luau = { "stylua" },
 				nix = { "alejandra" },
 			},
-			format_after_save = {
-				lsp_format = "fallback",
-				async = true,
-			},
+			format_after_save = function(_bufnr)
+				if vim.bo.filetype == "proto" then
+					return
+				end
+				return {
+					lsp_format = "fallback",
+					async = true,
+				}
+			end,
 		},
 	},
 	{
