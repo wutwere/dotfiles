@@ -105,6 +105,8 @@ KEYMAPS.general = function()
 	vim.keymap.set("n", "<leader>gp", "<cmd>Gitsigns preview_hunk_inline<cr>")
 	vim.keymap.set("n", "<leader>gr", "<cmd>Gitsigns reset_hunk<cr>")
 	vim.keymap.set("n", "<leader>gt", "<cmd>Gitsigns toggle_current_line_blame<cr>")
+	vim.keymap.set("n", "]g", "<cmd>Gitsigns next_hunk<cr>")
+	vim.keymap.set("n", "[g", "<cmd>Gitsigns prev_hunk<cr>")
 
 	vim.keymap.set("n", "<leader>gco", "<Plug>(git-conflict-ours)", { desc = "Merge choose ours" })
 	vim.keymap.set("n", "<leader>gct", "<Plug>(git-conflict-theirs)", { desc = "Merge choose theirs" })

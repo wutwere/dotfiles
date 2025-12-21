@@ -6,6 +6,7 @@ KEYMAPS.general()
 -----------------
 
 vim.g.netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
+-- vim.g.clipboard = "osc52"
 vim.opt.autoindent = true
 vim.opt.breakindent = true
 vim.opt.clipboard = "unnamedplus" -- on windows, install win32yank
@@ -18,6 +19,7 @@ vim.opt.linebreak = true
 vim.opt.list = true
 vim.opt.listchars = { tab = "  ", trail = "·", nbsp = "␣" }
 vim.opt.mouse = "nv"
+vim.opt.mousescroll = "ver:1,hor:1"
 vim.opt.scrolloff = 5
 vim.opt.shiftwidth = 2
 vim.opt.showmode = false
