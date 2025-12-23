@@ -75,7 +75,13 @@ config.font_rules = {
 
 local act = wezterm.action
 
-config.keys = {}
+config.keys = {
+	{
+		key = "Enter",
+		mods = "SHIFT",
+		action = wezterm.action.SendString("\027\r"),
+	},
+}
 
 local function addTmuxKey(want, tmux, mods)
 	mods = mods or "ALT"
