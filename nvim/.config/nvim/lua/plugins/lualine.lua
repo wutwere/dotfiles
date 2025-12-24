@@ -7,7 +7,7 @@ return {
 				options = {
 					theme = (function()
 						local theme = require("lualine.themes.gruvbox_light")
-						theme.normal.a.fg = "#f6c177"
+						-- theme.normal.a.fg = "#f6c177"
 						theme.inactive.a.gui = nil
 						for _, mode in pairs(theme) do
 							for k, section in pairs(mode) do
@@ -51,17 +51,17 @@ return {
 						end,
 					},
 				},
-				tabline = {
-					lualine_a = {
-						{
-							"buffers",
-							mode = 2,
-							show_filename_only = true,
-							use_mode_colors = false,
-							max_length = vim.o.columns,
-						},
-					},
-				},
+				-- tabline = {
+				-- 	lualine_a = {
+				-- 		{
+				-- 			"buffers",
+				-- 			mode = 2,
+				-- 			show_filename_only = true,
+				-- 			use_mode_colors = false,
+				-- 			max_length = vim.o.columns,
+				-- 		},
+				-- 	},
+				-- },
 			})
 		end,
 	},

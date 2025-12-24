@@ -10,7 +10,7 @@ vim.g.netrw_bufsettings = "noma nomod nu rnu nobl nowrap ro"
 vim.opt.autoindent = true
 vim.opt.breakindent = true
 vim.opt.clipboard = "unnamedplus" -- on windows, install win32yank
-vim.opt.cmdheight = 0
+-- vim.opt.cmdheight = 0
 vim.opt.cursorline = true
 vim.opt.expandtab = true
 vim.opt.fillchars = { eob = " " }

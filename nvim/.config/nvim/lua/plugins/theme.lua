@@ -4,7 +4,7 @@ local CUSTOM_HIGHLIGHTS = {
 	["BlinkCmpDocSeparator"] = { bg = "NONE" },
 	["BlinkCmpMenu"] = { bg = "NONE" },
 	["BufferLineFill"] = { bg = "NONE" },
-	["ColorColumn"] = { bg = "#181C29" }, -- markdown code block
+	["ColorColumn"] = { bg = "#111111" }, -- markdown code block
 	["Comment"] = { italic = true }, -- for markdown if i decide to disable global italic
 	-- ["CursorLine"] = { bg = "NONE" },
 	["Directory"] = { bg = "NONE" },
