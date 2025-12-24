@@ -91,4 +91,4 @@ keybind = super+left_bracket=text:\x00[
 keybind = shift+enter=text:\x1b\r
 
 # rename window
-keybind = shift+r=text:\x1b\,
+keybind = super+r=text:\x00,
