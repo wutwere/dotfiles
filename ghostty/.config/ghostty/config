@@ -1,6 +1,6 @@
 shell-integration = none
 
-theme = Gruvbox Dark Hard
+theme = Monokai Remastered
 # background = #0b0b12
 
 cursor-style = underline
@@ -89,3 +89,6 @@ keybind = super+left_bracket=text:\x00[
 
 # stripe shift+enter for newline
 keybind = shift+enter=text:\x1b\r
+
+# rename window
+keybind = shift+r=text:\x1b\,
