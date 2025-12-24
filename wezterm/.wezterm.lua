@@ -44,16 +44,15 @@ config.default_domain = "WSL:NixOS"
 -- config.font_size = 11
 -- config.line_height = 1.13
 -- config.font = wezterm.font("Monaspace Argon")
--- config.harfbuzz_features = { "calt", "liga", "dlig", "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07", "ss08" }
+config.harfbuzz_features = { "calt", "liga", "dlig", "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07", "ss08" }
 -- config.freetype_load_target = "Light"
 -- config.freetype_load_target = "HorizontalLcd"
 -- config.freetype_render_target = "HorizontalLcd"
--- config.front_end = "OpenGL"
--- config.custom_block_glyphs = true
+config.custom_block_glyphs = false
 
-config.font_size = 10
+config.font_size = 9
 config.line_height = 1
-config.cell_width = 0.95
+config.cell_width = 1
 
 -----------------
 -- KEYBINDINGS --
