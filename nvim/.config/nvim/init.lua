@@ -47,7 +47,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
 		vim.opt.formatoptions:remove({ "o", "r" })
 		vim.opt.number = true
 		vim.opt.relativenumber = true
-		require("lualine").refresh()
+		-- require("lualine").refresh()
 	end,
 })
 
