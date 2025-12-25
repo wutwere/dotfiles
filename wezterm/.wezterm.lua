@@ -16,7 +16,7 @@ config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
 -- config.color_scheme = "tokyonight"
 -- config.color_scheme = "catppuccin-macchiato"
 config.color_scheme = "Monokai Remastered"
--- config.colors = { background = "#000000" }
+config.colors = { background = "#000000" }
 config.window_background_opacity = 1.0
 config.max_fps = 255
 config.default_cursor_style = "BlinkingUnderline"
@@ -48,7 +48,7 @@ config.harfbuzz_features = { "calt", "liga", "dlig", "ss01", "ss02", "ss03", "ss
 -- config.freetype_load_target = "Light"
 -- config.freetype_load_target = "HorizontalLcd"
 -- config.freetype_render_target = "HorizontalLcd"
-config.custom_block_glyphs = false
+-- config.custom_block_glyphs = false
 
 config.font_size = 9
 config.line_height = 1
@@ -84,10 +84,10 @@ for i = 1, 9 do
 	addTmuxKey(tostring(i), tostring(i))
 end
 
--- addTmuxKey("h", "h")
--- addTmuxKey("j", "j")
--- addTmuxKey("k", "k")
--- addTmuxKey("l", "l")
+addTmuxKey("h", "h")
+addTmuxKey("j", "j")
+addTmuxKey("k", "k")
+addTmuxKey("l", "l")
 addTmuxKey("h", "H", "ALT|SHIFT")
 addTmuxKey("j", "J", "ALT|SHIFT")
 addTmuxKey("k", "K", "ALT|SHIFT")
