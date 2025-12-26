@@ -1,7 +1,7 @@
 shell-integration = none
 
 theme = Monokai Remastered
-# background = #0b0b12
+background = #000000
 
 cursor-style = underline
 cursor-style-blink = true
@@ -11,10 +11,10 @@ mouse-hide-while-typing = true
 window-decoration = auto
 macos-titlebar-style = hidden
 
-font-family = JetBrainsMono Nerd Font Mono
+# font-family = JetBrainsMono Nerd Font Mono
 # font-family = Monaspace Argon
 # font-feature = calt,liga,dlig,ss01,ss02,ss03,ss04,ss05,ss06,ss07,ss08
-font-family-italic = Monaspace Radon
+# font-family-italic = Monaspace Radon
 font-size = 12
 adjust-cell-height = 5%
 adjust-cell-width = -5%
@@ -22,8 +22,8 @@ adjust-cell-width = -5%
 font-thicken-strength = 30
 font-thicken = false
 
-window-padding-x = 3
-window-padding-y = 3
+window-padding-x = 0
+window-padding-y = 0
 window-padding-balance = true
 
 background-opacity = 1
@@ -92,3 +92,6 @@ keybind = shift+enter=text:\x1b\r
 
 # rename window
 keybind = super+r=text:\x00,
+
+# tmux thumbs
+keybind = "super+y=text:\x00 "

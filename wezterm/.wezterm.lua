@@ -101,5 +101,6 @@ addTmuxKey("f", "f")
 addTmuxKey("b", "b")
 addTmuxKey("[", "[")
 addTmuxKey("r", ",")
+addTmuxKey("y", "Space")
 
 return config
