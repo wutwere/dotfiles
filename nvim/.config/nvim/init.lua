@@ -20,10 +20,10 @@ vim.opt.list = true
 vim.opt.listchars = { tab = "  ", trail = "·", nbsp = "␣" }
 vim.opt.mouse = "nv"
 vim.opt.mousescroll = "ver:1,hor:1"
-vim.opt.scrolloff = 5
+vim.opt.scrolloff = 0
 vim.opt.shiftwidth = 2
 vim.opt.showmode = false
-vim.opt.sidescrolloff = 10
+vim.opt.sidescrolloff = 0
 vim.opt.signcolumn = "yes"
 vim.opt.smartcase = true
 vim.opt.smartindent = true
@@ -32,7 +32,7 @@ vim.opt.splitright = true
 vim.opt.tabstop = 2
 vim.opt.termguicolors = true
 vim.opt.undofile = true
-vim.opt.virtualedit = "block"
+vim.opt.virtualedit = "all"
 vim.opt.winborder = "rounded"
 vim.opt.wrap = false
 vim.api.nvim_create_autocmd({ "FileType" }, {
