@@ -9,7 +9,7 @@ cursor-style-blink = true
 mouse-hide-while-typing = true
 
 window-decoration = auto
-macos-titlebar-style = hidden
+macos-titlebar-style = transparent
 
 # font-family = JetBrainsMono Nerd Font Mono
 # font-family = Monaspace Argon
