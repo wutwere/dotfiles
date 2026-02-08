@@ -17,6 +17,7 @@ local custom_config = {
 				},
 			},
 		},
+		root_markers = { "selene.toml", ".luaurc", "stylua.toml", "src", ".git" },
 	},
 	lua_ls = {
 		settings = {
