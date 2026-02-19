@@ -28,7 +28,7 @@ return {
 						hidden = true,
 					},
 					explorer = {
-						layout = { layout = { position = "right" } },
+						-- layout = { layout = { position = "right" } },
 					},
 				},
 				previewers = {
