@@ -6,7 +6,7 @@ return {
 			require("lualine").setup({
 				options = {
 					theme = (function()
-						local theme = require("lualine.themes.gruvbox_light")
+						local theme = require("lualine.themes.ayu_light")
 						-- theme.normal.a.fg = "#f6c177"
 						theme.inactive.a.gui = nil
 						for _, mode in pairs(theme) do
@@ -30,14 +30,14 @@ return {
 					lualine_c = {
 						"branch",
 						"diff",
-						{ "tabs", path = 1, mode = 1, use_mode_colors = true, max_length = vim.o.columns / 2 },
+						{ "filename", path = 4 },
 					},
 					lualine_x = {
-						function()
-							local reg = vim.fn.reg_recording()
-							return reg == "" and "" or "recording @" .. reg
-						end,
-						"searchcount",
+						-- function()
+						-- 	local reg = vim.fn.reg_recording()
+						-- 	return reg == "" and "" or "recording @" .. reg
+						-- end,
+						-- "searchcount",
 						"diagnostics",
 						"lsp_status",
 						-- "progress",
