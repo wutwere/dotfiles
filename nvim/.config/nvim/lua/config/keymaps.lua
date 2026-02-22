@@ -17,6 +17,9 @@ KEYMAPS.general = function()
 	vim.keymap.set("i", "{<cr>", "{<cr>}<esc>O")
 	vim.keymap.set("i", "{<s-cr>", "{<cr>}<esc>O")
 
+	vim.keymap.set({ "o", "x" }, "iq", 'i"', { desc = 'inner " string' })
+	vim.keymap.set({ "o", "x" }, "aq", 'a"', { desc = '" string' })
+
 	vim.keymap.set("n", "zF", function()
 		vim.opt_local.foldmethod = "indent"
 	end, { desc = "Set buffer foldmethod to indent" })
