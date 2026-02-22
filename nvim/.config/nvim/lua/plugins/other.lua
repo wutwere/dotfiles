@@ -85,4 +85,13 @@ return {
 			},
 		},
 	},
+	{
+		"petertriho/nvim-scrollbar",
+		opts = {
+			show_in_active_only = true,
+			hide_if_all_visible = true,
+			excluded_buftypes = { "nofile" },
+			handlers = { cursor = false, gitsigns = true },
+		},
+	},
 }

@@ -8,11 +8,13 @@ local CUSTOM_HIGHLIGHTS = {
 	["Comment"] = { italic = true }, -- for markdown if i decide to disable global italic
 	-- ["CursorLine"] = { bg = "NONE" },
 	["Directory"] = { bg = "NONE" },
+	["FloatBorder"] = { fg = "#464B52" },
 	["LazyNormal"] = { bg = "NONE" },
 	["Pmenu"] = { bg = "NONE" }, -- for blink cmp
 	["PmenuExtra"] = { bg = "NONE" }, -- for blink cmp
 	["RenderMarkdownChecked"] = { fg = "#A7E22E" },
 	["SignColumn"] = { bg = "NONE" },
+	["SnacksIndent"] = { fg = "#161B22" },
 	["SnippetTabstop"] = { link = "NONE" },
 	["SpellBad"] = { link = "NONE" },
 	["SpellCap"] = { link = "NONE" },
@@ -58,25 +60,25 @@ return {
 			end,
 		},
 	},
-	-- {
-	-- 	"projekt0n/github-nvim-theme",
-	-- 	name = "github-theme",
-	-- 	lazy = false, -- make sure we load this during startup if it is your main colorscheme
-	-- 	priority = 1000, -- make sure to load this before all the other start plugins
-	-- 	opts = {
-	-- 		options = {
-	-- 			transparent = true,
-	-- 			styles = {
-	-- 				comments = "italic",
-	-- 				keywords = "bold",
-	-- 				types = "italic,bold",
-	-- 			},
-	-- 		},
-	-- 		groups = {
-	-- 			all = CUSTOM_HIGHLIGHTS,
-	-- 		},
-	-- 	},
-	-- },
+	{
+		"projekt0n/github-nvim-theme",
+		name = "github-theme",
+		lazy = false, -- make sure we load this during startup if it is your main colorscheme
+		priority = 1000, -- make sure to load this before all the other start plugins
+		opts = {
+			options = {
+				transparent = true,
+				styles = {
+					comments = "italic",
+					keywords = "bold",
+					types = "italic,bold",
+				},
+			},
+			groups = {
+				all = CUSTOM_HIGHLIGHTS,
+			},
+		},
+	},
 	{
 		"rose-pine/neovim",
 		name = "rose-pine",
@@ -90,7 +92,7 @@ return {
 			styles = {
 				bold = true,
 				italic = false,
-				transparency = false,
+				transparency = true,
 			},
 
 			highlight_groups = CUSTOM_HIGHLIGHTS,
