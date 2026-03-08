@@ -33,6 +33,8 @@ confirm-close-surface = false
 
 copy-on-select = clipboard
 
+custom-shader = cursor_warp.glsl
+
 ### TMUX BINDS
 
 # switch tabs (aka windows)
