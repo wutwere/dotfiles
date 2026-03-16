@@ -13,7 +13,7 @@ macos-titlebar-style = transparent
 
 # font-family = JetBrainsMono Nerd Font Mono
 # font-family = Monaspace Argon
-font-feature = calt,liga,dlig,ss01,ss02,ss03,ss04,ss05,ss06,ss07,ss08
+# font-feature = calt,liga,dlig,ss01,ss02,ss03,ss04,ss05,ss06,ss07,ss08
 # font-family-italic = Monaspace Radon
 font-size = 12
 adjust-cell-height = 5%
