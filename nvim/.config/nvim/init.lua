@@ -34,7 +34,7 @@ vim.opt.splitright = true
 vim.opt.tabstop = 2
 vim.opt.termguicolors = true
 vim.opt.undofile = true
-vim.opt.virtualedit = "all"
+-- vim.opt.virtualedit = "all"
 vim.opt.winborder = "rounded"
 vim.opt.wrap = false
 vim.api.nvim_create_autocmd({ "FileType" }, {
