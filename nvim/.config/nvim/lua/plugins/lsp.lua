@@ -65,6 +65,7 @@ local custom_config = {
 	gopls = {},
 	buf_ls = {},
 	ruff = {},
+	bashls = {},
 }
 
 return {

@@ -1,7 +1,8 @@
 shell-integration = none
 
 theme = Monokai Remastered
-background = #000000
+background = #0d1118
+# background = #000000
 
 cursor-style = underline
 cursor-style-blink = true
