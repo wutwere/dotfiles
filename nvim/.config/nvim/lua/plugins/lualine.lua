@@ -6,15 +6,18 @@ return {
 			require("lualine").setup({
 				options = {
 					theme = (function()
-						local theme = require("lualine.themes.ayu_light")
-						-- theme.normal.a.fg = "#f6c177"
-						theme.inactive.a.gui = nil
+						local theme = require("lualine.themes.ayu_mirage")
+						-- wtf does this do
+						-- theme.inactive.a.gui = nil
 						for _, mode in pairs(theme) do
 							for k, section in pairs(mode) do
 								-- if k == "a" then
+								--  -- invert color
 								-- 	section.fg = section.bg
 								-- end
-								section.bg = "NONE" -- fully transparent background
+								if k == "c" then
+									section.bg = "NONE" -- fully transparent background
+								end
 							end
 						end
 						return theme
@@ -22,14 +25,15 @@ return {
 					always_show_tabline = true,
 					globalstatus = true,
 					component_separators = { left = "", right = "" },
-					section_separators = { left = "", right = "" },
+					section_separators = { left = "", right = "" },
 				},
 				sections = {
 					lualine_a = { "mode" },
-					lualine_b = {},
-					lualine_c = {
+					lualine_b = {
 						"branch",
 						"diff",
+					},
+					lualine_c = {
 						{ "filename", path = 4 },
 					},
 					lualine_x = {
@@ -38,12 +42,13 @@ return {
 						-- 	return reg == "" and "" or "recording @" .. reg
 						-- end,
 						-- "searchcount",
-						"diagnostics",
 						"lsp_status",
 						-- "progress",
 						"location",
 					},
-					lualine_y = {},
+					lualine_y = {
+						"diagnostics",
+					},
 					lualine_z = {
 						-- "location",
 						function()

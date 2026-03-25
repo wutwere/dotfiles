@@ -18,7 +18,7 @@ return {
 					"lua",
 					"luau",
 					"markdown",
-          "nix",
+					"nix",
 					"python",
 					"ruby",
 					"rust",
@@ -33,7 +33,7 @@ return {
 						if lang == "latex" then
 							return true
 						end
-						local max_filesize = 100 * 1024
+						local max_filesize = 3 * 1024 * 1024
 						local ok, size = pcall(vim.fn.getfsize, vim.api.nvim_buf_get_name(buf))
 						return ok and (size == -2 or size > max_filesize)
 					end,

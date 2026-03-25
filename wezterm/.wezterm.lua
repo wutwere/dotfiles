@@ -16,7 +16,8 @@ config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
 -- config.color_scheme = "tokyonight"
 -- config.color_scheme = "catppuccin-macchiato"
 config.color_scheme = "Monokai Remastered"
-config.colors = { background = "#000000" }
+config.colors = { background = "#0d1118" }
+-- config.colors = { background = "#000000" }
 config.window_background_opacity = 1.0
 config.max_fps = 255
 config.default_cursor_style = "BlinkingUnderline"
