@@ -22,7 +22,7 @@ local CUSTOM_HIGHLIGHTS = {
 	["SpellRare"] = { link = "NONE" },
 	["StatusLine"] = { bg = "NONE" },
 	["TabLineFill"] = { bg = "NONE" },
-	["TreesitterContext"] = { bg = "NONE" },
+	-- ["TreesitterContext"] = { bg = "NONE" },
 	["TreesitterContextLineNumber"] = { link = "Keyword" },
 }
 

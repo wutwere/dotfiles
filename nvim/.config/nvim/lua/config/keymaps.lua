@@ -40,6 +40,25 @@ KEYMAPS.general = function()
 			require("snacks").notify.error("No file path found.")
 		end
 	end, { desc = "Copy file path to clipboard" })
+	vim.keymap.set("v", "<leader>y", function()
+		local path = vim.fn.expand("%:p")
+		if path ~= "" then
+			local home = os.getenv("HOME")
+			if home then
+				path = path:gsub("^" .. home, "~")
+			end
+			local start_line = vim.fn.getpos("v")[2]
+			local end_line = vim.fn.getpos(".")[2]
+			if start_line > end_line then
+				start_line, end_line = end_line, start_line
+			end
+			local result = string.format("%s:%d-%d", path, start_line, end_line)
+			vim.fn.setreg("+", result)
+			require("snacks").notify.notify("Copied file path to clipboard.")
+		else
+			require("snacks").notify.error("No file path found.")
+		end
+	end, { desc = "Copy file path with ~ and line numbers" })
 
 	vim.keymap.set(
 		"x",
@@ -269,7 +288,12 @@ KEYMAPS.snacks = function()
 		func_wrap(Snacks.picker.smart, { multi = { "buffers", "files" } }),
 		{ desc = "Smart Find Files" }
 	)
-	vim.keymap.set("n", "<leader>e", func_wrap(Snacks.picker.explorer, { hidden = true }), { desc = "File Tree" })
+	vim.keymap.set(
+		"n",
+		"<leader>e",
+		func_wrap(Snacks.picker.explorer, { hidden = true, ignored = true }),
+		{ desc = "File Tree" }
+	)
 	vim.keymap.set("n", "<leader>/", func_wrap(Snacks.picker.grep, { hidden = true }), { desc = "Grep" })
 	vim.keymap.set("n", "<leader>:", Snacks.picker.command_history, { desc = "Command History" })
 	-- git
