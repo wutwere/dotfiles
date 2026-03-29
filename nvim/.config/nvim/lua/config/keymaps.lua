@@ -156,9 +156,9 @@ end
 KEYMAPS.mini_files = function()
 	local mini_files = require("mini.files")
 	mini_files.config.mappings.close = "<esc>"
-	mini_files.config.mappings.synchronize = "<cr>"
-	mini_files.config.mappings.go_in = "L"
-	mini_files.config.mappings.go_in_plus = "l"
+	mini_files.config.mappings.synchronize = "="
+	mini_files.config.mappings.go_in = "<cr>"
+	mini_files.config.mappings.go_out = "-"
 	vim.keymap.set("n", "-", function()
 		if mini_files.get_explorer_state() == nil then
 			mini_files.open(vim.api.nvim_buf_get_name(0))
@@ -167,6 +167,9 @@ KEYMAPS.mini_files = function()
 	vim.keymap.set("n", "<leader>-", function()
 		mini_files.open()
 	end, { desc = "Open file explorer in current working directory" })
+	vim.keymap.set("n", "<leader>_", function()
+		mini_files.open(vim.fn.stdpath("data") .. "/mini.files/trash")
+	end, { desc = "Open file explorer in trash" })
 end
 
 ---------

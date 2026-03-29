@@ -15,9 +15,17 @@ local custom_config = {
 						enabled = true,
 					},
 				},
+				diagnostics = {
+					workspace = true,
+				},
 			},
 		},
 		root_markers = { "selene.toml", ".luaurc", "stylua.toml", "src", ".git" },
+		-- init_options = {
+		-- 	fflags = {
+		-- 		LuauSolverV2 = "true", -- this is so bad
+		-- 	},
+		-- },
 	},
 	lua_ls = {
 		settings = {

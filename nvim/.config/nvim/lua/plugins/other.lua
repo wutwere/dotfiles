@@ -10,9 +10,12 @@ return {
 				windows = {
 					max_number = 2,
 					preview = true,
-					width_preview = 55,
-					width_nofocus = 30,
-					width_focus = 30,
+					width_preview = 30,
+					width_nofocus = 50,
+					width_focus = 50,
+				},
+				options = {
+					permanent_delete = false,
 				},
 			})
 			KEYMAPS.mini_files()
