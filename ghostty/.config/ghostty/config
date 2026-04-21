@@ -18,7 +18,7 @@ macos-titlebar-style = transparent
 # font-family-italic = Monaspace Radon
 font-size = 12
 adjust-cell-height = 5%
-adjust-cell-width = -5%
+adjust-cell-width = 0%
 # 0 to 255
 font-thicken-strength = 30
 font-thicken = false
@@ -27,14 +27,14 @@ window-padding-x = 0
 window-padding-y = 0
 window-padding-balance = true
 
-background-opacity = 1
-background-blur = 0
+background-opacity = 0.9
+background-blur = 20
 
 confirm-close-surface = false
 
 copy-on-select = clipboard
 
-custom-shader = cursor_warp.glsl
+# custom-shader = cursor_warp.glsl
 
 ### TMUX BINDS
 

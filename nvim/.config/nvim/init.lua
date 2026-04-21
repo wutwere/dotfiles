@@ -24,6 +24,7 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.scrolloff = 20
 vim.opt.shiftwidth = 2
+vim.opt.showcmd = false
 vim.opt.showmode = false
 vim.opt.sidescrolloff = 0
 vim.opt.signcolumn = "yes"
