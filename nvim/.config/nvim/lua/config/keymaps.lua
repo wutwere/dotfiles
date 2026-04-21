@@ -11,8 +11,8 @@ KEYMAPS.general = function()
 	-- editor
 	vim.keymap.set("n", "<esc>", "<cmd>noh<cr>")
 
-	vim.keymap.set({ "n", "x" }, "j", "gj", { noremap = true })
-	vim.keymap.set({ "n", "x" }, "k", "gk", { noremap = true })
+	vim.keymap.set({ "n", "x" }, "j", "gj", { noremap = true, silent = true })
+	vim.keymap.set({ "n", "x" }, "k", "gk", { noremap = true, silent = true })
 
 	vim.keymap.set("i", "{<cr>", "{<cr>}<esc>O")
 	vim.keymap.set("i", "{<s-cr>", "{<cr>}<esc>O")
