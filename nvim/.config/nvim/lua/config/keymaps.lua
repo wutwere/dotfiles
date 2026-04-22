@@ -147,6 +147,23 @@ KEYMAPS.general = function()
 	end, { desc = "Refresh and show conflicts" })
 
 	vim.keymap.set("n", "<leader>n", "<cmd>Namu symbols<cr>", { desc = "Open LSP search" })
+
+	-- textobjects
+	vim.keymap.set({ "x", "o" }, "af", function()
+		require("nvim-treesitter-textobjects.select").select_textobject("@function.outer", "textobjects")
+	end, { desc = "function" })
+	vim.keymap.set({ "x", "o" }, "if", function()
+		require("nvim-treesitter-textobjects.select").select_textobject("@function.inner", "textobjects")
+	end, { desc = "inner function" })
+	vim.keymap.set({ "x", "o" }, "ac", function()
+		require("nvim-treesitter-textobjects.select").select_textobject("@class.outer", "textobjects")
+	end, { desc = "class" })
+	vim.keymap.set({ "x", "o" }, "ic", function()
+		require("nvim-treesitter-textobjects.select").select_textobject("@class.inner", "textobjects")
+	end, { desc = "inner class" })
+	vim.keymap.set({ "x", "o" }, "al", function()
+		require("nvim-treesitter-textobjects.select").select_textobject("@local.scope", "locals")
+	end, { desc = "scope" })
 end
 
 --------------------------------

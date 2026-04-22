@@ -88,7 +88,7 @@ keybind = super+f=text:\x00f
 keybind = super+b=text:\x00b
 
 # select mode
-keybind = super+left_bracket=text:\x00[
+keybind = super+[=text:\x00[
 keybind = super+u=text:\x00U
 keybind = super+d=text:\x00D
 
