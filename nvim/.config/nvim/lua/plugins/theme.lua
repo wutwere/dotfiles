@@ -16,7 +16,7 @@ local CUSTOM_HIGHLIGHTS = {
 	["SignColumn"] = { bg = "NONE" },
 	["SnacksIndent"] = { fg = "#161B22" },
 	["SnippetTabstop"] = { link = "NONE" },
-	["SpellBad"] = { link = "NONE" },
+	-- ["SpellBad"] = { link = "NONE" },
 	["SpellCap"] = { link = "NONE" },
 	["SpellLocal"] = { link = "NONE" },
 	["SpellRare"] = { link = "NONE" },
