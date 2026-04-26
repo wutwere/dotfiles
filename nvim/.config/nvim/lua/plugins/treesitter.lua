@@ -45,6 +45,25 @@ return {
 					end
 				end,
 			})
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "TSUpdate",
+				callback = function()
+					require("nvim-treesitter.parsers").luau = {
+						---@diagnostic disable-next-line missing-fields
+						install_info = {
+							-- IMPORTANT: need queries/luau/ to be able to use this
+							url = "https://github.com/polychromatist/tree-sitter-luau", -- git repo
+							revision = "71b03e66b2c8dd04e0133c9b998a54a58f239ca4",
+						},
+						-- WARN: `tier = 2` is important for custom parsers
+						-- `norm_languages()` in config.lua checks vor `tier < 4`
+						-- see: https://github.com/nvim-treesitter/nvim-treesitter/blob/0140c29b31d56be040697176ae809ba0c709da02/lua/nvim-treesitter/config.lua#L95
+						-- tiers: 1: stable, 2: unstable, 3: unmaintained, 4 or nil: unsupported
+						--        supported = tier < 4
+						tier = 2,
+					}
+				end,
+			})
 		end,
 	},
 	{
