@@ -49,6 +49,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
 	callback = function()
 		vim.opt.formatoptions:remove({ "o", "r" })
 		-- require("lualine").refresh()
+		vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#ffffff", bold = true, italic = true })
 	end,
 })
 
