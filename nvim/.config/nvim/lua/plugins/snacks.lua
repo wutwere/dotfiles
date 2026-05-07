@@ -15,7 +15,7 @@ return {
 				enabled = true,
 				expand = false,
 			},
-			-- image = { enabled = true },
+			image = { enabled = true },
 			notifier = {
 				enabled = true,
 				top_down = false,
@@ -41,7 +41,12 @@ return {
 			quickfile = { enabled = true },
 			scope = { enabled = true },
 			-- scroll = { enabled = true },
-			statuscolumn = { enabled = true, left = { "fold", "git" }, right = {} },
+			statuscolumn = {
+				enabled = true,
+				left = { "fold" },
+				right = { "git" },
+				folds = { open = true },
+			},
 			-- words = { enabled = true },
 			styles = {
 				notification = {
