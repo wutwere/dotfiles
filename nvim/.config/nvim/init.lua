@@ -12,12 +12,12 @@ vim.opt.breakindent = true
 vim.opt.clipboard = "unnamedplus" -- on windows, install win32yank
 -- vim.opt.cmdheight = 0
 vim.opt.cursorline = true
-vim.opt.expandtab = true
+-- vim.opt.expandtab = true
 vim.opt.fillchars = { eob = " " }
 vim.opt.ignorecase = true
 vim.opt.linebreak = true
 vim.opt.list = true
-vim.opt.listchars = { tab = "  ", trail = "·", nbsp = "␣" }
+vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 vim.opt.mouse = "nv"
 vim.opt.mousescroll = "ver:1,hor:1"
 vim.opt.number = true
