@@ -26,22 +26,22 @@ return {
 	{
 		"zbirenbaum/copilot.lua",
 		dependencies = {
-			{
-				"copilotlsp-nvim/copilot-lsp", -- (optional) for NES functionality
-				opts = {
-					nes = {
-						move_count_threshold = 30,
-					},
-				},
-			},
+			-- {
+			-- 	"copilotlsp-nvim/copilot-lsp", -- (optional) for NES functionality
+			-- 	opts = {
+			-- 		nes = {
+			-- 			move_count_threshold = 30,
+			-- 		},
+			-- 	},
+			-- },
 		},
 		opts = {
 			suggestion = {
 				auto_trigger = true,
 			},
 			nes = {
-				enabled = true,
-				auto_trigger = true,
+				-- enabled = true,
+				-- auto_trigger = true,
 			},
 			copilot_node_command = "node",
 			server_opts_overrides = {
