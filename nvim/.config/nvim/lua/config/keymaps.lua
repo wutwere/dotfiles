@@ -10,7 +10,7 @@ vim.g.maplocalleader = " "
 KEYMAPS.general = function()
 	-- editor
 	vim.keymap.set("n", "<esc>", function()
-		require("copilot-lsp.nes").clear()
+		-- require("copilot-lsp.nes").clear()
 		vim.cmd("noh")
 	end, { noremap = true, silent = true })
 
