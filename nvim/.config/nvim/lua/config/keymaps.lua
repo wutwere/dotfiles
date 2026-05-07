@@ -145,8 +145,6 @@ KEYMAPS.general = function()
 		vim.cmd("GitConflictListQf")
 	end, { desc = "Refresh and show conflicts" })
 
-	vim.keymap.set("n", "<leader>n", "<cmd>Namu symbols<cr>", { desc = "Open LSP search" })
-
 	-- textobjects
 	vim.keymap.set({ "x", "o" }, "af", function()
 		require("nvim-treesitter-textobjects.select").select_textobject("@function.outer", "textobjects")
@@ -353,6 +351,7 @@ KEYMAPS.snacks = function()
 	vim.keymap.set("n", "<leader>sn", Snacks.notifier.show_history, { desc = "Notification History" })
 	vim.keymap.set("n", "<leader>ss", func_wrap(Snacks.picker, nil), { desc = "All Snacks Pickers" })
 	-- LSP
+	vim.keymap.set("n", "<leader>n", Snacks.picker.lsp_symbols, { desc = "Buffer Symbols" })
 	vim.keymap.set("n", "gw", Snacks.picker.lsp_workspace_symbols, { desc = "Goto Workspace Symbol" })
 	vim.keymap.set("n", "gd", Snacks.picker.lsp_definitions, { desc = "Goto Definition" })
 	vim.keymap.set("n", "gD", Snacks.picker.lsp_declarations, { desc = "Goto Declaration" })
