@@ -62,15 +62,9 @@ return {
 		end,
 	},
 	{
-		"norcalli/nvim-colorizer.lua",
+		"catgoose/nvim-colorizer.lua",
+		event = "BufReadPre",
 		opts = {},
-		init = function()
-			vim.api.nvim_create_autocmd({ "BufEnter" }, {
-				callback = function()
-					vim.cmd("ColorizerAttachToBuffer")
-				end,
-			})
-		end,
 	},
 	{
 		"otavioschwanck/arrow.nvim",
@@ -96,5 +90,18 @@ return {
 			excluded_buftypes = { "nofile" },
 			handlers = { cursor = false, gitsigns = true },
 		},
+	},
+	{
+		-- brew install pngpaste on mac
+		"HakonHarnes/img-clip.nvim",
+		opts = {
+			default = {
+				insert_mode_after_paste = false,
+				prompt_for_file_name = false,
+			},
+		},
+	},
+	{
+		"chrisgrieser/nvim-spider",
 	},
 }

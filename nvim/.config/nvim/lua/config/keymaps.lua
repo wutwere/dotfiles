@@ -9,7 +9,10 @@ vim.g.maplocalleader = " "
 
 KEYMAPS.general = function()
 	-- editor
-	vim.keymap.set("n", "<esc>", "<cmd>noh<cr>")
+	vim.keymap.set("n", "<esc>", function()
+		require("copilot-lsp.nes").clear()
+		vim.cmd("noh")
+	end, { noremap = true, silent = true })
 
 	vim.keymap.set({ "n", "x" }, "j", "gj", { noremap = true, silent = true })
 	vim.keymap.set({ "n", "x" }, "k", "gk", { noremap = true, silent = true })
@@ -22,10 +25,6 @@ KEYMAPS.general = function()
 
 	vim.keymap.set("n", "n", "nzz", { noremap = true })
 	vim.keymap.set("n", "N", "Nzz", { noremap = true })
-
-	vim.keymap.set("n", "zF", function()
-		vim.opt_local.foldmethod = "indent"
-	end, { desc = "Set buffer foldmethod to indent" })
 
 	vim.keymap.set("n", "<leader>y", function()
 		local path = vim.fn.expand("%:p")
@@ -164,6 +163,11 @@ KEYMAPS.general = function()
 	vim.keymap.set({ "x", "o" }, "al", function()
 		require("nvim-treesitter-textobjects.select").select_textobject("@local.scope", "locals")
 	end, { desc = "scope" })
+
+	vim.keymap.set({ "n", "o", "x" }, "w", "<cmd>lua require('spider').motion('w')<CR>")
+	vim.keymap.set({ "n", "o", "x" }, "e", "<cmd>lua require('spider').motion('e')<CR>")
+	vim.keymap.set({ "n", "o", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>")
+	vim.keymap.set({ "n", "o", "x" }, "ge", "<cmd>lua require('spider').motion('ge')<CR>")
 end
 
 --------------------------------
