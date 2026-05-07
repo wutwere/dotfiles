@@ -26,10 +26,12 @@ return {
 				},
 			},
 			completion = {
-				documentation = { auto_show = true, auto_show_delay_ms = 100, window = { border = "rounded" } },
+				documentation = {
+					auto_show = true,
+					auto_show_delay_ms = 100,
+				},
 				menu = {
 					auto_show = true,
-					border = "rounded",
 					draw = {
 						columns = {
 							{ "kind_icon", "label", "label_description", gap = 1 },
@@ -40,7 +42,7 @@ return {
 				list = {
 					selection = {
 						preselect = false,
-						auto_insert = true,
+						auto_insert = false,
 					},
 				},
 				ghost_text = { enabled = false },
@@ -48,7 +50,6 @@ return {
 			},
 			signature = {
 				enabled = true,
-				window = { border = "rounded" },
 			},
 			keymap = KEYMAPS.cmp,
 			sources = {
