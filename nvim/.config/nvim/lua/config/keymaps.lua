@@ -161,11 +161,6 @@ KEYMAPS.general = function()
 	vim.keymap.set({ "x", "o" }, "al", function()
 		require("nvim-treesitter-textobjects.select").select_textobject("@local.scope", "locals")
 	end, { desc = "scope" })
-
-	vim.keymap.set({ "n", "o", "x" }, "w", "<cmd>lua require('spider').motion('w')<CR>")
-	vim.keymap.set({ "n", "o", "x" }, "e", "<cmd>lua require('spider').motion('e')<CR>")
-	vim.keymap.set({ "n", "o", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>")
-	vim.keymap.set({ "n", "o", "x" }, "ge", "<cmd>lua require('spider').motion('ge')<CR>")
 end
 
 --------------------------------
