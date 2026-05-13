@@ -1,11 +1,8 @@
 shell-integration = none
 
 theme = Monokai Remastered
-background = #0d1118
-# background = #000000
-
-cursor-style = underline
-cursor-style-blink = true
+# background = #0d1118
+background = #000000
 
 mouse-hide-while-typing = true
 
@@ -27,8 +24,8 @@ window-padding-x = 0
 window-padding-y = 0
 window-padding-balance = true
 
-background-opacity = 1.0
-background-blur = 20
+background-opacity = 1
+background-blur = 10
 
 confirm-close-surface = false
 
