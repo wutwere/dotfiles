@@ -310,6 +310,7 @@ KEYMAPS.snacks = function()
 	)
 	vim.keymap.set("n", "<leader>/", func_wrap(Snacks.picker.grep, { hidden = true }), { desc = "Grep" })
 	vim.keymap.set("n", "<leader>:", Snacks.picker.command_history, { desc = "Command History" })
+	vim.keymap.set("n", "<leader><leader>", Snacks.picker.resume, { desc = "Resume last picker" })
 	-- git
 	vim.keymap.set({ "n", "v" }, "<leader>gB", func_wrap(Snacks.gitbrowse, nil), { desc = "Git Browse" })
 	vim.keymap.set("n", "<leader>gg", func_wrap(Snacks.lazygit, nil), { desc = "Lazygit" })
