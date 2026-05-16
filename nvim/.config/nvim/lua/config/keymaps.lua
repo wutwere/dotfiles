@@ -125,7 +125,9 @@ KEYMAPS.general = function()
 			vim.cmd("b#")
 		end
 	end, { desc = "Go to alt buffer" })
-	vim.keymap.set("n", "<bs>", "<cmd>bd<cr>")
+	vim.keymap.set("n", "<bs>", function()
+		Snacks.bufdelete()
+	end, { desc = "Delete buffer" })
 
 	-- plugins
 	vim.keymap.set("n", "<leader>r", "<cmd>GrugFar<cr>", { desc = "Search and replace all files" })
