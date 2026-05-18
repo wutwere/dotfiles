@@ -262,21 +262,8 @@ end
 
 KEYMAPS.cmp = {
 	preset = "enter",
-	-- ["<cr>"] = { "accept", "fallback" },
-	-- ["<tab>"] = {
-	-- 	function(cmp)
-	-- 		if has_words_before() and not cmp.is_visible() then
-	-- 			return cmp.show()
-	-- 		elseif cmp.is_visible() then
-	-- 			return cmp.select_next()
-	-- 		end
-	-- 		return nil
-	-- 	end,
-	-- 	"fallback",
-	-- },
-	-- ["<S-tab>"] = { "show", "select_prev", "fallback" },
-	-- ["<C-j>"] = { "scroll_documentation_down" },
-	-- ["<C-k>"] = { "scroll_documentation_up" },
+	["<C-n>"] = { "show", "select_next", "fallback" },
+	["<C-p>"] = { "show", "select_prev", "fallback" },
 }
 
 KEYMAPS.ai = {
