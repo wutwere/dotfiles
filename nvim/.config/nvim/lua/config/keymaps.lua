@@ -274,51 +274,37 @@ KEYMAPS.ai = {
 -- SNACKS / QUALITY OF LIFE --
 ------------------------------
 
-local function func_wrap(func, opts)
-	return function()
-		func(opts)
-	end
-end
-
 KEYMAPS.snacks = function()
 	local Snacks = require("snacks")
 	-- Top Pickers & Explorer
-	vim.keymap.set(
-		"n",
-		"<leader>f",
-		func_wrap(Snacks.picker.smart, { multi = { "buffers", "files" } }),
-		{ desc = "Smart Find Files" }
-	)
-	vim.keymap.set(
-		"n",
-		"<leader>e",
-		func_wrap(Snacks.picker.explorer, { hidden = true, ignored = true }),
-		{ desc = "File Tree" }
-	)
-	vim.keymap.set("n", "<leader>/", func_wrap(Snacks.picker.grep, { hidden = true }), { desc = "Grep" })
+	vim.keymap.set("n", "<leader>f", Snacks.picker.files, { desc = "Find Files" })
+	vim.keymap.set("n", "<leader>e", function()
+		Snacks.picker.explorer({ hidden = true, ignored = true })
+	end, { desc = "File Tree" })
+	vim.keymap.set("n", "<leader>/", function()
+		Snacks.picker.grep({ hidden = true })
+	end, { desc = "Grep" })
 	vim.keymap.set("n", "<leader>:", Snacks.picker.command_history, { desc = "Command History" })
 	vim.keymap.set("n", "<leader><leader>", Snacks.picker.resume, { desc = "Resume last picker" })
 	-- git
-	vim.keymap.set({ "n", "v" }, "<leader>gB", func_wrap(Snacks.gitbrowse, nil), { desc = "Git Browse" })
-	vim.keymap.set("n", "<leader>gg", func_wrap(Snacks.lazygit, nil), { desc = "Lazygit" })
+	vim.keymap.set({ "n", "v" }, "<leader>gB", function()
+		Snacks.gitbrowse()
+	end, { desc = "Git Browse" })
+	vim.keymap.set("n", "<leader>gg", function()
+		Snacks.lazygit()
+	end, { desc = "Lazygit" })
 	vim.keymap.set("n", "<leader>gb", Snacks.picker.git_branches, { desc = "Git Branches" })
 	vim.keymap.set("n", "<leader>gl", Snacks.picker.git_log, { desc = "Git Log" })
 	vim.keymap.set("n", "<leader>gL", Snacks.picker.git_log_line, { desc = "Git Log Line" })
 	vim.keymap.set("n", "<leader>gf", Snacks.picker.git_log_file, { desc = "Git Log File" })
 	vim.keymap.set("n", "<leader>gd", Snacks.picker.git_diff, { desc = "Git Diff" })
 	-- Grep
-	vim.keymap.set(
-		"n",
-		"<leader>sB",
-		func_wrap(Snacks.picker.grep_buffers, { hidden = true }),
-		{ desc = "Grep Open Buffers" }
-	)
-	vim.keymap.set(
-		{ "n", "x" },
-		"<leader>sw",
-		func_wrap(Snacks.picker.grep_word, { hidden = true }),
-		{ desc = "Visual selection or word" }
-	)
+	vim.keymap.set("n", "<leader>sB", function()
+		Snacks.picker.grep_buffers({ hidden = true })
+	end, { desc = "Grep Open Buffers" })
+	vim.keymap.set({ "n", "x" }, "<leader>sw", function()
+		Snacks.picker.grep_word({ hidden = true })
+	end, { desc = "Visual selection or word" })
 	-- search
 	vim.keymap.set("n", '<leader>s"', Snacks.picker.registers, { desc = "Registers" })
 	vim.keymap.set("n", "<leader>s/", Snacks.picker.lines, { desc = "Buffer Lines" })
@@ -334,7 +320,9 @@ KEYMAPS.snacks = function()
 	vim.keymap.set("n", "<leader>sm", Snacks.picker.marks, { desc = "Marks" })
 	vim.keymap.set("n", "<leader>sp", Snacks.picker.spelling, { desc = "Spelling Suggestions" })
 	vim.keymap.set("n", "<leader>sn", Snacks.notifier.show_history, { desc = "Notification History" })
-	vim.keymap.set("n", "<leader>ss", func_wrap(Snacks.picker, nil), { desc = "All Snacks Pickers" })
+	vim.keymap.set("n", "<leader>ss", function()
+		Snacks.picker()
+	end, { desc = "All Snacks Pickers" })
 	-- LSP
 	vim.keymap.set("n", "<leader>n", Snacks.picker.lsp_symbols, { desc = "Buffer Symbols" })
 	vim.keymap.set("n", "gw", Snacks.picker.lsp_workspace_symbols, { desc = "Goto Workspace Symbol" })
@@ -344,7 +332,9 @@ KEYMAPS.snacks = function()
 	vim.keymap.set("n", "gi", Snacks.picker.lsp_implementations, { desc = "Goto Implementation" })
 	vim.keymap.set("n", "go", Snacks.picker.lsp_type_definitions, { desc = "Goto Type Definition" })
 	-- Other
-	vim.keymap.set("n", "<leader>.", func_wrap(Snacks.scratch, nil), { desc = "Toggle Scratch Buffer" })
+	vim.keymap.set("n", "<leader>.", function()
+		Snacks.scratch()
+	end, { desc = "Toggle Scratch Buffer" })
 
 	-- Custom pick + edit directory
 	local function get_directories()
