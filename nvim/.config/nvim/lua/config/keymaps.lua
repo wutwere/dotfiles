@@ -16,6 +16,8 @@ KEYMAPS.general = function()
 
 	vim.keymap.set({ "n", "x" }, "j", "gj", { noremap = true, silent = true })
 	vim.keymap.set({ "n", "x" }, "k", "gk", { noremap = true, silent = true })
+	vim.keymap.set({ "n", "x" }, "<C-E>", "5<C-E>", { noremap = true, silent = true })
+	vim.keymap.set({ "n", "x" }, "<C-Y>", "5<C-Y>", { noremap = true, silent = true })
 
 	vim.keymap.set("i", "{<cr>", "{<cr>}<esc>O")
 	vim.keymap.set("i", "{<s-cr>", "{<cr>}<esc>O")
@@ -297,7 +299,19 @@ KEYMAPS.snacks = function()
 	vim.keymap.set("n", "<leader>gl", Snacks.picker.git_log, { desc = "Git Log" })
 	vim.keymap.set("n", "<leader>gL", Snacks.picker.git_log_line, { desc = "Git Log Line" })
 	vim.keymap.set("n", "<leader>gf", Snacks.picker.git_log_file, { desc = "Git Log File" })
-	vim.keymap.set("n", "<leader>gd", Snacks.picker.git_diff, { desc = "Git Diff" })
+	local git_base = nil
+	vim.keymap.set("n", "<leader>gd", function()
+		Snacks.picker.git_diff({ base = git_base, group = true })
+	end, { desc = "Git Diff" })
+	vim.keymap.set("n", "<leader>gm", function()
+		if git_base == nil then
+			git_base = "origin/master"
+		else
+			git_base = nil
+		end
+		require("gitsigns").change_base(git_base, true)
+		Snacks.notify.notify("Git base: " .. (git_base or "HEAD"))
+	end, { desc = "Toggle Gitsigns & Git Diff base" })
 	-- Grep
 	vim.keymap.set("n", "<leader>sB", function()
 		Snacks.picker.grep_buffers({ hidden = true })

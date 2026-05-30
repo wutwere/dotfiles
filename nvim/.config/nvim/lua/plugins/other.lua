@@ -21,7 +21,6 @@ return {
 			KEYMAPS.mini_files()
 		end,
 	},
-	{ "MagicDuck/grug-far.nvim", opts = { windowCreationCommand = "e" }, version = "1.6.3" },
 	{
 		"lervag/vimtex",
 		lazy = false,
@@ -80,15 +79,6 @@ return {
 			window = {
 				border = "rounded",
 			},
-		},
-	},
-	{
-		"petertriho/nvim-scrollbar",
-		opts = {
-			show_in_active_only = true,
-			hide_if_all_visible = true,
-			excluded_buftypes = { "nofile" },
-			handlers = { cursor = false, gitsigns = true },
 		},
 	},
 	{

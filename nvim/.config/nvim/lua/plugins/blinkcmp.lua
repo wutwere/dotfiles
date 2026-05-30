@@ -3,6 +3,7 @@ local KEYMAPS = require("config.keymaps")
 return {
 	{
 		"saghen/blink.cmp",
+		lazy = true,
 		version = "*",
 		opts = {
 			cmdline = {

@@ -24,10 +24,11 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.scrolloff = 20
 vim.opt.shiftwidth = 4
+vim.opt.showbreak = "↪ "
 vim.opt.showcmd = false
 vim.opt.showmode = false
 vim.opt.sidescrolloff = 0
-vim.opt.signcolumn = "yes"
+vim.opt.signcolumn = "auto"
 vim.opt.smartcase = true
 vim.opt.smartindent = true
 vim.opt.splitbelow = true
@@ -37,19 +38,17 @@ vim.opt.termguicolors = true
 vim.opt.undofile = true
 -- vim.opt.virtualedit = "all"
 vim.opt.winborder = "rounded"
-vim.opt.wrap = false
+vim.opt.wrap = true
+vim.opt.wrapscan = false
 vim.api.nvim_create_autocmd({ "FileType" }, {
 	pattern = { "markdown" },
 	callback = function()
 		vim.opt_local.spell = true
-		-- vim.opt_local.wrap = true
 	end,
 })
 vim.api.nvim_create_autocmd("BufEnter", {
 	callback = function()
-		vim.opt.formatoptions:remove({ "o", "r" })
-		-- require("lualine").refresh()
-		vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#ffffff", bold = true, italic = true })
+		vim.opt.formatoptions:remove({ "o", "r" }) -- don't continue comments when pressing o or Enter
 	end,
 })
 
@@ -94,6 +93,7 @@ vim.diagnostic.config({
 	float = {
 		source = true,
 	},
+	signs = false,
 })
 
 -- vim.cmd("colorscheme rose-pine-moon")
