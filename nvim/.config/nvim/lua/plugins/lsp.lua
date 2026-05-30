@@ -42,8 +42,8 @@ local custom_config = {
 	rust_analyzer = { settings = { ["rust-analyzer"] = { check = { command = "clippy" } } } },
 	texlab = {},
 	biome = {},
-	ruby_lsp = {},
-	standardrb = {},
+	-- ruby_lsp = {},
+	-- standardrb = {},
 	-- sorbet = { cmd = { "srb", "tc", "--lsp", "--disable-watchman", "." } },
 	jdtls = {
 		on_init = function(client, _)

@@ -42,9 +42,9 @@ return {
 			scope = { enabled = true },
 			-- scroll = { enabled = true },
 			statuscolumn = {
-				enabled = true,
-				left = { "fold" },
-				right = { "git" },
+				enabled = false,
+				left = { "git" },
+				right = {},
 				folds = { open = true },
 			},
 			-- words = { enabled = true },
