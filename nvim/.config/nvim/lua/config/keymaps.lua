@@ -281,7 +281,12 @@ KEYMAPS.snacks = function()
 	-- Top Pickers & Explorer
 	vim.keymap.set("n", "<leader>f", Snacks.picker.files, { desc = "Find Files" })
 	vim.keymap.set("n", "<leader>e", function()
-		Snacks.picker.explorer({ hidden = true, ignored = true })
+		Snacks.picker.explorer({
+			layout = { preset = "default", preview = true },
+			auto_close = true,
+			hidden = true,
+			ignored = true,
+		})
 	end, { desc = "File Tree" })
 	vim.keymap.set("n", "<leader>/", function()
 		Snacks.picker.grep({ hidden = true })
