@@ -280,11 +280,15 @@ KEYMAPS.snacks = function()
 	local Snacks = require("snacks")
 	-- Top Pickers & Explorer
 	vim.keymap.set("n", "<leader>f", function()
-		Snacks.picker.files({ matcher = { frecency = true } })
+		Snacks.picker.files({ layout = { fullscreen = true }, matcher = { frecency = true } })
 	end, { desc = "Find Files" })
 	vim.keymap.set("n", "<leader>e", function()
 		Snacks.picker.explorer({
-			layout = { preset = "default", preview = true },
+			layout = {
+				preset = "default",
+				preview = true,
+				fullscreen = true,
+			},
 			auto_close = true,
 			hidden = true,
 			ignored = true,
