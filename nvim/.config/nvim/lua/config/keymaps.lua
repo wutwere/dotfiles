@@ -190,6 +190,10 @@ KEYMAPS.mini_files = function()
 	end, { desc = "Open file explorer in trash" })
 end
 
+KEYMAPS.oil = function()
+	vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+end
+
 ---------
 -- LSP --
 ---------
