@@ -1,10 +1,4 @@
 # This is Git's per-user configuration file.
-[credential "https://github.com"]
-  helper = 
-  helper = !/opt/homebrew/bin/gh auth git-credential
-[credential "https://gist.github.com"]
-  helper = 
-  helper = !/opt/homebrew/bin/gh auth git-credential
 [user]
   name = wutwere
   email = 62412610+wutwere@users.noreply.github.com

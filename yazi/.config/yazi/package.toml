@@ -1,29 +1,7 @@
 [[plugin.deps]]
-use = "KKV9/compress"
-rev = "60b24af"
-hash = "ee025be766240cc98e671754ac836da3"
+use = "Rolv-Apneseth/starship"
+rev = "a837101"
+hash = "635b0feb9215772d22020eb0abf0bb34"
 
-[[plugin.deps]]
-use = "yazi-rs/plugins:max-preview"
-rev = "8945e54"
-hash = "15b2ff7f6563c14d5b2e93b3e9da35de"
-
-[[plugin.deps]]
-use = "llanosrocas/githead"
-rev = "2375024"
-hash = "f46c42b1146bed331c7000b1efd076f5"
-
-[[plugin.deps]]
-use = "llanosrocas/yaziline"
-rev = "e06c47f"
-hash = "7df84299e89ffefd4686d1e20a295c8a"
-
-[[plugin.deps]]
-use = "yazi-rs/plugins:smart-enter"
-rev = "5186af7"
-hash = "aef2b1a805b80cce573bb766f1459d88"
-
-[[flavor.deps]]
-use = "kalidyasin/yazi-flavors:tokyonight-night"
-rev = "92a09a6"
-hash = "845c5ee33e147b1a57f48728e42600ee"
+[flavor]
+deps = []

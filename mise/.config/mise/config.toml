@@ -1,0 +1,5 @@
+[tools]
+node = "lts"
+"npm:@openai/codex" = "latest"
+rust = "latest"
+"npm:bash-language-server" = "latest"
