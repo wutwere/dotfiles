@@ -10,7 +10,7 @@ return {
 			bigfile = { enabled = true },
 			-- dashboard = { enabled = true },
 			-- explorer = { enabled = true },
-			-- indent = { enabled = true, animate = { enabled = false }, scope = { enabled = false } },
+			indent = { enabled = true, animate = { enabled = false }, scope = { enabled = false } },
 			input = {
 				enabled = true,
 				expand = false,
@@ -35,6 +35,18 @@ return {
 					diff = {
 						builtin = false,
 						cmd = { "delta", "--paging=never" },
+					},
+				},
+				icons = {
+					files = {
+						enabled = true, -- show file icons
+						dir = " ",
+						dir_open = " ",
+					},
+					tree = {
+						vertical = "│ ",
+						middle = "│ ",
+						last = "╰╴",
 					},
 				},
 			},

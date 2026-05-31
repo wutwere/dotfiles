@@ -91,4 +91,7 @@ return {
 			},
 		},
 	},
+	{
+		"tpope/vim-sleuth",
+	},
 }

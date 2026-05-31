@@ -36,7 +36,6 @@ vim.opt.splitright = true
 vim.opt.tabstop = 4
 vim.opt.termguicolors = true
 vim.opt.undofile = true
--- vim.opt.virtualedit = "all"
 vim.opt.winborder = "rounded"
 vim.opt.wrap = true
 vim.opt.wrapscan = false

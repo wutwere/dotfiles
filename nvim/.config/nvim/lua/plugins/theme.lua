@@ -27,6 +27,7 @@ return {
 					["Comment"] = { italic = true }, -- for markdown if i decide to disable global italic
 					["CursorLine"] = { bg = "#06060a" },
 					["CursorLineNr"] = { style = "bold", fg = "#FFFFFF", bg = "#06060a" },
+					["CursorLineSign"] = { style = "bold", fg = "#FFFFFF", bg = "#06060a" },
 					["Directory"] = { bg = "NONE" },
 					["DiagnosticVirtualTextHint"] = { bg = "#17191c" },
 					["DiagnosticVirtualTextInfo"] = { bg = "#021631" },
@@ -34,10 +35,10 @@ return {
 					["DiagnosticVirtualTextError"] = { bg = "#310402" },
 					-- ["FloatBorder"] = { fg = "#464B52" },
 					["LazyNormal"] = { bg = "NONE" },
-					["NonText"] = { fg = "#2e3338" },
+					["NonText"] = { fg = "#454b54" },
 					["Pmenu"] = { bg = "NONE" }, -- for blink cmp
 					["PmenuExtra"] = { bg = "NONE" }, -- for blink cmp
-					["RenderMarkdownChecked"] = { fg = "#A7E22E" },
+					-- ["RenderMarkdownChecked"] = { fg = "#A7E22E" },
 					["SignColumn"] = { bg = "NONE" },
 					["SnacksIndent"] = { fg = "#161B22" },
 					["SnippetTabstop"] = { link = "NONE" },
