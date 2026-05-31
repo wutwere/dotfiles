@@ -64,6 +64,7 @@ return {
 					}
 				end,
 			})
+			vim.cmd("silent! TSUpdate luau")
 		end,
 	},
 	{
