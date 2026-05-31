@@ -1,32 +1,54 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-eval "$(/opt/homebrew/bin/brew shellenv)"
-
-export PATH=/Applications/WezTerm.app/Contents/MACOS:$PATH
 export PATH=~/.local/bin:$PATH
-export PATH=~/.aftman/bin:$PATH
 export ESCDELAY=0
 export EDITOR=nvim
-source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
-alias ls="ls -F --color=auto"
-alias n=nvim
+
+setopt AUTO_CD
+setopt SHARE_HISTORY
+HISTSIZE=50000
+SAVEHIST=50000
+
 alias v=nvim
-alias b="g++ --std=c++17 -DLOCAL -O2 -include-pch /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/bits/stdc++.h.pch -o a"
-cht() {
-  if [ -z $1 ]; then
-    curl -s cht.sh/$(cat ~/.cht_sh | fzf --bind=enter:replace-query+print-query) | less -Rc
+alias lg=lazygit
+
+ls() {
+  if (( $+commands[eza] )); then
+    command eza --icons --group-directories-first "$@"
   else
-    curl -s cht.sh/$1 | less -Rc
+    command ls -F --color=auto "$@"
   fi
 }
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+l() {
+  if (( $+commands[eza] )); then
+    command eza -al --icons --group-directories-first "$@"
+  else
+    command ls -F --color=auto -al "$@"
+  fi
+}
+
+source_first() {
+  local file
+  for file in "$@"; do
+    if [[ -r "$file" ]]; then
+      source "$file"
+      return 0
+    fi
+  done
+  return 1
+}
+
+BREW_PREFIX=""
+if (( $+commands[brew] )); then
+  BREW_PREFIX="$(brew --prefix)"
+fi
+
+source_first \
+  "$BREW_PREFIX/opt/fzf/shell/completion.zsh" \
+  /usr/share/fzf/completion.zsh
+
+source_first \
+  "$BREW_PREFIX/opt/fzf/shell/key-bindings.zsh" \
+  /usr/share/fzf/key-bindings.zsh
 
 function y() {
   local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
@@ -37,24 +59,22 @@ function y() {
   rm -f -- "$tmp"
 }
 
-eval "$(zoxide init zsh)"
-source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+if (( $+commands[zoxide] )); then
+  eval "$(zoxide init zsh)"
+fi
 
-# type cinit to start conda
-cinit() {
-  # >>> conda initialize >>>
-  # !! Contents within this block are managed by 'conda init' !!
-  __conda_setup="$('/opt/homebrew/Caskroom/miniconda/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-  if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-  else
-    if [ -f "/opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh" ]; then
-      . "/opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh"
-    else
-      export PATH="/opt/homebrew/Caskroom/miniconda/base/bin:$PATH"
-    fi
-  fi
-  unset __conda_setup
-  # <<< conda initialize <<<
-}
+if (( $+commands[mise] )); then
+  eval "$(mise activate zsh)"
+fi
 
+if (( $+commands[starship] )); then
+  eval "$(starship init zsh)"
+fi
+
+source_first \
+  "$BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh" \
+  /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+source_first \
+  "$BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" \
+  /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

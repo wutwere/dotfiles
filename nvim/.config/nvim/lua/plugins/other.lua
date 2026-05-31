@@ -29,8 +29,6 @@ return {
 			default_file_explorer = true,
 			columns = {
 				"icon",
-				"size",
-				"mtime",
 			},
 			delete_to_trash = true,
 			view_options = {
@@ -55,22 +53,22 @@ return {
 			KEYMAPS.oil()
 		end,
 	},
-	{
-		"lervag/vimtex",
-		lazy = false,
-		init = function()
-			vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
-				pattern = { "*.tex" },
-				callback = function()
-					vim.opt_local.conceallevel = 2
-				end,
-			})
-			vim.g.tex_conceal = "abdmg"
-			vim.g.vimtex_view_method = "sioyek"
-			vim.g.vimtex_callback_progpath = vim.fn.system("where nvim")
-			vim.g.vimtex_quickfix_open_on_warning = 0
-		end,
-	},
+	-- {
+	-- 	"lervag/vimtex",
+	-- 	lazy = false,
+	-- 	init = function()
+	-- 		vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+	-- 			pattern = { "*.tex" },
+	-- 			callback = function()
+	-- 				vim.opt_local.conceallevel = 2
+	-- 			end,
+	-- 		})
+	-- 		vim.g.tex_conceal = "abdmg"
+	-- 		vim.g.vimtex_view_method = "sioyek"
+	-- 		vim.g.vimtex_callback_progpath = vim.fn.system("where nvim")
+	-- 		vim.g.vimtex_quickfix_open_on_warning = 0
+	-- 	end,
+	-- },
 	{ "lewis6991/gitsigns.nvim", opts = { current_line_blame_opts = { delay = 0 } } },
 	{
 		"akinsho/git-conflict.nvim",
