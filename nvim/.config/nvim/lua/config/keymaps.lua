@@ -279,7 +279,9 @@ KEYMAPS.ai = {
 KEYMAPS.snacks = function()
 	local Snacks = require("snacks")
 	-- Top Pickers & Explorer
-	vim.keymap.set("n", "<leader>f", Snacks.picker.files, { desc = "Find Files" })
+	vim.keymap.set("n", "<leader>f", function()
+		Snacks.picker.files({ matcher = { frecency = true } })
+	end, { desc = "Find Files" })
 	vim.keymap.set("n", "<leader>e", function()
 		Snacks.picker.explorer({
 			layout = { preset = "default", preview = true },
