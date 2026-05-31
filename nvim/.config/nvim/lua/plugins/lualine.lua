@@ -24,17 +24,20 @@ return {
 					end)(),
 					always_show_tabline = true,
 					globalstatus = true,
-					component_separators = { left = "", right = "" },
-					section_separators = { left = "", right = "" },
+					component_separators = { left = "", right = "" },
+					section_separators = { left = "", right = "" },
 				},
 				sections = {
 					lualine_a = { "mode" },
 					lualine_b = {
-						"branch",
-						"diff",
+						function()
+							local current_line = vim.fn.line(".")
+							return current_line .. "/" .. vim.fn.line("$")
+						end,
 					},
 					lualine_c = {
 						{ "filename", path = 4 },
+						"diagnostics",
 					},
 					lualine_x = {
 						-- function()
@@ -44,16 +47,13 @@ return {
 						-- "searchcount",
 						"lsp_status",
 						-- "progress",
-						"location",
 					},
 					lualine_y = {
-						"diagnostics",
+						"diff",
 					},
 					lualine_z = {
 						-- "location",
-						function()
-							return vim.fn.line("$") .. "L"
-						end,
+						"branch",
 					},
 				},
 				-- tabline = {
