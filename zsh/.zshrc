@@ -4,6 +4,7 @@ export EDITOR=nvim
 
 setopt AUTO_CD
 setopt SHARE_HISTORY
+HISTFILE=~/.zsh_history
 HISTSIZE=50000
 SAVEHIST=50000
 
