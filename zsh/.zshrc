@@ -1,5 +1,11 @@
 export PATH=~/.local/bin:$PATH
+
+if (( $+commands[mise] )); then
+  eval "$(mise activate zsh --shims)"
+fi
+
 export ESCDELAY=0
+KEYTIMEOUT=1
 export EDITOR=nvim
 
 setopt AUTO_CD
@@ -62,10 +68,6 @@ function y() {
 
 if (( $+commands[zoxide] )); then
   eval "$(zoxide init zsh)"
-fi
-
-if (( $+commands[mise] )); then
-  eval "$(mise activate zsh)"
 fi
 
 if (( $+commands[starship] )); then
