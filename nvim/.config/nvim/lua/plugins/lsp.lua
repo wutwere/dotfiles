@@ -7,6 +7,8 @@ local custom_config = {
 			"lsp",
 			"--definitions=~/.luau-lsp/globalTypes.d.luau",
 			"--docs=~/.luau-lsp/en-us.json",
+			-- "--definitions=@zune=~/.zune/typedefs/global/zune.d.luau",
+			-- "--docs=~/.zune/typedefs/global/zune.d.json",
 		},
 		settings = {
 			["luau-lsp"] = {
