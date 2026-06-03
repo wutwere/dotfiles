@@ -66,6 +66,9 @@ return {
 				},
 			},
 			zen = { enabled = true },
+			lazygit = {
+				win = { width = 0, height = 0 },
+			},
 		},
 		init = function()
 			vim.api.nvim_create_autocmd("User", {

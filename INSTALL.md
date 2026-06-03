@@ -17,6 +17,7 @@ Install:
 - `zsh`
 - `zsh-autosuggestions`
 - `zsh-syntax-highlighting`
+- `zsh-vi-mode`
 - `starship`
 - `eza`
 
