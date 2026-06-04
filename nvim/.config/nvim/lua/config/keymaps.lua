@@ -103,11 +103,41 @@ KEYMAPS.general = function()
 	toggle_virtual_lines()
 
 	-- competitive programming
-	vim.keymap.set("n", "<leader>t", function()
+	vim.keymap.set("n", "<leader>t1", function()
 		vim.cmd("update")
-		vim.cmd("vsplit +term\\ ./run\\ " .. vim.fn.expand("%:t:r"))
+		local source = vim.fn.expand("%")
+		local started = vim.uv.hrtime()
+
+		Snacks.notify.notify("Compiling")
+		vim.system({ "make", "compile", "SOURCE=" .. source }, { text = true }, function(obj)
+			local elapsed = (vim.uv.hrtime() - started) / 1e9
+			vim.schedule(function()
+				if obj.code == 0 then
+					Snacks.notify.notify(("Compiled: %.3fs"):format(elapsed))
+				else
+					Snacks.notify.error(vim.trim(obj.stderr ~= "" and obj.stderr or obj.stdout))
+				end
+			end)
+		end)
+	end, { desc = "Compile current program" })
+
+	vim.keymap.set("n", "<leader>t2", function()
+		vim.cmd("update")
+		local source = vim.fn.expand("%")
+		vim.cmd("vnew")
+		local job = vim.fn.jobstart({ "make", "exec", "SOURCE=" .. source }, { term = true })
+		vim.fn.chansend(job, vim.fn.getreg("+"))
+		vim.fn.chanclose(job, "stdin")
 		vim.cmd("startinsert!")
-	end, { desc = "Run program in terminal split" })
+	end, { desc = "Run with clipboard input" })
+
+	vim.keymap.set("n", "<leader>t3", function()
+		vim.cmd("update")
+		local source = vim.fn.expand("%")
+		vim.cmd("vnew")
+		vim.fn.jobstart({ "make", "exec", "SOURCE=" .. source }, { term = true })
+		vim.cmd("startinsert!")
+	end, { desc = "Run interactively in terminal split" })
 	vim.keymap.set("t", "<esc>", "<cmd>bd!<cr>")
 	vim.keymap.set("t", "<c-n>", "<c-\\><c-n>")
 
