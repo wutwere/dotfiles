@@ -125,7 +125,11 @@ KEYMAPS.general = function()
 		vim.cmd("update")
 		local source = vim.fn.expand("%")
 		vim.cmd("vnew")
-		local job = vim.fn.jobstart({ "make", "exec", "SOURCE=" .. source }, { term = true })
+		local command = string.format(
+			"stty -echo; make exec SOURCE=%s; status=$?; stty echo; exit $status",
+			vim.fn.shellescape(source)
+		)
+		local job = vim.fn.jobstart({ "sh", "-c", command }, { term = true })
 		vim.fn.chansend(job, vim.fn.getreg("+"))
 		vim.fn.chanclose(job, "stdin")
 		vim.cmd("startinsert!")
