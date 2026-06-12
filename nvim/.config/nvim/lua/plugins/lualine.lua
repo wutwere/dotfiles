@@ -6,7 +6,7 @@ return {
 			require("lualine").setup({
 				options = {
 					theme = (function()
-						local theme = require("lualine.themes.ayu_mirage")
+						local theme = require("lualine.themes.iceberg")
 						-- wtf does this do
 						-- theme.inactive.a.gui = nil
 						for _, mode in pairs(theme) do
@@ -28,15 +28,14 @@ return {
 					section_separators = { left = "", right = "" },
 				},
 				sections = {
-					lualine_a = { "mode" },
-					lualine_b = {
+					lualine_a = {},
+					lualine_b = {},
+					lualine_c = {
+						-- { "filename", path = 4 },
 						function()
 							local current_line = vim.fn.line(".")
 							return current_line .. "/" .. vim.fn.line("$")
 						end,
-					},
-					lualine_c = {
-						{ "filename", path = 4 },
 						"diagnostics",
 					},
 					lualine_x = {
@@ -47,13 +46,12 @@ return {
 						-- "searchcount",
 						"lsp_status",
 						-- "progress",
-					},
-					lualine_y = {
 						"diff",
+						"branch",
 					},
+					lualine_y = {},
 					lualine_z = {
 						-- "location",
-						"branch",
 					},
 				},
 				-- tabline = {
