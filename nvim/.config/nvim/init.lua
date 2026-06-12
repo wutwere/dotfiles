@@ -53,6 +53,23 @@ vim.api.nvim_create_autocmd("BufEnter", {
 	end,
 })
 
+function _G.winbar()
+	if vim.bo.buftype ~= "" then
+		return ""
+	end
+
+	local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ":~")
+	local file = vim.fn.expand("%:.")
+
+	if file == "" then
+		return cwd
+	end
+
+	return cwd .. "/" .. file .. (vim.bo.modified and " [+]" or "")
+end
+
+vim.o.winbar = "%{%v:lua.winbar()%}"
+
 ---------------
 -- LAZY.NVIM --
 ---------------

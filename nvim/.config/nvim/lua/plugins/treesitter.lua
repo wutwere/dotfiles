@@ -82,17 +82,17 @@ return {
 		end,
 	},
 	-- { "nvim-treesitter/nvim-treesitter-context", opts = { mode = "topline" } },
-	{
-		"Bekaboo/dropbar.nvim",
-		opts = {
-			sources = {
-				treesitter = {
-					max_depth = 2,
-				},
-				lsp = {
-					max_depth = 2,
-				},
-			},
-		},
-	},
+	-- {
+	-- 	"Bekaboo/dropbar.nvim",
+	-- 	opts = {
+	-- 		sources = {
+	-- 			treesitter = {
+	-- 				max_depth = 2,
+	-- 			},
+	-- 			lsp = {
+	-- 				max_depth = 2,
+	-- 			},
+	-- 		},
+	-- 	},
+	-- },
 }
