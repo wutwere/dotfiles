@@ -51,7 +51,7 @@ return {
 				},
 			},
 			quickfile = { enabled = true },
-			scope = { enabled = true },
+			-- scope = { enabled = true },
 			-- scroll = { enabled = true },
 			statuscolumn = {
 				enabled = false,
@@ -65,7 +65,6 @@ return {
 					-- wo = { wrap = true } -- Wrap notifications
 				},
 			},
-			zen = { enabled = true },
 			lazygit = {
 				win = { width = 0, height = 0 },
 			},

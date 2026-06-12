@@ -1,7 +1,8 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "instructions": [
-    "/Users/robert/dev/agents-wiki/AGENTS.md"
+    "/Users/robert/dev/agents-wiki/AGENTS.md",
+    "/home/wutwere/dev/agents-wiki/AGENTS.md"
   ],
   "permission": {
     "external_directory": {
