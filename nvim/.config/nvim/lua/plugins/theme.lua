@@ -22,6 +22,7 @@ return {
 					["BlinkCmpLabel"] = { fg = "#8B949E" },
 					["BlinkCmpLabelMatch"] = { style = "bold", fg = "#FFFFFF" },
 					["BlinkCmpMenu"] = { bg = "NONE" },
+					["BlinkCmpMenuBorder"] = { fg = "#000000" },
 					["BufferLineFill"] = { bg = "NONE" },
 					["ColorColumn"] = { bg = "#121720" }, -- markdown code block
 					["Comment"] = { italic = true }, -- for markdown if i decide to disable global italic
