@@ -41,6 +41,7 @@ config.default_domain = "WSL:archlinux"
 -- FONT --
 ----------
 
+config.font = wezterm.font("ComicShannsMono Nerd Font Mono")
 -- config.font = wezterm.font("JetBrainsMono Nerd Font Mono", { weight = "DemiBold" })
 -- config.font_size = 11
 -- config.line_height = 1.13
