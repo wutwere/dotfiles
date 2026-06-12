@@ -1,12 +1,13 @@
 local KEYMAPS = require("config.keymaps")
+local home = vim.fn.expand("~")
 
 local custom_config = {
 	luau_lsp = {
 		cmd = {
 			"luau-lsp",
 			"lsp",
-			"--definitions=~/.luau-lsp/globalTypes.d.luau",
-			"--docs=~/.luau-lsp/en-us.json",
+			"--definitions=@roblox=" .. home .. "/.luau-lsp/globalTypes.d.luau",
+			"--docs=" .. home .. "/.luau-lsp/en-us.json",
 			-- "--definitions=@zune=~/.zune/typedefs/global/zune.d.luau",
 			-- "--docs=~/.zune/typedefs/global/zune.d.json",
 		},
@@ -18,7 +19,7 @@ local custom_config = {
 					},
 				},
 				diagnostics = {
-					workspace = true,
+					workspace = false,
 				},
 			},
 		},

@@ -18,7 +18,7 @@ return {
 			image = { enabled = true },
 			notifier = {
 				enabled = true,
-				top_down = false,
+				top_down = true,
 				timeout = 3000,
 			},
 			picker = {
