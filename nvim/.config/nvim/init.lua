@@ -53,13 +53,27 @@ vim.api.nvim_create_autocmd("BufEnter", {
 	end,
 })
 
+vim.api.nvim_set_hl(0, "WinBarFlash", { fg = "#ffffff" })
+
+local DEFAULT_WINBAR = "%{%v:lua.winbar()%}"
+local FLASH_TIME = 100
+
+local function flash_winbar(winid)
+	vim.w[winid]._winbar_flash_until = vim.uv.now() + FLASH_TIME
+
+	vim.defer_fn(function()
+		if vim.api.nvim_win_is_valid(winid) then
+			vim.cmd("redrawstatus")
+		end
+	end, FLASH_TIME)
+end
+
 function _G.winbar()
-	if vim.bo.buftype ~= "" then
-		return ""
-	end
+	local winid = vim.g.statusline_winid or vim.api.nvim_get_current_win()
+	local bufnr = vim.api.nvim_win_get_buf(winid)
 
 	local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ":~")
-	local file = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":~:.")
+	local file = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), ":~:.")
 
 	if file == "" then
 		return cwd
@@ -71,10 +85,30 @@ function _G.winbar()
 		location = cwd .. "/" .. file
 	end
 
-	return location .. (vim.bo.modified and " [+]" or "")
+	local value = location
+	local now = vim.uv.now()
+
+	if (vim.w[winid]._winbar_flash_until or 0) > now then
+		return "%#WinBarFlash#" .. value .. "%*"
+	end
+
+	return value .. (vim.bo[bufnr].modified and " [+]" or "")
 end
 
-vim.o.winbar = "%{%v:lua.winbar()%}"
+vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
+	callback = function(args)
+		local buftype = vim.bo[args.buf].buftype
+		local current_winbar = vim.wo.winbar
+
+		flash_winbar(vim.api.nvim_get_current_win())
+
+		if buftype == "" then
+			vim.wo.winbar = DEFAULT_WINBAR
+		elseif current_winbar == DEFAULT_WINBAR then
+			vim.wo.winbar = ""
+		end
+	end,
+})
 
 ---------------
 -- LAZY.NVIM --
