@@ -59,13 +59,19 @@ function _G.winbar()
 	end
 
 	local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ":~")
-	local file = vim.fn.expand("%:.")
+	local file = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":~:.")
 
 	if file == "" then
 		return cwd
 	end
 
-	return cwd .. "/" .. file .. (vim.bo.modified and " [+]" or "")
+	local location = file
+
+	if not file:match("^[~/]") then
+		location = cwd .. "/" .. file
+	end
+
+	return location .. (vim.bo.modified and " [+]" or "")
 end
 
 vim.o.winbar = "%{%v:lua.winbar()%}"
