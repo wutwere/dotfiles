@@ -51,6 +51,7 @@ return {
 					["TabLineFill"] = { bg = "NONE" },
 					-- ["TreesitterContext"] = { bg = "NONE" },
 					["TreesitterContextLineNumber"] = { link = "Keyword" },
+					["WinBar"] = { fg = "#4C576D" },
 				},
 			},
 		},
