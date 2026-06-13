@@ -1,7 +1,7 @@
 export PATH=~/.local/bin:$PATH
 
 if (( $+commands[mise] )); then
-  eval "$(mise activate zsh --shims)"
+  eval "$(mise activate zsh)"
 fi
 
 export ESCDELAY=0
