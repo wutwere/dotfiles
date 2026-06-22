@@ -9,3 +9,5 @@
   dark = true
 [pull]
   rebase = true
+[rebase]
+  autoStash = true
