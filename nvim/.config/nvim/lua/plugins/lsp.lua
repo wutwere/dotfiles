@@ -77,6 +77,7 @@ local custom_config = {
 	buf_ls = {},
 	ruff = {},
 	bashls = {},
+	zls = {},
 }
 
 return {
