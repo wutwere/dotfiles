@@ -1,8 +1,46 @@
+local FLASH_INTERVAL = 80
+local LUALINE_BG = "#111113"
+local LOCATION_FLASH_BG = "#f85149"
+
+local function refresh()
+	require("lualine").refresh({ place = { "statusline" } })
+end
+
+local function flash(buf, win)
+	if win == -1 or not vim.api.nvim_win_is_valid(win) or vim.api.nvim_win_get_config(win).relative ~= "" then
+		return
+	end
+	if vim.bo[buf].buftype ~= "" or vim.bo[buf].filetype == "oil" then
+		return
+	end
+
+	local token = (vim.w[win]._lualine_flash_token or 0) + 1
+	vim.w[win]._lualine_flash = true
+	vim.w[win]._lualine_flash_token = token
+	refresh()
+
+	for i = 1, 3 do
+		vim.defer_fn(function()
+			if not vim.api.nvim_win_is_valid(win) or vim.w[win]._lualine_flash_token ~= token then
+				return
+			end
+			vim.w[win]._lualine_flash = i % 2 == 0
+			refresh()
+		end, FLASH_INTERVAL * i)
+	end
+end
+
 return {
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function(_, opts)
+			vim.api.nvim_create_autocmd("BufWinEnter", {
+				callback = function(args)
+					flash(args.buf, vim.fn.bufwinid(args.buf))
+				end,
+			})
+
 			require("lualine").setup({
 				options = {
 					theme = (function()
@@ -16,7 +54,7 @@ return {
 								-- 	section.fg = section.bg
 								-- end
 								if k == "c" then
-									section.bg = "NONE" -- fully transparent background
+									section.bg = LUALINE_BG -- background
 								end
 							end
 						end
@@ -31,40 +69,27 @@ return {
 					lualine_a = {},
 					lualine_b = {},
 					lualine_c = {
-						-- { "filename", path = 4 },
-						function()
-							local current_line = vim.fn.line(".")
-							return current_line .. "/" .. vim.fn.line("$")
-						end,
-						"diagnostics",
+						{
+							"filename",
+							path = 4,
+							color = function()
+								local win = vim.g.statusline_winid or vim.api.nvim_get_current_win()
+								return {
+									fg = "#ffffff",
+									-- make it flash on buffer changes
+									bg = vim.w[win]._lualine_flash and LOCATION_FLASH_BG or LUALINE_BG,
+								}
+							end,
+						},
 					},
 					lualine_x = {
-						-- function()
-						-- 	local reg = vim.fn.reg_recording()
-						-- 	return reg == "" and "" or "recording @" .. reg
-						-- end,
-						-- "searchcount",
+						"diagnostics",
 						"lsp_status",
-						-- "progress",
-						"diff",
 						"branch",
 					},
 					lualine_y = {},
-					lualine_z = {
-						-- "location",
-					},
+					lualine_z = {},
 				},
-				-- tabline = {
-				-- 	lualine_a = {
-				-- 		{
-				-- 			"buffers",
-				-- 			mode = 2,
-				-- 			show_filename_only = true,
-				-- 			use_mode_colors = false,
-				-- 			max_length = vim.o.columns,
-				-- 		},
-				-- 	},
-				-- },
 			})
 		end,
 	},

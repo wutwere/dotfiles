@@ -27,7 +27,6 @@ vim.opt.scrolloff = 0
 vim.opt.shiftwidth = 4
 vim.opt.showbreak = "↪ "
 vim.opt.showcmd = false
-vim.opt.showmode = false
 vim.opt.sidescrolloff = 0
 vim.opt.signcolumn = "auto"
 vim.opt.smartcase = true
@@ -52,8 +51,6 @@ vim.api.nvim_create_autocmd("BufEnter", {
 		vim.opt.formatoptions:remove({ "o", "r" }) -- don't continue comments when pressing o or Enter
 	end,
 })
-require("config.winbar").setup()
-
 ---------------
 -- LAZY.NVIM --
 ---------------
