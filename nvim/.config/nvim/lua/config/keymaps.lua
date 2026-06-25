@@ -318,14 +318,14 @@ KEYMAPS.snacks = function()
 	local Snacks = require("snacks")
 	-- Top Pickers & Explorer
 	vim.keymap.set("n", "<leader>f", function()
-		Snacks.picker.files({ layout = { fullscreen = true }, matcher = { frecency = true } })
+		Snacks.picker.files({ layout = { fullscreen = false }, matcher = { frecency = true } })
 	end, { desc = "Find Files" })
 	vim.keymap.set("n", "<leader>e", function()
 		Snacks.picker.explorer({
 			layout = {
 				preset = "default",
 				preview = true,
-				fullscreen = true,
+				fullscreen = false,
 			},
 			auto_close = true,
 			hidden = true,
@@ -333,7 +333,7 @@ KEYMAPS.snacks = function()
 		})
 	end, { desc = "File Tree" })
 	vim.keymap.set("n", "<leader>/", function()
-		Snacks.picker.grep({ layout = { fullscreen = true }, hidden = true })
+		Snacks.picker.grep({ layout = { fullscreen = false }, hidden = true })
 	end, { desc = "Grep" })
 	vim.keymap.set("n", "<leader>:", Snacks.picker.command_history, { desc = "Command History" })
 	vim.keymap.set("n", "<leader><leader>", Snacks.picker.resume, { desc = "Resume last picker" })
@@ -366,7 +366,7 @@ KEYMAPS.snacks = function()
 		Snacks.picker.grep_buffers({ hidden = true })
 	end, { desc = "Grep Open Buffers" })
 	vim.keymap.set({ "n", "x" }, "<leader>sw", function()
-		Snacks.picker.grep_word({ layout = { fullscreen = true }, hidden = true })
+		Snacks.picker.grep_word({ layout = { fullscreen = false }, hidden = true })
 	end, { desc = "Visual selection or word" })
 	-- search
 	vim.keymap.set("n", '<leader>s"', Snacks.picker.registers, { desc = "Registers" })

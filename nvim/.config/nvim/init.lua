@@ -36,8 +36,7 @@ vim.opt.splitright = true
 vim.opt.tabstop = 4
 vim.opt.termguicolors = true
 vim.opt.undofile = true
--- vim.opt.winborder = "rounded"
-vim.opt.winborder = "single"
+vim.opt.winborder = "rounded"
 vim.opt.wrap = true
 vim.opt.wrapscan = false
 vim.api.nvim_create_autocmd({ "FileType" }, {
@@ -98,4 +97,4 @@ vim.diagnostic.config({
 -- vim.cmd("colorscheme rose-pine-moon")
 -- vim.cmd("colorscheme monokai-pro-classic")
 -- vim.cmd("colorscheme gruvbox")
-vim.cmd.colorscheme("github_dark_default")
+-- vim.cmd.colorscheme("github_dark_default")
