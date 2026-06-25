@@ -46,7 +46,7 @@ return {
 					["SpellCap"] = { link = "NONE" },
 					["SpellLocal"] = { link = "NONE" },
 					["SpellRare"] = { link = "NONE" },
-					-- ["StatusLine"] = { bg = "NONE" }, -- default status line
+					["StatusLine"] = { bg = "NONE" }, -- default status line, fix weird flash on start
 					["TabLineFill"] = { bg = "NONE" }, -- tabline background
 					-- ["TreesitterContext"] = { bg = "NONE" },
 					-- ["TreesitterContextLineNumber"] = { link = "Keyword" },

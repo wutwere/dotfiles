@@ -108,12 +108,12 @@ KEYMAPS.general = function()
 		local source = vim.fn.expand("%")
 		local started = vim.uv.hrtime()
 
-		Snacks.notify.notify("Compiling")
+		Snacks.notify.notify("Compiling", { timeout = 200 })
 		vim.system({ "make", "compile", "SOURCE=" .. source }, { text = true }, function(obj)
 			local elapsed = (vim.uv.hrtime() - started) / 1e9
 			vim.schedule(function()
 				if obj.code == 0 then
-					Snacks.notify.notify(("Compiled: %.3fs"):format(elapsed))
+					Snacks.notify.notify(("Compiled: %.3fs"):format(elapsed), { timeout = 200 })
 				else
 					Snacks.notify.error(vim.trim(obj.stderr ~= "" and obj.stderr or obj.stdout))
 				end
