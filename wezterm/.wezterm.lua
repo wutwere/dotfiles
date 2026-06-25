@@ -9,20 +9,13 @@ local config = wezterm.config_builder()
 -------------
 
 config.enable_tab_bar = false
--- config.window_decorations = "RESIZE"
 config.initial_cols = 120
 config.initial_rows = 50
 config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
--- config.color_scheme = "tokyonight"
--- config.color_scheme = "catppuccin-macchiato"
 config.color_scheme = "Monokai Remastered"
--- config.colors = { background = "#0d0e1b" }
 config.colors = { background = "#000000" }
 config.window_background_opacity = 1
 config.max_fps = 255
-config.default_cursor_style = "BlinkingUnderline"
-config.cursor_blink_rate = 300
-config.animation_fps = 60
 
 config.wsl_domains = {
 	{
@@ -41,18 +34,8 @@ config.default_domain = "WSL:archlinux"
 -- FONT --
 ----------
 
-config.font = wezterm.font("ComicShannsMono Nerd Font Mono")
--- config.font = wezterm.font("JetBrainsMono Nerd Font Mono", { weight = "DemiBold" })
--- config.font_size = 11
--- config.line_height = 1.13
--- config.font = wezterm.font("Monaspace Argon")
--- config.harfbuzz_features = { "calt", "liga", "dlig", "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07", "ss08" }
--- config.freetype_load_target = "Light"
--- config.freetype_load_target = "HorizontalLcd"
--- config.freetype_render_target = "HorizontalLcd"
--- config.custom_block_glyphs = false
-
-config.font_size = 9
+config.font = wezterm.font("Monaspace Neon")
+config.font_size = 14
 config.line_height = 1
 config.cell_width = 1
 
@@ -102,9 +85,8 @@ addTmuxKey("s", "s")
 addTmuxKey("f", "f")
 addTmuxKey("b", "b")
 addTmuxKey("[", "[")
-addTmuxKey("r", ",")
-addTmuxKey("y", "Space")
 addTmuxKey("u", "U")
 addTmuxKey("d", "D")
+addTmuxKey("/", "/")
 
 return config

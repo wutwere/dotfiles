@@ -1,5 +1,5 @@
 local FLASH_INTERVAL = 80
-local LUALINE_BG = "#111113"
+local LUALINE_BG = "#1f242d"
 local LOCATION_FLASH_BG = "#f85149"
 
 local function refresh()

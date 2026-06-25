@@ -22,38 +22,40 @@ return {
 					["BlinkCmpLabel"] = { fg = "#8B949E" },
 					["BlinkCmpLabelMatch"] = { style = "bold", fg = "#FFFFFF" },
 					["BlinkCmpMenu"] = { bg = "NONE" },
-					["BlinkCmpMenuBorder"] = { fg = "#000000" },
 					["BufferLineFill"] = { bg = "NONE" },
-					["ColorColumn"] = { bg = "#121720" }, -- markdown code block
+					["ColorColumn"] = { bg = "NONE" }, -- markdown code block
 					["Comment"] = { italic = true }, -- for markdown if i decide to disable global italic
 					["CursorLine"] = { bg = "#0a0a0c" },
 					["CursorLineNr"] = { style = "bold", fg = "#FFFFFF", bg = "#0a0a0c" },
 					["CursorLineSign"] = { style = "bold", fg = "#FFFFFF", bg = "#0a0a0c" },
-					["Directory"] = { bg = "NONE" },
+					-- ["Directory"] = { bg = "NONE" }, -- ?
 					["DiagnosticVirtualTextHint"] = { bg = "#17191c" },
 					["DiagnosticVirtualTextInfo"] = { bg = "#021631" },
 					["DiagnosticVirtualTextWarn"] = { bg = "#2c2007" },
 					["DiagnosticVirtualTextError"] = { bg = "#310402" },
-					-- ["FloatBorder"] = { fg = "#464B52" },
+					["FloatBorder"] = { fg = "#FFFFFF" },
 					["LazyNormal"] = { bg = "NONE" },
-					["NonText"] = { fg = "#454b54" },
+					["NonText"] = { fg = "#454b54" }, -- line wrap icon
 					["Pmenu"] = { bg = "NONE" }, -- for blink cmp
 					["PmenuExtra"] = { bg = "NONE" }, -- for blink cmp
 					-- ["RenderMarkdownChecked"] = { fg = "#A7E22E" },
-					["SignColumn"] = { bg = "NONE" },
+					-- ["SignColumn"] = { bg = "NONE" },
 					["SnacksIndent"] = { fg = "#161B22" },
-					["SnippetTabstop"] = { link = "NONE" },
+					["SnippetTabstop"] = { link = "NONE" }, -- ?
 					-- ["SpellBad"] = { link = "NONE" },
 					["SpellCap"] = { link = "NONE" },
 					["SpellLocal"] = { link = "NONE" },
 					["SpellRare"] = { link = "NONE" },
-					["StatusLine"] = { bg = "NONE" },
-					["TabLineFill"] = { bg = "NONE" },
+					-- ["StatusLine"] = { bg = "NONE" }, -- default status line
+					["TabLineFill"] = { bg = "NONE" }, -- tabline background
 					-- ["TreesitterContext"] = { bg = "NONE" },
-					["TreesitterContextLineNumber"] = { link = "Keyword" },
+					-- ["TreesitterContextLineNumber"] = { link = "Keyword" },
 					["WinBar"] = { fg = "#4C576D" },
 				},
 			},
 		},
+		init = function()
+			vim.cmd.colorscheme("github_dark_default")
+		end,
 	},
 }

@@ -89,12 +89,7 @@ keybind = super+b=text:\x00b
 keybind = super+[=text:\x00[
 keybind = super+u=text:\x00U
 keybind = super+d=text:\x00D
+keybind = super+/=text:\x00/
 
 # stripe shift+enter for newline
 keybind = shift+enter=text:\x1b\r
-
-# rename window
-keybind = super+r=text:\x00,
-
-# tmux thumbs
-keybind = "super+y=text:\x00 "
