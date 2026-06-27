@@ -28,6 +28,9 @@ KEYMAPS.general = function()
 	vim.keymap.set("n", "n", "nzz", { noremap = true })
 	vim.keymap.set("n", "N", "Nzz", { noremap = true })
 
+	vim.keymap.set("n", "<a-left>", "<c-o>", { noremap = true })
+	vim.keymap.set("n", "<a-right>", "<c-i>", { noremap = true })
+
 	vim.keymap.set("n", "<leader>y", function()
 		local path = vim.fn.expand("%:p")
 		if path ~= "" then
