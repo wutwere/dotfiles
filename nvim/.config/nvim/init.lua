@@ -20,7 +20,7 @@ vim.opt.linebreak = true
 vim.opt.list = true
 vim.opt.listchars = { tab = "  ", lead = " ", trail = "·", nbsp = "␣" }
 vim.opt.mouse = "nv"
-vim.opt.mousescroll = "ver:1,hor:1"
+vim.opt.mousescroll = "ver:5,hor:1"
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.scrolloff = 0
