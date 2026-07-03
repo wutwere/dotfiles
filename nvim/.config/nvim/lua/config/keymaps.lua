@@ -16,8 +16,8 @@ KEYMAPS.general = function()
 
 	vim.keymap.set({ "n", "x" }, "j", "gj", { noremap = true, silent = true })
 	vim.keymap.set({ "n", "x" }, "k", "gk", { noremap = true, silent = true })
-	vim.keymap.set({ "n", "x" }, "<C-E>", "5<C-E>", { noremap = true, silent = true })
-	vim.keymap.set({ "n", "x" }, "<C-Y>", "5<C-Y>", { noremap = true, silent = true })
+	vim.keymap.set({ "n", "v" }, "<C-ScrollWheelUp>", "{", { noremap = true, silent = true })
+	vim.keymap.set({ "n", "v" }, "<C-ScrollWheelDown>", "}", { noremap = true, silent = true })
 
 	vim.keymap.set("i", "{<cr>", "{<cr>}<esc>O")
 	vim.keymap.set("i", "{<s-cr>", "{<cr>}<esc>O")
@@ -31,6 +31,7 @@ KEYMAPS.general = function()
 	vim.keymap.set("n", "<a-left>", "<c-o>", { noremap = true })
 	vim.keymap.set("n", "<a-right>", "<c-i>", { noremap = true })
 
+	-- clipboard
 	vim.keymap.set("n", "<leader>y", function()
 		local path = vim.fn.expand("%:p")
 		if path ~= "" then
@@ -71,6 +72,7 @@ KEYMAPS.general = function()
 		{ desc = "Replace all occurrences of selection" }
 	)
 
+	-- diagnostics
 	local virtual_lines_enabled = true
 	local function toggle_virtual_lines()
 		if not virtual_lines_enabled then
@@ -151,6 +153,8 @@ KEYMAPS.general = function()
 	-- fast navigation
 	vim.keymap.set("n", "<c-h>", "20zh")
 	vim.keymap.set("n", "<c-l>", "20zl")
+	vim.keymap.set({ "n", "v" }, "<S-ScrollWheelUp>", "5zh", { noremap = true, silent = true })
+	vim.keymap.set({ "n", "v" }, "<S-ScrollWheelDown>", "5zl", { noremap = true, silent = true })
 	vim.keymap.set("n", "<leader>h", "<c-w>h", { desc = "Move to left pane" })
 	vim.keymap.set("n", "<leader>j", "<c-w>j", { desc = "Move to lower pane" })
 	vim.keymap.set("n", "<leader>k", "<c-w>k", { desc = "Move to upper pane" })
