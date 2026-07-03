@@ -71,7 +71,7 @@ return {
 					lualine_c = {
 						{
 							"filename",
-							path = 4,
+							path = 1,
 							color = function()
 								local win = vim.g.statusline_winid or vim.api.nvim_get_current_win()
 								return {

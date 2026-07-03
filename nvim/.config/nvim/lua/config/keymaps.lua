@@ -330,11 +330,11 @@ KEYMAPS.snacks = function()
 	end, { desc = "Find Files" })
 	vim.keymap.set("n", "<leader>e", function()
 		Snacks.picker.explorer({
-			layout = {
-				preset = "default",
-				preview = true,
-				fullscreen = false,
-			},
+			-- layout = {
+			-- 	preset = "default",
+			-- 	preview = true,
+			-- 	fullscreen = false,
+			-- },
 			auto_close = true,
 			hidden = true,
 			ignored = true,
