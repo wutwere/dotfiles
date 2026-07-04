@@ -93,12 +93,15 @@ return {
 				-- 	client.server_capabilities.semanticTokensProvider = nil
 				-- end,
 			}
-			if default_config.capabilities.workspace == nil then
-				default_config.capabilities.workspace = {}
-			end
-			default_config.capabilities.workspace.didChangeWatchedFiles = {
-				dynamicRegistration = true,
-			}
+			vim.lsp.config("*", {
+				capabilities = {
+					workspace = {
+						didChangeWatchedFiles = {
+							dynamicRegistration = true,
+						},
+					},
+				},
+			})
 
 			for lsp, config in pairs(custom_config) do
 				for k, v in pairs(default_config) do
