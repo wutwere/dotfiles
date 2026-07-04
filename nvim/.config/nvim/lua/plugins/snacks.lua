@@ -40,8 +40,8 @@ return {
 				icons = {
 					files = {
 						enabled = true, -- show file icons
-						dir = " ",
-						dir_open = " ",
+						dir = " ",
+						dir_open = " ",
 					},
 					tree = {
 						vertical = "│ ",
