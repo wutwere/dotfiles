@@ -1,7 +1,11 @@
 local KEYMAPS = require("config.keymaps")
 local home = vim.fn.expand("~")
 
-local custom_config = {
+---@class UserLspServerConfig: vim.lsp.ClientConfig
+---@field cmd? string[]|fun(dispatchers: vim.lsp.rpc.Dispatchers, config: vim.lsp.ClientConfig): vim.lsp.rpc.PublicClient
+
+---@type table<string, UserLspServerConfig>
+local server_overrides = {
 	luau_lsp = {
 		cmd = {
 			"luau-lsp",
@@ -84,16 +88,8 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		config = function()
-			local lspconfig = require("lspconfig")
-
-			local default_config = {
-				capabilities = require("blink.cmp").get_lsp_capabilities(),
-				flags = { debounce_text_changes = 1000 },
-				-- on_init = function(client, _)
-				-- 	client.server_capabilities.semanticTokensProvider = nil
-				-- end,
-			}
 			vim.lsp.config("*", {
+				flags = { debounce_text_changes = 300 },
 				capabilities = {
 					workspace = {
 						didChangeWatchedFiles = {
@@ -103,20 +99,30 @@ return {
 				},
 			})
 
-			for lsp, config in pairs(custom_config) do
-				for k, v in pairs(default_config) do
-					if not config[k] then
-						config[k] = v
-					end
-				end
-				vim.lsp.config(lsp, config)
-				vim.lsp.enable(lsp)
+			for server_name, server_config in pairs(server_overrides) do
+				vim.lsp.config(server_name, server_config)
+				vim.lsp.enable(server_name)
 			end
 
 			vim.api.nvim_create_autocmd("LspAttach", {
 				desc = "LSP actions",
 				callback = function(event)
 					KEYMAPS.lsp(event)
+				end,
+			})
+
+			vim.api.nvim_create_autocmd("BufEnter", {
+				desc = "Refresh pull diagnostics",
+				callback = function(args)
+					if vim.api.nvim_get_option_value("buftype", { buf = args.buf }) ~= "" then
+						return
+					end
+
+					for _, client in ipairs(vim.lsp.get_clients({ bufnr = args.buf })) do
+						if client:supports_method("textDocument/diagnostic", args.buf) then
+							vim.lsp.diagnostic._refresh(args.buf, client.id)
+						end
+					end
 				end,
 			})
 		end,
@@ -147,8 +153,8 @@ return {
 				luau = { "stylua" },
 				nix = { "alejandra" },
 			},
-			format_after_save = function(_bufnr)
-				if vim.bo.filetype == "proto" then
+			format_after_save = function(bufnr)
+				if vim.bo[bufnr].filetype == "proto" then
 					return
 				end
 				return {
