@@ -1,6 +1,6 @@
 return {
 	{
-		"projekt0n/github-nvim-theme",
+		"tadeucbm/github-nvim-theme",
 		name = "github-theme",
 		lazy = false, -- make sure we load this during startup if it is your main colorscheme
 		priority = 1000, -- make sure to load this before all the other start plugins
@@ -18,7 +18,7 @@ return {
 					["@markup.italic"] = { italic = true }, -- for markdown if i decide to disable global italic
 					["BlinkCmpDoc"] = { bg = "NONE" },
 					["BlinkCmpDocSeparator"] = { bg = "NONE" },
-					["BlinkCmpKind"] = { fg = "#FF7B72" },
+					-- ["BlinkCmpKind"] = { fg = "#FF7B72" },
 					["BlinkCmpLabel"] = { fg = "#8B949E" },
 					["BlinkCmpLabelMatch"] = { style = "bold", fg = "#FFFFFF" },
 					["BlinkCmpMenu"] = { bg = "NONE" },
@@ -41,6 +41,7 @@ return {
 					-- ["RenderMarkdownChecked"] = { fg = "#A7E22E" },
 					-- ["SignColumn"] = { bg = "NONE" },
 					["SnacksIndent"] = { fg = "#161B22" },
+					["SnacksPickerMatch"] = { style = "bold", fg = "#FF7B72" },
 					["SnippetTabstop"] = { link = "NONE" }, -- ?
 					-- ["SpellBad"] = { link = "NONE" },
 					["SpellCap"] = { link = "NONE" },
