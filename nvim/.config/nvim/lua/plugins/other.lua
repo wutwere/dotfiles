@@ -119,4 +119,8 @@ return {
 	{
 		"Darazaki/indent-o-matic",
 	},
+	{
+		"esmuellert/codediff.nvim",
+		cmd = "CodeDiff",
+	},
 }
