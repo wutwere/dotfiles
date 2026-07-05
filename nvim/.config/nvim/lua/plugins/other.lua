@@ -74,13 +74,6 @@ return {
 		"akinsho/git-conflict.nvim",
 		version = "*",
 		opts = { default_mappings = false },
-		init = function()
-			vim.api.nvim_create_autocmd({ "BufEnter" }, {
-				callback = function()
-					vim.cmd("GitConflictRefresh")
-				end,
-			})
-		end,
 	},
 	{
 		"jake-stewart/multicursor.nvim",

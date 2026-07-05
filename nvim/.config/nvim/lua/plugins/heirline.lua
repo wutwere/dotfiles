@@ -80,7 +80,9 @@ end
 
 local function right_status(bufnr)
 	local sep = hl("UserStatuslineText", "  ")
-	local parts = vim.tbl_filter(function(s) return s ~= "" end, {
+	local parts = vim.tbl_filter(function(s)
+		return s ~= ""
+	end, {
 		get_diagnostics(bufnr),
 		hl("UserStatuslineText", get_lsp_status(bufnr)),
 	})
@@ -120,13 +122,10 @@ return {
 
 			vim.api.nvim_create_autocmd("ColorScheme", { callback = set_highlights })
 
-			vim.api.nvim_create_autocmd({ "DiagnosticChanged", "LspAttach", "LspDetach", "BufEnter", "User" }, {
-				pattern = { "*", "GitSignsUpdate" },
-				callback = function() vim.cmd.redrawstatus() end,
-			})
-
 			vim.api.nvim_create_autocmd("BufWinEnter", {
-				callback = function(args) flash(args.buf, vim.fn.bufwinid(args.buf)) end,
+				callback = function(args)
+					flash(args.buf, vim.fn.bufwinid(args.buf))
+				end,
 			})
 
 			---@diagnostic disable-next-line: missing-fields
@@ -145,7 +144,9 @@ return {
 							local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(select(2, ctx())), ":~:.")
 							return filename == "" and "[No Name]" or filename
 						end,
-						hl = function() return filename_hl(ctx()) end,
+						hl = function()
+							return filename_hl(ctx())
+						end,
 					},
 					{
 						provider = function()
@@ -154,7 +155,9 @@ return {
 					},
 					{ provider = "%=" },
 					{
-						provider = function() return right_status(select(2, ctx())) end,
+						provider = function()
+							return right_status(select(2, ctx()))
+						end,
 					},
 					{ provider = " " },
 				},
