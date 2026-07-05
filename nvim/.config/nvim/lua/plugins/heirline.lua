@@ -1,6 +1,6 @@
 local FLASH_INTERVAL = 80
 local STATUSLINE_BG = "#1f242d"
-local LOCATION_FLASH_BG = "#f85149"
+local LOCATION_FLASH_BG = "#7ee787"
 local GIT_ICON = ""
 local LSP_ICON = ""
 
@@ -35,10 +35,10 @@ end
 local function filename_hl(win, bufnr)
 	local has_errors = vim.diagnostic.count(bufnr)[S.ERROR] ~= nil
 	if vim.w[win]._heirline_flash then
-		return { fg = "#ffffff", bg = LOCATION_FLASH_BG, bold = has_errors }
+		return { fg = "#000000", bg = LOCATION_FLASH_BG, bold = has_errors }
 	end
 	if has_errors then
-		return { fg = LOCATION_FLASH_BG, bg = STATUSLINE_BG, bold = true }
+		return { fg = "#ff0000", bg = STATUSLINE_BG, bold = true, undercurl = true, sp = "#F85149" }
 	end
 	return { fg = "#ffffff", bg = STATUSLINE_BG }
 end
@@ -83,8 +83,8 @@ local function right_status(bufnr)
 	local parts = vim.tbl_filter(function(s)
 		return s ~= ""
 	end, {
-		get_diagnostics(bufnr),
 		hl("UserStatuslineText", get_lsp_status(bufnr)),
+		get_diagnostics(bufnr),
 	})
 	return table.concat(parts, sep)
 end
@@ -155,19 +155,19 @@ return {
 				end,
 			})
 
-			---@diagnostic disable-next-line: missing-fields
 			require("heirline").setup({
+				---@diagnostic disable-next-line: missing-fields
 				statusline = {
 					{ provider = " " },
 					island({
 						{
 							provider = function()
-								return hl("UserStatuslineText", " " .. get_branch(select(2, ctx())) .. " ")
+								return " " .. right_status(select(2, ctx())) .. " "
 							end,
 						},
 					}, {
 						condition = function()
-							return get_branch(select(2, ctx())) ~= ""
+							return right_status(select(2, ctx())) ~= ""
 						end,
 					}),
 					{ provider = "%=" },
@@ -180,11 +180,11 @@ return {
 						},
 						{
 							provider = function()
-								return vim.bo[select(2, ctx())].modified and " [+]" or ""
+								return vim.bo[select(2, ctx())].modified and " " or ""
 							end,
 							hl = function()
 								local spec = vim.deepcopy(filename_hl(ctx()))
-								spec.bold = true
+								spec.fg = "#888888"
 								return spec
 							end,
 						},
@@ -198,12 +198,12 @@ return {
 					island({
 						{
 							provider = function()
-								return " " .. right_status(select(2, ctx())) .. " "
+								return hl("UserStatuslineText", " " .. get_branch(select(2, ctx())) .. " ")
 							end,
 						},
 					}, {
 						condition = function()
-							return right_status(select(2, ctx())) ~= ""
+							return get_branch(select(2, ctx())) ~= ""
 						end,
 					}),
 					{ provider = " " },
