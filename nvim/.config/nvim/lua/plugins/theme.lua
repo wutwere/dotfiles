@@ -1,6 +1,7 @@
 return {
 	{
-		"tadeucbm/github-nvim-theme",
+		"tim3nd/github-nvim-theme",
+		branch = "feat-support_blink_cmp",
 		name = "github-theme",
 		lazy = false, -- make sure we load this during startup if it is your main colorscheme
 		priority = 1000, -- make sure to load this before all the other start plugins
