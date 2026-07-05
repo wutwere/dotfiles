@@ -42,7 +42,7 @@ return {
 					-- ["RenderMarkdownChecked"] = { fg = "#A7E22E" },
 					-- ["SignColumn"] = { bg = "NONE" },
 					["SnacksIndent"] = { fg = "#161B22" },
-					["SnacksPickerMatch"] = { style = "bold", fg = "#FF7B72" },
+					["SnacksPickerMatch"] = { link = "Search" },
 					["SnippetTabstop"] = { link = "NONE" }, -- ?
 					-- ["SpellBad"] = { link = "NONE" },
 					["SpellCap"] = { link = "NONE" },
