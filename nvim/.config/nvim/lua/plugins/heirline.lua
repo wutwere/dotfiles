@@ -89,6 +89,33 @@ local function right_status(bufnr)
 	return table.concat(parts, sep)
 end
 
+local function island_edge_hl(spec)
+	local island_hl = type(spec) == "function" and spec() or spec
+	return { fg = island_hl.bg or STATUSLINE_BG }
+end
+
+local function island(components, opts)
+	opts = opts or {}
+	local body = { hl = opts.hl or { bg = STATUSLINE_BG } }
+	vim.list_extend(body, components)
+	return {
+		condition = opts.condition,
+		{
+			provider = opts.left_sep or "",
+			hl = function()
+				return island_edge_hl(body.hl)
+			end,
+		},
+		body,
+		{
+			provider = opts.right_sep or "",
+			hl = function()
+				return island_edge_hl(body.hl)
+			end,
+		},
+	}
+end
+
 local function flash(buf, win)
 	if win == -1 or not vim.api.nvim_win_is_valid(win) or vim.api.nvim_win_get_config(win).relative ~= "" then
 		return
@@ -131,34 +158,54 @@ return {
 			---@diagnostic disable-next-line: missing-fields
 			require("heirline").setup({
 				statusline = {
-					hl = { bg = STATUSLINE_BG },
 					{ provider = " " },
-					{
-						provider = function()
-							return hl("UserStatuslineText", get_branch(select(2, ctx())))
+					island({
+						{
+							provider = function()
+								return hl("UserStatuslineText", " " .. get_branch(select(2, ctx())) .. " ")
+							end,
+						},
+					}, {
+						condition = function()
+							return get_branch(select(2, ctx())) ~= ""
 						end,
-					},
+					}),
 					{ provider = "%=" },
-					{
-						provider = function()
-							local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(select(2, ctx())), ":~:.")
-							return filename == "" and "[No Name]" or filename
-						end,
+					island({
+						{
+							provider = function()
+								local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(select(2, ctx())), ":~:.")
+								return " " .. (filename == "" and "[No Name]" or filename)
+							end,
+						},
+						{
+							provider = function()
+								return vim.bo[select(2, ctx())].modified and " [+]" or ""
+							end,
+							hl = function()
+								local spec = vim.deepcopy(filename_hl(ctx()))
+								spec.bold = true
+								return spec
+							end,
+						},
+						{ provider = " " },
+					}, {
 						hl = function()
 							return filename_hl(ctx())
 						end,
-					},
-					{
-						provider = function()
-							return vim.bo[select(2, ctx())].modified and hl("UserStatuslineModified", " [+]") or ""
-						end,
-					},
+					}),
 					{ provider = "%=" },
-					{
-						provider = function()
-							return right_status(select(2, ctx()))
+					island({
+						{
+							provider = function()
+								return " " .. right_status(select(2, ctx())) .. " "
+							end,
+						},
+					}, {
+						condition = function()
+							return right_status(select(2, ctx())) ~= ""
 						end,
-					},
+					}),
 					{ provider = " " },
 				},
 				opts = {
