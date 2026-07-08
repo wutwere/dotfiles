@@ -81,6 +81,9 @@ return {
 			})
 		end,
 	},
+	{
+		"wutwere/nvim-treesitter-endwise",
+	},
 	-- { "nvim-treesitter/nvim-treesitter-context", opts = { mode = "topline" } },
 	-- {
 	-- 	"Bekaboo/dropbar.nvim",
