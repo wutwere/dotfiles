@@ -233,6 +233,7 @@ end
 
 KEYMAPS.oil = function()
 	vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+	vim.keymap.set("n", "<leader>-", "<CMD>Oil .<CR>", { desc = "Open current working directory" })
 end
 
 ---------
@@ -324,6 +325,54 @@ KEYMAPS.ai = {
 
 KEYMAPS.snacks = function()
 	local Snacks = require("snacks")
+	local function workspace_error_files()
+		for _, client in ipairs(vim.lsp.get_clients({ method = "workspace/diagnostic" })) do
+			vim.lsp.buf.workspace_diagnostics({ client_id = client.id })
+		end
+
+		local diagnostics = vim.diagnostic.get(nil, { severity = vim.diagnostic.severity.ERROR })
+		local items = {}
+		local seen = {}
+		local cwd = vim.uv.cwd() or "."
+		local current_buf = vim.api.nvim_get_current_buf()
+
+		for _, diag in ipairs(diagnostics) do
+			local buf = diag.bufnr
+			if buf and vim.api.nvim_buf_is_valid(buf) and not seen[buf] then
+				local file = vim.api.nvim_buf_get_name(buf)
+				if file ~= "" then
+					seen[buf] = true
+					items[#items + 1] = {
+						text = file,
+						file = file,
+						buf = buf,
+						severity = vim.diagnostic.severity.ERROR,
+						is_current = buf == current_buf and 0 or 1,
+						is_cwd = file:sub(1, #cwd) == cwd and 0 or 1,
+						pos = { 0, 0 },
+					}
+				end
+			end
+		end
+
+		return Snacks.picker({
+			title = "Files With Errors",
+			finder = function()
+				return items
+			end,
+			format = "file",
+			sort = {
+				fields = { "is_current", "is_cwd", "file" },
+			},
+			matcher = { sort_empty = true },
+			confirm = function(picker, item)
+				picker:close()
+				if item then
+					vim.cmd.edit(vim.fn.fnameescape(item.file))
+				end
+			end,
+		})
+	end
 	-- Top Pickers & Explorer
 	vim.keymap.set("n", "<leader>f", function()
 		Snacks.picker.files({ layout = { fullscreen = false }, matcher = { frecency = true } })
@@ -343,7 +392,6 @@ KEYMAPS.snacks = function()
 	vim.keymap.set("n", "<leader>/", function()
 		Snacks.picker.grep({ layout = { fullscreen = false }, hidden = true })
 	end, { desc = "Grep" })
-	vim.keymap.set("n", "<leader>:", Snacks.picker.command_history, { desc = "Command History" })
 	vim.keymap.set("n", "<leader><leader>", Snacks.picker.resume, { desc = "Resume last picker" })
 	-- git
 	vim.keymap.set({ "n", "v" }, "<leader>gB", function()
@@ -377,18 +425,12 @@ KEYMAPS.snacks = function()
 		Snacks.picker.grep_word({ layout = { fullscreen = false }, hidden = true })
 	end, { desc = "Visual selection or word" })
 	-- search
-	vim.keymap.set("n", '<leader>s"', Snacks.picker.registers, { desc = "Registers" })
-	vim.keymap.set("n", "<leader>s/", Snacks.picker.lines, { desc = "Buffer Lines" })
 	vim.keymap.set("n", "<leader>b", Snacks.picker.buffers, { desc = "Buffers" })
 	vim.keymap.set("n", "<leader>sd", Snacks.picker.diagnostics, { desc = "Diagnostics" })
+	vim.keymap.set("n", "<leader>se", workspace_error_files, { desc = "Files With Errors" })
 	vim.keymap.set("n", "<leader>sD", Snacks.picker.diagnostics_buffer, { desc = "Buffer Diagnostics" })
 	vim.keymap.set("n", "<leader>sh", Snacks.picker.help, { desc = "Help Pages" })
 	vim.keymap.set("n", "<leader>si", Snacks.picker.icons, { desc = "Nerd Font Icons" })
-	vim.keymap.set("n", "<leader>sj", Snacks.picker.jumps, { desc = "Jumps" })
-	vim.keymap.set("n", "<leader>sq", Snacks.picker.qflist, { desc = "Quickfix List" })
-	vim.keymap.set("n", "<leader>sR", Snacks.picker.resume, { desc = "Resume" })
-	vim.keymap.set("n", "<leader>su", Snacks.picker.undo, { desc = "Undo History" })
-	vim.keymap.set("n", "<leader>sm", Snacks.picker.marks, { desc = "Marks" })
 	vim.keymap.set("n", "<leader>sp", Snacks.picker.spelling, { desc = "Spelling Suggestions" })
 	vim.keymap.set("n", "<leader>sn", Snacks.notifier.show_history, { desc = "Notification History" })
 	vim.keymap.set("n", "<leader>ss", function()
