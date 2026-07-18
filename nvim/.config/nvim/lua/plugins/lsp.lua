@@ -21,6 +21,7 @@ local server_overrides = {
 					imports = {
 						enabled = true,
 					},
+					enableFragmentAutocomplete = false,
 				},
 				diagnostics = {
 					workspace = false,
