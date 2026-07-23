@@ -31,6 +31,11 @@ KEYMAPS.general = function()
 	vim.keymap.set("n", "<a-left>", "<c-o>", { noremap = true })
 	vim.keymap.set("n", "<a-right>", "<c-i>", { noremap = true })
 
+	vim.keymap.set({ "n", "v" }, "<leader>v", "P", { noremap = true })
+
+	vim.keymap.set({ "n", "v" }, "<c-u>", "10<c-y>10k", { noremap = true })
+	vim.keymap.set({ "n", "v" }, "<c-d>", "10<c-e>10j", { noremap = true })
+
 	-- clipboard
 	vim.keymap.set("n", "<leader>y", function()
 		local path = vim.fn.expand("%:p")
