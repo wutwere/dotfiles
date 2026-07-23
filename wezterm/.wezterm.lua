@@ -35,7 +35,7 @@ config.default_domain = "WSL:archlinux"
 ----------
 
 config.font = wezterm.font("Monaspace Neon")
-config.font_size = 14
+config.font_size = 12
 config.line_height = 1.2
 config.cell_width = 1
 

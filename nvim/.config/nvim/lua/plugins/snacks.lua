@@ -1,5 +1,45 @@
 local KEYMAPS = require("config.keymaps")
 
+local function expand_node(Tree, node)
+	if not node or not node.dir then
+		return
+	end
+
+	node.open = true
+	Tree:expand(node)
+
+	for _, child in pairs(node.children) do
+		expand_node(Tree, child)
+	end
+end
+
+local function expand_path(picker, path)
+	local Tree = require("snacks.explorer.tree")
+	local Actions = require("snacks.explorer.actions")
+	local node = Tree:find(path)
+
+	if not node or not node.dir then
+		return
+	end
+
+	expand_node(Tree, node)
+	Actions.update(picker, {
+		target = path ~= picker:cwd() and path or nil,
+		refresh = true,
+	})
+end
+
+local function expand_under_cursor(picker)
+	local item = picker:current()
+	if item and item.dir then
+		expand_path(picker, item.file)
+	end
+end
+
+local function expand_all(picker)
+	expand_path(picker, picker:cwd())
+end
+
 return {
 	{
 		"folke/snacks.nvim",
@@ -29,6 +69,18 @@ return {
 					},
 					explorer = {
 						-- layout = { layout = { position = "right" } },
+						actions = {
+							explorer_expand_all = expand_all,
+							explorer_expand_under_cursor = expand_under_cursor,
+						},
+						win = {
+							list = {
+								keys = {
+									["A"] = "explorer_expand_all",
+									["L"] = "explorer_expand_under_cursor",
+								},
+							},
+						},
 					},
 				},
 				previewers = {
