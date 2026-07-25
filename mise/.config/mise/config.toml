@@ -4,7 +4,7 @@
 "aqua:LuaLS/lua-language-server" = "latest"
 "aqua:luau-lang/luau" = "latest"
 "github:1Axen/blink" = "latest"
-"github:JohnnyMorganz/luau-lsp" = "latest"
+"github:JohnnyMorganz/luau-lsp" = "1.68.1"
 "github:JohnnyMorganz/wally-package-types" = "latest"
 "github:Roblox/rocale-cli" = "latest"
 "github:UpliftGames/wally" = "latest"
