@@ -21,3 +21,4 @@ python = "latest"
 rust = { version = "latest", components = "rust-analyzer" }
 zig = "latest"
 zls = "latest"
+"npm:pyright" = "latest"
