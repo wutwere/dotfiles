@@ -101,14 +101,14 @@ local function island(components, opts)
 	return {
 		condition = opts.condition,
 		{
-			provider = opts.left_sep or "",
+			provider = opts.left_sep or "",
 			hl = function()
 				return island_edge_hl(body.hl)
 			end,
 		},
 		body,
 		{
-			provider = opts.right_sep or "",
+			provider = opts.right_sep or "",
 			hl = function()
 				return island_edge_hl(body.hl)
 			end,
