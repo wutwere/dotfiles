@@ -39,6 +39,7 @@ vim.opt.undofile = true
 vim.opt.winborder = "rounded"
 vim.opt.wrap = true
 vim.opt.wrapscan = false
+
 vim.api.nvim_create_autocmd({ "FileType" }, {
 	pattern = { "markdown" },
 	callback = function()
@@ -50,22 +51,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
 		vim.opt.formatoptions:remove({ "o", "r" }) -- don't continue comments when pressing o or Enter
 	end,
 })
-vim.api.nvim_create_autocmd("FocusGained", {
-	callback = function()
-		if vim.fn.mode() == "c" then
-			return
-		end
 
-		for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-			if
-				vim.api.nvim_buf_is_loaded(bufnr)
-				and vim.api.nvim_get_option_value("buftype", { buf = bufnr }) == ""
-			then
-				vim.cmd.checktime({ args = { tostring(bufnr) } })
-			end
-		end
-	end,
-})
 ---------------
 -- LAZY.NVIM --
 ---------------

@@ -33,9 +33,6 @@ KEYMAPS.general = function()
 
 	vim.keymap.set({ "n", "v" }, "<leader>v", "P", { noremap = true })
 
-	vim.keymap.set({ "n", "v" }, "<c-u>", "10<c-y>10k", { noremap = true })
-	vim.keymap.set({ "n", "v" }, "<c-d>", "10<c-e>10j", { noremap = true })
-
 	-- clipboard
 	vim.keymap.set("n", "<leader>y", function()
 		local path = vim.fn.expand("%:p")
@@ -380,7 +377,7 @@ KEYMAPS.snacks = function()
 	end
 	-- Top Pickers & Explorer
 	vim.keymap.set("n", "<leader>f", function()
-		Snacks.picker.files({ layout = { fullscreen = false }, matcher = { frecency = true } })
+		Snacks.picker.files({ layout = { fullscreen = false, preset = "vertical" }, matcher = { frecency = true } })
 	end, { desc = "Find Files" })
 	vim.keymap.set("n", "<leader>e", function()
 		Snacks.picker.explorer({
@@ -395,7 +392,7 @@ KEYMAPS.snacks = function()
 		})
 	end, { desc = "File Tree" })
 	vim.keymap.set("n", "<leader>/", function()
-		Snacks.picker.grep({ layout = { fullscreen = false }, hidden = true })
+		Snacks.picker.grep({ layout = { fullscreen = true, preset = "dropdown" }, hidden = true })
 	end, { desc = "Grep" })
 	vim.keymap.set("n", "<leader><leader>", Snacks.picker.resume, { desc = "Resume last picker" })
 	-- git
@@ -423,11 +420,8 @@ KEYMAPS.snacks = function()
 		Snacks.notify.notify("Git base: " .. (git_base or "HEAD"))
 	end, { desc = "Toggle Gitsigns & Git Diff base" })
 	-- Grep
-	vim.keymap.set("n", "<leader>sB", function()
-		Snacks.picker.grep_buffers({ hidden = true })
-	end, { desc = "Grep Open Buffers" })
 	vim.keymap.set({ "n", "x" }, "<leader>sw", function()
-		Snacks.picker.grep_word({ layout = { fullscreen = false }, hidden = true })
+		Snacks.picker.grep_word({ layout = { fullscreen = true, preset = "dropdown" }, hidden = true })
 	end, { desc = "Visual selection or word" })
 	-- search
 	vim.keymap.set("n", "<leader>b", Snacks.picker.buffers, { desc = "Buffers" })
@@ -475,6 +469,7 @@ KEYMAPS.snacks = function()
 		local dirs = get_directories()
 
 		return Snacks.picker({
+			layout = { preset = "vertical" },
 			title = "Directories",
 			finder = function()
 				local items = {}

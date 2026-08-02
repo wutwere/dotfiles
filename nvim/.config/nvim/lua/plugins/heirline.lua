@@ -101,14 +101,14 @@ local function island(components, opts)
 	return {
 		condition = opts.condition,
 		{
-			provider = opts.left_sep or "",
+			provider = opts.left_sep or "",
 			hl = function()
 				return island_edge_hl(body.hl)
 			end,
 		},
 		body,
 		{
-			provider = opts.right_sep or "",
+			provider = opts.right_sep or "",
 			hl = function()
 				return island_edge_hl(body.hl)
 			end,
@@ -170,6 +170,18 @@ return {
 							return right_status(select(2, ctx())) ~= ""
 						end,
 					}),
+					{ provider = " " },
+					island({
+						{
+							provider = function()
+								return hl("UserStatuslineText", " " .. get_branch(select(2, ctx())) .. " ")
+							end,
+						},
+					}, {
+						condition = function()
+							return get_branch(select(2, ctx())) ~= ""
+						end,
+					}),
 					{ provider = "%=" },
 					island({
 						{
@@ -192,18 +204,6 @@ return {
 					}, {
 						hl = function()
 							return filename_hl(ctx())
-						end,
-					}),
-					{ provider = "%=" },
-					island({
-						{
-							provider = function()
-								return hl("UserStatuslineText", " " .. get_branch(select(2, ctx())) .. " ")
-							end,
-						},
-					}, {
-						condition = function()
-							return get_branch(select(2, ctx())) ~= ""
 						end,
 					}),
 					{ provider = " " },
