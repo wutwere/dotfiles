@@ -13,7 +13,7 @@ config.initial_cols = 120
 config.initial_rows = 50
 config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
 config.color_scheme = "Monokai Remastered"
-config.colors = { background = "#000000" }
+config.colors = { background = "#070709" }
 config.window_background_opacity = 1
 config.max_fps = 255
 
@@ -34,8 +34,8 @@ config.default_domain = "WSL:archlinux"
 -- FONT --
 ----------
 
-config.font = wezterm.font("Monaspace Neon")
-config.font_size = 12
+config.font = wezterm.font("GeistMono Nerd Font")
+config.font_size = 11
 config.line_height = 1.2
 config.cell_width = 1
 
