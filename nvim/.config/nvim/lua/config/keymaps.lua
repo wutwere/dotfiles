@@ -377,7 +377,7 @@ KEYMAPS.snacks = function()
 	end
 	-- Top Pickers & Explorer
 	vim.keymap.set("n", "<leader>f", function()
-		Snacks.picker.files({ layout = { fullscreen = false, preset = "vertical" }, matcher = { frecency = true } })
+		Snacks.picker.files({ layout = { fullscreen = false, preset = "dropdown" }, matcher = { frecency = true } })
 	end, { desc = "Find Files" })
 	vim.keymap.set("n", "<leader>e", function()
 		Snacks.picker.explorer({
@@ -469,7 +469,7 @@ KEYMAPS.snacks = function()
 		local dirs = get_directories()
 
 		return Snacks.picker({
-			layout = { preset = "vertical" },
+			layout = { preset = "dropdown" },
 			title = "Directories",
 			finder = function()
 				local items = {}
