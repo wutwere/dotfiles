@@ -72,7 +72,7 @@ return {
 	{ "lewis6991/gitsigns.nvim", opts = { current_line_blame_opts = { delay = 0 } } },
 	{
 		"lewis6991/satellite.nvim",
-		opts = { current_only = true, width = 1, winblend = 0, excluded_filetypes = { "snacks_picker_list" } },
+		opts = { current_only = true, excluded_filetypes = { "snacks_picker_list" } },
 		init = function()
 			vim.api.nvim_create_autocmd("BufWinEnter", {
 				callback = function()

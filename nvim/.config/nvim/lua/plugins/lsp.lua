@@ -83,6 +83,7 @@ local server_overrides = {
 	ruff = {},
 	bashls = {},
 	zls = {},
+	svelte = {},
 }
 
 return {
