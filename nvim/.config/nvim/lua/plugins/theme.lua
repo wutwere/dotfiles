@@ -27,8 +27,8 @@ return {
 					["ColorColumn"] = { bg = "NONE" }, -- markdown code block
 					["Comment"] = { italic = true }, -- for markdown if i decide to disable global italic
 					["CursorLine"] = { bg = "#0a0a0c" },
-					["CursorLineNr"] = { style = "bold", fg = "#FFFFFF", bg = "#0a0a0c" },
-					["CursorLineSign"] = { style = "bold", fg = "#FFFFFF", bg = "#0a0a0c" },
+					["CursorLineNr"] = { style = "bold", fg = "#FFFFFF" },
+					["CursorLineSign"] = { style = "bold", fg = "#FFFFFF" },
 					-- ["Directory"] = { bg = "NONE" }, -- ?
 					["DiagnosticVirtualTextHint"] = { bg = "#17191c" },
 					["DiagnosticVirtualTextInfo"] = { bg = "#021631" },
