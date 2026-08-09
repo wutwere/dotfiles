@@ -26,6 +26,7 @@ return {
 					["BufferLineFill"] = { bg = "NONE" },
 					["ColorColumn"] = { bg = "NONE" }, -- markdown code block
 					["Comment"] = { italic = true }, -- for markdown if i decide to disable global italic
+					["CurSearch"] = { link = "Search" },
 					["CursorLine"] = { bg = "#0a0a0c" },
 					["CursorLineNr"] = { style = "bold", fg = "#FFFFFF" },
 					["CursorLineSign"] = { style = "bold", fg = "#FFFFFF" },

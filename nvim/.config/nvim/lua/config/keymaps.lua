@@ -25,9 +25,6 @@ KEYMAPS.general = function()
 	vim.keymap.set({ "o", "x" }, "iq", 'i"', { desc = 'inner " string' })
 	vim.keymap.set({ "o", "x" }, "aq", 'a"', { desc = '" string' })
 
-	vim.keymap.set("n", "n", "nzz", { noremap = true })
-	vim.keymap.set("n", "N", "Nzz", { noremap = true })
-
 	vim.keymap.set("n", "<a-left>", "<c-o>", { noremap = true })
 	vim.keymap.set("n", "<a-right>", "<c-i>", { noremap = true })
 
