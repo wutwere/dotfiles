@@ -107,7 +107,16 @@ KEYMAPS.general = function()
 	toggle_virtual_lines()
 
 	-- competitive programming
+	local temp_test = "/tmp/temp_test.in"
+
 	vim.keymap.set("n", "<leader>t1", function()
+		local file = assert(io.open(temp_test, "w"))
+		file:write(vim.fn.getreg("+"))
+		file:close()
+		Snacks.notify.notify("Saved clipboard to " .. temp_test, { timeout = 500 })
+	end, { desc = "Save clipboard to temp input file" })
+
+	vim.keymap.set("n", "<leader>t2", function()
 		vim.cmd("update")
 		local source = vim.fn.expand("%")
 		local started = vim.uv.hrtime()
@@ -125,21 +134,23 @@ KEYMAPS.general = function()
 		end)
 	end, { desc = "Compile current program" })
 
-	vim.keymap.set("n", "<leader>t2", function()
+	vim.keymap.set("n", "<leader>t3", function()
 		vim.cmd("update")
 		local source = vim.fn.expand("%")
+		if not vim.fn.filereadable(temp_test) then
+			Snacks.notify.error(temp_test .. " not found; save input with <leader>t1")
+			return
+		end
 		vim.cmd("vnew")
 		local command = string.format(
-			"stty -echo; make exec SOURCE=%s; status=$?; stty echo; exit $status",
-			vim.fn.shellescape(source)
+			"make exec SOURCE=%s < %s",
+			vim.fn.shellescape(source),
+			vim.fn.shellescape(temp_test)
 		)
-		local job = vim.fn.jobstart({ "sh", "-c", command }, { term = true })
-		vim.fn.chansend(job, vim.fn.getreg("+") .. "\n")
-		vim.fn.chanclose(job, "stdin")
-		vim.cmd("startinsert!")
-	end, { desc = "Run with clipboard input" })
+		vim.fn.jobstart({ "sh", "-c", command }, { term = true })
+	end, { desc = "Run with saved input file" })
 
-	vim.keymap.set("n", "<leader>t3", function()
+	vim.keymap.set("n", "<leader>t4", function()
 		vim.cmd("update")
 		local source = vim.fn.expand("%")
 		vim.cmd("vnew")
