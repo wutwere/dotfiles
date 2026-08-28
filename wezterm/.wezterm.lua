@@ -35,23 +35,6 @@ config.default_domain = "WSL:archlinux"
 ----------
 
 config.font = wezterm.font("GeistMono Nerd Font")
-config.font_rules = {
-	{
-		intensity = "Normal",
-		italic = true,
-		font = wezterm.font("GeistMono Nerd Font", { weight = "Regular" }),
-	},
-	{
-		intensity = "Bold",
-		italic = false,
-		font = wezterm.font("GeistMono Nerd Font", { weight = "ExtraBold" }),
-	},
-	{
-		intensity = "Bold",
-		italic = true,
-		font = wezterm.font("GeistMono Nerd Font", { weight = "ExtraBold" }),
-	},
-}
 config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
 config.font_size = 12
 config.line_height = 1.2

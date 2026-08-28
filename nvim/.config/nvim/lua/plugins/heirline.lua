@@ -158,7 +158,19 @@ return {
 			require("heirline").setup({
 				---@diagnostic disable-next-line: missing-fields
 				statusline = {
-					{ provider = " " },
+					-- { provider = " " },
+					-- island({
+					-- 	{
+					-- 		provider = function()
+					-- 			return hl("UserStatuslineText", " " .. get_branch(select(2, ctx())) .. " ")
+					-- 		end,
+					-- 	},
+					-- }, {
+					-- 	condition = function()
+					-- 		return get_branch(select(2, ctx())) ~= ""
+					-- 	end,
+					-- }),
+					{ provider = "%=" },
 					island({
 						{
 							provider = function()
@@ -171,18 +183,6 @@ return {
 						end,
 					}),
 					{ provider = " " },
-					island({
-						{
-							provider = function()
-								return hl("UserStatuslineText", " " .. get_branch(select(2, ctx())) .. " ")
-							end,
-						},
-					}, {
-						condition = function()
-							return get_branch(select(2, ctx())) ~= ""
-						end,
-					}),
-					{ provider = "%=" },
 					island({
 						{
 							provider = function()
@@ -206,7 +206,7 @@ return {
 							return filename_hl(ctx())
 						end,
 					}),
-					{ provider = " " },
+					{ provider = "%=" },
 				},
 				opts = {
 					disable_winbar_cb = function(args)
