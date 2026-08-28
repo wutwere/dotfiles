@@ -127,9 +127,8 @@ local function flash(buf, win)
 	local token = (vim.w[win]._heirline_flash_token or 0) + 1
 	vim.w[win]._heirline_flash = true
 	vim.w[win]._heirline_flash_token = token
-	vim.cmd.redrawstatus()
 
-	for i = 1, 3 do
+	for i = 0, 3 do
 		vim.defer_fn(function()
 			if not vim.api.nvim_win_is_valid(win) or vim.w[win]._heirline_flash_token ~= token then
 				return
