@@ -10,7 +10,6 @@ vim.g.maplocalleader = " "
 KEYMAPS.general = function()
 	-- editor
 	vim.keymap.set("n", "<esc>", function()
-		-- require("copilot-lsp.nes").clear()
 		vim.cmd("noh")
 	end, { noremap = true, silent = true })
 
@@ -142,11 +141,8 @@ KEYMAPS.general = function()
 			return
 		end
 		vim.cmd("vnew")
-		local command = string.format(
-			"make exec SOURCE=%s < %s",
-			vim.fn.shellescape(source),
-			vim.fn.shellescape(temp_test)
-		)
+		local command =
+			string.format("make exec SOURCE=%s < %s", vim.fn.shellescape(source), vim.fn.shellescape(temp_test))
 		vim.fn.jobstart({ "sh", "-c", command }, { term = true })
 	end, { desc = "Run with saved input file" })
 
@@ -385,7 +381,10 @@ KEYMAPS.snacks = function()
 	end
 	-- Top Pickers & Explorer
 	vim.keymap.set("n", "<leader>f", function()
-		Snacks.picker.files({ layout = { fullscreen = false, preset = "dropdown" }, matcher = { frecency = true } })
+		Snacks.picker.files({
+			-- layout = { fullscreen = false, preset = "dropdown" },
+			matcher = { frecency = true },
+		})
 	end, { desc = "Find Files" })
 	vim.keymap.set("n", "<leader>e", function()
 		Snacks.picker.explorer({
@@ -400,7 +399,11 @@ KEYMAPS.snacks = function()
 		})
 	end, { desc = "File Tree" })
 	vim.keymap.set("n", "<leader>/", function()
-		Snacks.picker.grep({ layout = { fullscreen = true, preset = "dropdown" }, hidden = true })
+		Snacks.picker.grep({
+			-- layout = { fullscreen = true, preset = "dropdown" },
+			layout = { fullscreen = true },
+			hidden = true,
+		})
 	end, { desc = "Grep" })
 	vim.keymap.set("n", "<leader><leader>", Snacks.picker.resume, { desc = "Resume last picker" })
 	-- git
@@ -429,7 +432,11 @@ KEYMAPS.snacks = function()
 	end, { desc = "Toggle Gitsigns & Git Diff base" })
 	-- Grep
 	vim.keymap.set({ "n", "x" }, "<leader>sw", function()
-		Snacks.picker.grep_word({ layout = { fullscreen = true, preset = "dropdown" }, hidden = true })
+		Snacks.picker.grep_word({
+			-- layout = { fullscreen = true, preset = "dropdown" },
+			layout = { fullscreen = true },
+			hidden = true,
+		})
 	end, { desc = "Visual selection or word" })
 	-- search
 	vim.keymap.set("n", "<leader>b", Snacks.picker.buffers, { desc = "Buffers" })
@@ -477,7 +484,7 @@ KEYMAPS.snacks = function()
 		local dirs = get_directories()
 
 		return Snacks.picker({
-			layout = { preset = "dropdown" },
+			-- layout = { preset = "dropdown" },
 			title = "Directories",
 			finder = function()
 				local items = {}
