@@ -84,6 +84,7 @@ local server_overrides = {
 	bashls = {},
 	zls = {},
 	svelte = {},
+	tinymist = {},
 }
 
 return {

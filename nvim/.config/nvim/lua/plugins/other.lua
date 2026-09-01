@@ -134,4 +134,9 @@ return {
 		"esmuellert/codediff.nvim",
 		cmd = "CodeDiff",
 	},
+	{
+		"chomosuke/typst-preview.nvim",
+		ft = "typst",
+		opts = {},
+	},
 }
