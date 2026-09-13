@@ -101,6 +101,11 @@ return {
 						last = "╰╴",
 					},
 				},
+				formatters = {
+					file = {
+						filename_first = true,
+					},
+				},
 			},
 			quickfile = { enabled = true },
 			-- scope = { enabled = true },
@@ -170,5 +175,17 @@ return {
 		"folke/todo-comments.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
 		opts = {},
+	},
+	{
+		"so1ve/snacks-fff.nvim",
+		dependencies = {
+			"folke/snacks.nvim",
+			{
+				"dmtrKovalenko/fff",
+				build = function()
+					require("fff.download").download_or_build_binary()
+				end,
+			},
+		},
 	},
 }
