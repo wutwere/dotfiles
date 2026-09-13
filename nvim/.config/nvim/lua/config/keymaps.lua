@@ -13,10 +13,17 @@ KEYMAPS.general = function()
 		vim.cmd("noh")
 	end, { noremap = true, silent = true })
 
-	vim.keymap.set({ "n", "x" }, "j", "gj", { noremap = true, silent = true })
-	vim.keymap.set({ "n", "x" }, "k", "gk", { noremap = true, silent = true })
-	vim.keymap.set({ "n", "v" }, "<C-ScrollWheelUp>", "{", { noremap = true, silent = true })
-	vim.keymap.set({ "n", "v" }, "<C-ScrollWheelDown>", "}", { noremap = true, silent = true })
+	-- for wrapped lines
+	vim.keymap.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+	vim.keymap.set({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+
+	-- mouse
+	vim.keymap.set({ "n", "v" }, "<C-ScrollWheelUp>", "<c-y>", { noremap = true, silent = true })
+	vim.keymap.set({ "n", "v" }, "<C-ScrollWheelDown>", "<c-e>", { noremap = true, silent = true })
+	vim.keymap.set({ "n", "v" }, "<S-ScrollWheelUp>", "5zh", { noremap = true, silent = true })
+	vim.keymap.set({ "n", "v" }, "<S-ScrollWheelDown>", "5zl", { noremap = true, silent = true })
+	vim.keymap.set("n", "<a-left>", "<c-o>", { noremap = true })
+	vim.keymap.set("n", "<a-right>", "<c-i>", { noremap = true })
 
 	vim.keymap.set("i", "{<cr>", "{<cr>}<esc>O")
 	vim.keymap.set("i", "{<s-cr>", "{<cr>}<esc>O")
@@ -24,10 +31,22 @@ KEYMAPS.general = function()
 	vim.keymap.set({ "o", "x" }, "iq", 'i"', { desc = 'inner " string' })
 	vim.keymap.set({ "o", "x" }, "aq", 'a"', { desc = '" string' })
 
-	vim.keymap.set("n", "<a-left>", "<c-o>", { noremap = true })
-	vim.keymap.set("n", "<a-right>", "<c-i>", { noremap = true })
-
 	vim.keymap.set({ "n", "v" }, "<leader>v", "P", { noremap = true })
+
+	vim.keymap.set("n", "<s-h>", "20zh")
+	vim.keymap.set("n", "<s-l>", "20zl")
+
+	vim.keymap.set("n", "<c-h>", "<c-w>h", { desc = "Move to left pane" })
+	vim.keymap.set("n", "<c-j>", "<c-w>j", { desc = "Move to lower pane" })
+	vim.keymap.set("n", "<c-k>", "<c-w>k", { desc = "Move to upper pane" })
+	vim.keymap.set("n", "<c-l>", "<c-w>l", { desc = "Move to right pane" })
+
+	-- highlight word without moving
+	vim.keymap.set("n", "*", function()
+		local word = vim.fn.expand("<cword>")
+		vim.fn.setreg("/", "\\<" .. word .. "\\>")
+		vim.opt.hlsearch = true
+	end, { silent = true })
 
 	-- clipboard
 	vim.keymap.set("n", "<leader>y", function()
@@ -156,15 +175,6 @@ KEYMAPS.general = function()
 	vim.keymap.set("t", "<esc>", "<cmd>bd!<cr>")
 	vim.keymap.set("t", "<c-n>", "<c-\\><c-n>")
 
-	-- fast navigation
-	vim.keymap.set("n", "<c-h>", "20zh")
-	vim.keymap.set("n", "<c-l>", "20zl")
-	vim.keymap.set({ "n", "v" }, "<S-ScrollWheelUp>", "5zh", { noremap = true, silent = true })
-	vim.keymap.set({ "n", "v" }, "<S-ScrollWheelDown>", "5zl", { noremap = true, silent = true })
-	vim.keymap.set("n", "<leader>h", "<c-w>h", { desc = "Move to left pane" })
-	vim.keymap.set("n", "<leader>j", "<c-w>j", { desc = "Move to lower pane" })
-	vim.keymap.set("n", "<leader>k", "<c-w>k", { desc = "Move to upper pane" })
-	vim.keymap.set("n", "<leader>l", "<c-w>l", { desc = "Move to right pane" })
 	vim.keymap.set("n", "gb", function()
 		-- `gb` for alt buffer
 		-- or `Xgb` where X is a number to go to X-th buffer
@@ -179,8 +189,6 @@ KEYMAPS.general = function()
 	end, { desc = "Delete buffer" })
 
 	-- plugins
-	vim.keymap.set("n", "<leader>r", "<cmd>GrugFar<cr>", { desc = "Search and replace all files" })
-
 	vim.keymap.set("n", "<leader>gp", "<cmd>Gitsigns preview_hunk_inline<cr>")
 	vim.keymap.set("n", "<leader>gr", "<cmd>Gitsigns reset_hunk<cr>")
 	vim.keymap.set("n", "<leader>gt", "<cmd>Gitsigns toggle_current_line_blame<cr>")
