@@ -221,9 +221,9 @@ end
 KEYMAPS.mini_files = function()
 	local mini_files = require("mini.files")
 	mini_files.config.mappings.close = "<esc>"
-	mini_files.config.mappings.synchronize = "="
-	mini_files.config.mappings.go_in = "<cr>"
-	mini_files.config.mappings.go_out = "-"
+	-- mini_files.config.mappings.synchronize = "="
+	mini_files.config.mappings.go_in_plus = "l"
+	-- mini_files.config.mappings.go_out = "-"
 	vim.keymap.set("n", "-", function()
 		if mini_files.get_explorer_state() == nil then
 			mini_files.open(vim.api.nvim_buf_get_name(0))
@@ -381,10 +381,11 @@ KEYMAPS.snacks = function()
 	end
 	-- Top Pickers & Explorer
 	vim.keymap.set("n", "<leader>f", function()
-		Snacks.picker.files({
-			-- layout = { fullscreen = false, preset = "dropdown" },
-			matcher = { frecency = true },
-		})
+		-- Snacks.picker.files({
+		-- 	-- layout = { fullscreen = false, preset = "dropdown" },
+		-- 	matcher = { frecency = true },
+		-- })
+		require("snacks-fff").find_files()
 	end, { desc = "Find Files" })
 	vim.keymap.set("n", "<leader>e", function()
 		Snacks.picker.explorer({
@@ -399,10 +400,13 @@ KEYMAPS.snacks = function()
 		})
 	end, { desc = "File Tree" })
 	vim.keymap.set("n", "<leader>/", function()
-		Snacks.picker.grep({
-			-- layout = { fullscreen = true, preset = "dropdown" },
+		-- Snacks.picker.grep({
+		-- 	-- layout = { fullscreen = true, preset = "dropdown" },
+		-- 	layout = { fullscreen = true },
+		-- 	hidden = true,
+		-- })
+		require("snacks-fff").live_grep({
 			layout = { fullscreen = true },
-			hidden = true,
 		})
 	end, { desc = "Grep" })
 	vim.keymap.set("n", "<leader><leader>", Snacks.picker.resume, { desc = "Resume last picker" })
@@ -432,7 +436,7 @@ KEYMAPS.snacks = function()
 	end, { desc = "Toggle Gitsigns & Git Diff base" })
 	-- Grep
 	vim.keymap.set({ "n", "x" }, "<leader>sw", function()
-		Snacks.picker.grep_word({
+		require("snacks-fff").grep_word({
 			-- layout = { fullscreen = true, preset = "dropdown" },
 			layout = { fullscreen = true },
 			hidden = true,

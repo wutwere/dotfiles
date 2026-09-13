@@ -27,7 +27,7 @@ return {
 			},
 			completion = {
 				trigger = {
-					show_on_insert = true,
+					-- show_on_insert = true,
 				},
 				documentation = {
 					auto_show = true,
@@ -65,7 +65,7 @@ return {
 					"markdown",
 				},
 				providers = {
-					lsp = { score_offset = 90, async = true },
+					lsp = { score_offset = 90, async = false },
 					lazydev = { name = "LazyDev", module = "lazydev.integrations.blink", score_offset = 91 },
 					markdown = {
 						name = "RenderMarkdown",

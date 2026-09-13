@@ -1,7 +1,6 @@
 local FLASH_INTERVAL = 80
 local STATUSLINE_BG = "#1f242d"
 local LOCATION_FLASH_BG = "#7ee787"
-local GIT_ICON = ""
 local LSP_ICON = ""
 
 local S = vim.diagnostic and vim.diagnostic.severity or { ERROR = 1, WARN = 2, INFO = 3, HINT = 4 }
@@ -17,7 +16,6 @@ local function set_highlights()
 		vim.api.nvim_set_hl(0, d.hl, { fg = vim.api.nvim_get_hl(0, { name = d.src }).fg, bg = STATUSLINE_BG })
 	end
 	vim.api.nvim_set_hl(0, "UserStatuslineText", { fg = "#ffffff", bg = STATUSLINE_BG })
-	vim.api.nvim_set_hl(0, "UserStatuslineModified", { fg = "#ffffff", bg = STATUSLINE_BG, bold = true })
 end
 
 local function hl(group, text)
@@ -30,6 +28,15 @@ end
 local function ctx()
 	local win = vim.g.statusline_winid or vim.api.nvim_get_current_win()
 	return win, vim.api.nvim_win_get_buf(win)
+end
+local function file_parts(bufnr)
+	local name = vim.api.nvim_buf_get_name(bufnr)
+	if name == "" or vim.bo[bufnr].filetype == "minifiles" then
+		return "[No Name]", ""
+	end
+	local filename = vim.fn.fnamemodify(name, ":t")
+	local path = vim.fn.fnamemodify(vim.fn.fnamemodify(name, ":h"), ":~:.")
+	return filename, path == "." and "" or path
 end
 
 local function filename_hl(win, bufnr)
@@ -68,14 +75,6 @@ local function get_lsp_status(bufnr)
 		end
 	end
 	return LSP_ICON .. " " .. table.concat(names, ", ")
-end
-
-local function get_branch(bufnr)
-	local head = vim.b[bufnr].gitsigns_head
-	if not head or head == "" then
-		return ""
-	end
-	return GIT_ICON .. " " .. head
 end
 
 local function right_status(bufnr)
@@ -157,41 +156,23 @@ return {
 			require("heirline").setup({
 				---@diagnostic disable-next-line: missing-fields
 				statusline = {
-					-- { provider = " " },
-					-- island({
-					-- 	{
-					-- 		provider = function()
-					-- 			return hl("UserStatuslineText", " " .. get_branch(select(2, ctx())) .. " ")
-					-- 		end,
-					-- 	},
-					-- }, {
-					-- 	condition = function()
-					-- 		return get_branch(select(2, ctx())) ~= ""
-					-- 	end,
-					-- }),
 					{ provider = "%=" },
 					island({
 						{
 							provider = function()
-								return " " .. right_status(select(2, ctx())) .. " "
+								local filename = file_parts(select(2, ctx()))
+								return " " .. filename .. " "
 							end,
-						},
-					}, {
-						condition = function()
-							return right_status(select(2, ctx())) ~= ""
-						end,
-					}),
-					{ provider = " " },
-					island({
-						{
-							provider = function()
-								local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(select(2, ctx())), ":~:.")
-								return " " .. (filename == "" and "[No Name]" or filename)
+							hl = function()
+								return filename_hl(ctx())
 							end,
 						},
 						{
+							condition = function()
+								return vim.bo[select(2, ctx())].modified
+							end,
 							provider = function()
-								return vim.bo[select(2, ctx())].modified and " " or ""
+								return " "
 							end,
 							hl = function()
 								local spec = vim.deepcopy(filename_hl(ctx()))
@@ -199,11 +180,27 @@ return {
 								return spec
 							end,
 						},
-						{ provider = " " },
-					}, {
-						hl = function()
-							return filename_hl(ctx())
-						end,
+						{
+							condition = function()
+								local _, path = file_parts(select(2, ctx()))
+								return path ~= ""
+							end,
+							provider = function()
+								local _, path = file_parts(select(2, ctx()))
+								return " " .. path
+							end,
+							hl = "NonText",
+						},
+						{
+							condition = function()
+								return right_status(select(2, ctx())) ~= ""
+							end,
+							provider = function()
+								local _, path = file_parts(select(2, ctx()))
+								local prefix = path == "" and " " or "  "
+								return prefix .. right_status(select(2, ctx())) .. " "
+							end,
+						},
 					}),
 					{ provider = "%=" },
 				},
