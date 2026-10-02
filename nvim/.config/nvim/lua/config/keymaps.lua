@@ -389,11 +389,10 @@ KEYMAPS.snacks = function()
 	end
 	-- Top Pickers & Explorer
 	vim.keymap.set("n", "<leader>f", function()
-		-- Snacks.picker.files({
-		-- 	-- layout = { fullscreen = false, preset = "dropdown" },
-		-- 	matcher = { frecency = true },
-		-- })
-		require("snacks-fff").find_files()
+		Snacks.picker.files({
+			-- layout = { fullscreen = false, preset = "dropdown" },
+			matcher = { frecency = true },
+		})
 	end, { desc = "Find Files" })
 	vim.keymap.set("n", "<leader>e", function()
 		Snacks.picker.explorer({
@@ -408,13 +407,10 @@ KEYMAPS.snacks = function()
 		})
 	end, { desc = "File Tree" })
 	vim.keymap.set("n", "<leader>/", function()
-		-- Snacks.picker.grep({
-		-- 	-- layout = { fullscreen = true, preset = "dropdown" },
-		-- 	layout = { fullscreen = true },
-		-- 	hidden = true,
-		-- })
-		require("snacks-fff").live_grep({
+		Snacks.picker.grep({
+			-- layout = { fullscreen = true, preset = "dropdown" },
 			layout = { fullscreen = true },
+			hidden = true,
 		})
 	end, { desc = "Grep" })
 	vim.keymap.set("n", "<leader><leader>", Snacks.picker.resume, { desc = "Resume last picker" })
@@ -444,7 +440,7 @@ KEYMAPS.snacks = function()
 	end, { desc = "Toggle Gitsigns & Git Diff base" })
 	-- Grep
 	vim.keymap.set({ "n", "x" }, "<leader>sw", function()
-		require("snacks-fff").grep_word({
+		Snacks.picker.grep_word({
 			-- layout = { fullscreen = true, preset = "dropdown" },
 			layout = { fullscreen = true },
 			hidden = true,
