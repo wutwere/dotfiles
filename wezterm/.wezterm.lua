@@ -56,11 +56,24 @@ config.keys = {
 
 local function addTmuxKey(want, tmux, mods)
 	mods = mods or "ALT"
+	local prefix = "b" -- herdr
+	-- herdr overrides
+	if want == "t" then
+		tmux = "c"
+	elseif want == "w" then
+		tmux = "x"
+	elseif want == "f" then
+		tmux = "g"
+	elseif tmux == "L" or tmux == "H" then
+		tmux = "v"
+	elseif tmux == "J" or tmux == "K" then
+		tmux = "-"
+	end
 	table.insert(config.keys, {
 		key = want,
 		mods = mods,
 		action = act.Multiple({
-			act.SendKey({ key = "Space", mods = "CTRL" }),
+			act.SendKey({ key = prefix, mods = "CTRL" }),
 			act.SendKey({ key = tmux }),
 		}),
 	})
