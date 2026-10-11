@@ -6,7 +6,7 @@
 2. Stow the dotfiles:
 
 ```sh
-stow --target ~ --restow `ls -d */`
+stow --no-folding --target ~ --restow `ls -d */`
 ```
 
 3. Bootstrap TPM for tmux.
@@ -56,3 +56,6 @@ Install if available:
 
 Yazi plugins:
 `ya pkg add Rolv-Apneseth/starship`
+
+Pi plugins:
+`pi update --extensions`
