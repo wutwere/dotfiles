@@ -18,6 +18,26 @@ KEYMAPS.general = function()
 	vim.keymap.set({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 
 	-- mouse
+	local scroll = { time = 0, direction = nil, interval = nil, win = nil }
+	for _, direction in ipairs({ "Up", "Down" }) do
+		local key = "<ScrollWheel" .. direction .. ">"
+		vim.keymap.set({ "n", "x", "i" }, key, function()
+			local now = vim.uv.hrtime() / 1e6
+			local elapsed = now - scroll.time
+			local win = vim.fn.getmousepos().winid
+			local lines = 1
+			if direction == scroll.direction and win == scroll.win and elapsed < 150 then
+				-- Smooth event timing to avoid abrupt jumps; 150ms = 1 line, 30ms = 6.
+				scroll.interval = scroll.interval and (scroll.interval * 0.5 + elapsed * 0.5) or elapsed
+				lines = math.min(6, math.max(1, math.floor(150 / math.max(scroll.interval, 1))))
+			else
+				scroll.interval = nil
+			end
+			scroll.time, scroll.direction, scroll.win = now, direction, win
+			vim.o.mousescroll = vim.o.mousescroll:gsub("ver:%d+", "ver:" .. lines)
+			return key
+		end, { expr = true, silent = true, desc = "Accelerated scroll " .. direction:lower() })
+	end
 	vim.keymap.set({ "n", "v" }, "<C-ScrollWheelUp>", "<c-y>", { noremap = true, silent = true })
 	vim.keymap.set({ "n", "v" }, "<C-ScrollWheelDown>", "<c-e>", { noremap = true, silent = true })
 	vim.keymap.set({ "n", "v" }, "<S-ScrollWheelUp>", "5zh", { noremap = true, silent = true })
@@ -62,7 +82,7 @@ KEYMAPS.general = function()
 			require("snacks").notify.error("No file path found.")
 		end
 	end, { desc = "Copy file path to clipboard" })
-	vim.keymap.set("v", "<leader>y", function()
+	vim.keymap.set("x", "<leader>y", function()
 		local path = vim.fn.expand("%:p")
 		if path ~= "" then
 			local home = os.getenv("HOME")
@@ -74,13 +94,17 @@ KEYMAPS.general = function()
 			if start_line > end_line then
 				start_line, end_line = end_line, start_line
 			end
-			local result = string.format("%s:%d-%d", path, start_line, end_line)
+			local selection = vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos("."), {
+				type = vim.fn.mode(),
+				exclusive = vim.o.selection == "exclusive",
+			})
+			local result = string.format("%s:%d-%d\n%s\n", path, start_line, end_line, table.concat(selection, "\n"))
 			vim.fn.setreg("+", result)
-			require("snacks").notify.notify("Copied file path to clipboard.")
+			require("snacks").notify.notify("Copied file path, line numbers, and selection to clipboard.")
 		else
 			require("snacks").notify.error("No file path found.")
 		end
-	end, { desc = "Copy file path with ~ and line numbers" })
+	end, { desc = "Copy file path, line numbers, and selected content" })
 
 	vim.keymap.set(
 		"x",
@@ -425,9 +449,15 @@ KEYMAPS.snacks = function()
 	vim.keymap.set("n", "<leader>gl", Snacks.picker.git_log, { desc = "Git Log" })
 	vim.keymap.set("n", "<leader>gL", Snacks.picker.git_log_line, { desc = "Git Log Line" })
 	vim.keymap.set("n", "<leader>gf", Snacks.picker.git_log_file, { desc = "Git Log File" })
+	vim.keymap.set("n", "<leader>gs", Snacks.picker.git_status, { desc = "Git Status" })
 	local git_base = nil
 	vim.keymap.set("n", "<leader>gd", function()
-		Snacks.picker.git_diff({ base = git_base, group = true })
+		-- Snacks.picker.git_diff({ base = git_base, group = true })
+		local cmd = "CodeDiff"
+		if git_base then
+			cmd = cmd .. " " .. git_base .. "..."
+		end
+		vim.cmd(cmd)
 	end, { desc = "Git Diff" })
 	vim.keymap.set("n", "<leader>gm", function()
 		if git_base == nil then

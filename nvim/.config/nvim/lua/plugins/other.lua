@@ -82,6 +82,25 @@ return {
 	{
 		"esmuellert/codediff.nvim",
 		cmd = "CodeDiff",
+		opts = {
+			diff = {
+				layout = "inline",
+				max_computation_time_ms = 100,
+				ignore_trim_whitespace = true,
+				cycle_hunks_across_files = true,
+				compact_context_lines = 5,
+				compact_sync_folds = false,
+			},
+			explorer = {
+				view_mode = "tree",
+				position = "bottom",
+				focus_on_select = true,
+				line_stats = {
+					enabled = true,
+					count_untracked = true,
+				},
+			},
+		},
 	},
 	{
 		"chomosuke/typst-preview.nvim",

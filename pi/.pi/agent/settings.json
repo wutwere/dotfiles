@@ -1,0 +1,10 @@
+{
+  "lastChangelogVersion": "1.1.0",
+  "packages": [
+    "npm:pi-context-view",
+    "npm:pi-web-access",
+    "npm:pi-compact-tools"
+  ],
+  "defaultProvider": "github-copilot",
+  "defaultModel": "gpt-6.1-sol"
+}
