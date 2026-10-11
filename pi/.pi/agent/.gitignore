@@ -1,0 +1,5 @@
+# Pi mixes configuration, credentials, caches, and session history here.
+# Track only explicitly approved configuration; keep new runtime files ignored.
+/*
+!/.gitignore
+!/settings.json

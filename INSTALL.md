@@ -6,7 +6,7 @@
 2. Stow the dotfiles:
 
 ```sh
-stow --no-folding --target ~ --restow `ls -d */`
+stow --target ~ --restow `ls -d */`
 ```
 
 3. Bootstrap TPM for tmux.
