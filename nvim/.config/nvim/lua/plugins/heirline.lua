@@ -202,6 +202,8 @@ return {
 							end,
 						},
 					}),
+					-- Preserve the filename/left side when the statusline overflows.
+					{ provider = "%<" },
 					{ provider = "%=" },
 				},
 				opts = {
