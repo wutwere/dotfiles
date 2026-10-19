@@ -258,4 +258,53 @@ return {
 	-- 		KEYMAPS.oil()
 	-- 	end,
 	-- },
+	{
+		"FylerOrg/fyler.nvim",
+		opts = {
+			-- kind = "split_left_most",
+			-- Configure the width of that window kind.
+			kind_presets = {
+				split_left_most = {
+					width = 35,
+				},
+			},
+			win_opts = {
+				nu = true,
+				rnu = true,
+				scl = "no",
+			},
+			extensions = {
+				-- Enable git extension
+				-- git = { enabled = true }
+				-- Enable git extension with right aligned icons
+				git = { enabled = true, inline = false },
+				-- Enable trash extension
+				trash = { enabled = true },
+				-- Enable watcher extension
+				watcher = { enabled = true },
+			},
+			integrations = {
+				-- Use mini.icons as the icon provider
+				icon = "nvim_web_devicons",
+			},
+			ui = {
+				-- indent_guides = true,
+				hidden_items = {
+					switches = {},
+				},
+			},
+			mappings = {
+				n = {
+					["<CR>"] = {
+						action = "select",
+						args = {
+							pick = false,
+							close = false,
+						},
+						desc = "Open file in editing window",
+					},
+				},
+			},
+		},
+	},
 }

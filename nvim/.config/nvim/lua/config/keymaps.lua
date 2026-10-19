@@ -419,16 +419,17 @@ KEYMAPS.snacks = function()
 		})
 	end, { desc = "Find Files" })
 	vim.keymap.set("n", "<leader>e", function()
-		Snacks.picker.explorer({
-			-- layout = {
-			-- 	preset = "default",
-			-- 	preview = true,
-			-- 	fullscreen = false,
-			-- },
-			auto_close = true,
-			hidden = true,
-			ignored = true,
-		})
+		-- Snacks.picker.explorer({
+		-- 	-- layout = {
+		-- 	-- 	preset = "default",
+		-- 	-- 	preview = true,
+		-- 	-- 	fullscreen = false,
+		-- 	-- },
+		-- 	-- auto_close = true,
+		-- 	hidden = true,
+		-- 	ignored = true,
+		-- })
+		vim.cmd("Fyler")
 	end, { desc = "File Tree" })
 	vim.keymap.set("n", "<leader>/", function()
 		Snacks.picker.grep({
