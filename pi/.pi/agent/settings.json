@@ -6,5 +6,6 @@
     "npm:pi-compact-tools"
   ],
   "defaultProvider": "github-copilot",
-  "defaultModel": "gpt-6.1-sol"
+  "defaultModel": "claude-opus-5.5",
+  "hideThinkingBlock": true
 }

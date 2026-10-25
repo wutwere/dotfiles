@@ -17,6 +17,12 @@ SAVEHIST=50000
 alias v=nvim
 alias lg=lazygit
 
+if [[ "$OSTYPE" == darwin* ]]; then
+  alias e='open .'
+elif [[ -n "$WSL_DISTRO_NAME" ]] || grep -qi microsoft /proc/version 2>/dev/null; then
+  alias e='explorer.exe .'
+fi
+
 ls() {
   if (( $+commands[eza] )); then
     command eza --icons --group-directories-first "$@"

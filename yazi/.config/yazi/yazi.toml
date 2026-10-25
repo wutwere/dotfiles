@@ -6,3 +6,24 @@ max_height = 3000
 linemode = "size_and_mtime"
 ratio = [1, 3, 4]
 show_hidden = true
+
+# Same as the defaults, but on WSL hand files to Windows via explorer.exe
+# instead of xdg-open.
+[opener]
+open = [
+	{ run = 'if [ -n "$WSL_DISTRO_NAME" ]; then for f in %s; do explorer.exe "$(wslpath -w "$f")"; done; else xdg-open %s1; fi', desc = "Open", for = "linux", orphan = true },
+	{ run = "open %s", desc = "Open", for = "macos" },
+	{ run = 'start "" %s1', desc = "Open", for = "windows", orphan = true },
+]
+play = [
+	{ run = 'if [ -n "$WSL_DISTRO_NAME" ]; then for f in %s; do explorer.exe "$(wslpath -w "$f")"; done; else xdg-open %s1; fi', desc = "Play", for = "linux", orphan = true },
+	{ run = "open %s", desc = "Play", for = "macos" },
+	{ run = 'start "" %s1', desc = "Play", for = "windows", orphan = true },
+	{ run = "mediainfo %s1; echo 'Press enter to exit'; read _", block = true, desc = "Show media info", for = "unix" },
+]
+reveal = [
+	{ run = 'if [ -n "$WSL_DISTRO_NAME" ]; then explorer.exe /select, "$(wslpath -w %s1)"; else xdg-open %d1; fi', desc = "Reveal", for = "linux", orphan = true },
+	{ run = "open -R %s1", desc = "Reveal", for = "macos" },
+	{ run = "explorer /select,%s1", desc = "Reveal", for = "windows", orphan = true },
+	{ run = "clear; exiftool %s1; echo 'Press enter to exit'; read _", desc = "Show EXIF", for = "unix", block = true },
+]

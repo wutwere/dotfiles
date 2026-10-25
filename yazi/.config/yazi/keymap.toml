@@ -1,0 +1,15 @@
+# System clipboard sync (vendored XYenon/clipboard.yazi + WSL support)
+[[mgr.prepend_keymap]]
+on   = "y"
+run  = [ "yank", "plugin system-clipboard -- --action=copy" ]
+desc = "Yank selected files (copy)"
+
+[[mgr.prepend_keymap]]
+on   = "x"
+run  = [ "yank --cut", "plugin system-clipboard -- --action=copy" ]
+desc = "Yank selected files (cut)"
+
+[[mgr.prepend_keymap]]
+on   = "<C-p>"
+run  = "plugin system-clipboard -- --action=paste"
+desc = "Paste files from system clipboard"
