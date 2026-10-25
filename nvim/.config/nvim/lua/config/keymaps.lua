@@ -17,31 +17,59 @@ KEYMAPS.general = function()
 	vim.keymap.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 	vim.keymap.set({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 
-	-- mouse
-	local scroll = { time = 0, direction = nil, interval = nil, win = nil }
-	for _, direction in ipairs({ "Up", "Down" }) do
-		local key = "<ScrollWheel" .. direction .. ">"
-		vim.keymap.set({ "n", "x", "i" }, key, function()
+	-- mouse: accelerated scrolling. Each wheel event scrolls `base * speed`
+	-- lines/columns, where speed ramps continuously from 1x (slow ticks) to
+	-- `max`x (fast spins). Fractional amounts carry over to the next event, so
+	-- the speed changes smoothly instead of jumping between whole steps.
+	local function accel_scroller(axis, base, max)
+		local s = { time = 0, key = nil, win = nil, interval = nil, carry = 0, amount = nil }
+		local RESET_MS = 150 -- ticks further apart than this start over at 1x
+		return function(key)
 			local now = vim.uv.hrtime() / 1e6
-			local elapsed = now - scroll.time
+			local elapsed = now - s.time
 			local win = vim.fn.getmousepos().winid
-			local lines = 1
-			if direction == scroll.direction and win == scroll.win and elapsed < 150 then
-				-- Smooth event timing to avoid abrupt jumps; 150ms = 1 line, 30ms = 6.
-				scroll.interval = scroll.interval and (scroll.interval * 0.5 + elapsed * 0.5) or elapsed
-				lines = math.min(6, math.max(1, math.floor(150 / math.max(scroll.interval, 1))))
+			local speed = 1
+			if key == s.key and win == s.win and elapsed < RESET_MS then
+				-- Light smoothing: react quickly to speed changes but ignore jitter.
+				s.interval = s.interval and (s.interval * 0.3 + elapsed * 0.7) or elapsed
+				-- 150ms apart = 1x, 75ms = 2x, 25ms = 6x
+				speed = math.min(max, math.max(1, RESET_MS / math.max(s.interval, 1)))
 			else
-				scroll.interval = nil
+				s.interval, s.carry = nil, 0
 			end
-			scroll.time, scroll.direction, scroll.win = now, direction, win
-			vim.o.mousescroll = vim.o.mousescroll:gsub("ver:%d+", "ver:" .. lines)
+			s.time, s.key, s.win = now, key, win
+
+			local exact = base * speed + s.carry
+			local amount = math.max(1, math.floor(exact))
+			s.carry = exact - amount
+			-- Only touch the option when needed; `noautocmd` skips OptionSet handlers.
+			if amount ~= s.amount then
+				s.amount = amount
+				local value = vim.o.mousescroll:gsub(axis .. ":%d+", axis .. ":" .. amount)
+				vim.cmd("noautocmd set mousescroll=" .. value)
+			end
 			return key
-		end, { expr = true, silent = true, desc = "Accelerated scroll " .. direction:lower() })
+		end
+	end
+
+	local vertical = accel_scroller("ver", 1, 6)
+	local horizontal = accel_scroller("hor", 3, 6)
+	local wheel = {
+		["<ScrollWheelUp>"] = { vertical, "<ScrollWheelUp>" },
+		["<ScrollWheelDown>"] = { vertical, "<ScrollWheelDown>" },
+		-- Shift+wheel and native horizontal wheel/trackpad both scroll sideways.
+		["<S-ScrollWheelUp>"] = { horizontal, "<ScrollWheelLeft>" },
+		["<S-ScrollWheelDown>"] = { horizontal, "<ScrollWheelRight>" },
+		["<ScrollWheelLeft>"] = { horizontal, "<ScrollWheelLeft>" },
+		["<ScrollWheelRight>"] = { horizontal, "<ScrollWheelRight>" },
+	}
+	for lhs, spec in pairs(wheel) do
+		vim.keymap.set({ "n", "x", "i" }, lhs, function()
+			return spec[1](spec[2])
+		end, { expr = true, silent = true, desc = "Accelerated scroll" })
 	end
 	vim.keymap.set({ "n", "v" }, "<C-ScrollWheelUp>", "<c-y>", { noremap = true, silent = true })
 	vim.keymap.set({ "n", "v" }, "<C-ScrollWheelDown>", "<c-e>", { noremap = true, silent = true })
-	vim.keymap.set({ "n", "v" }, "<S-ScrollWheelUp>", "5zh", { noremap = true, silent = true })
-	vim.keymap.set({ "n", "v" }, "<S-ScrollWheelDown>", "5zl", { noremap = true, silent = true })
 	vim.keymap.set("n", "<a-left>", "<c-o>", { noremap = true })
 	vim.keymap.set("n", "<a-right>", "<c-i>", { noremap = true })
 

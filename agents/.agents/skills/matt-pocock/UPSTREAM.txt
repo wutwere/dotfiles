@@ -1,3 +1,0 @@
-Source: https://github.com/mattpocock/skills
-Commit: 49dd158d1076134a641b33efb035946536778336
-Included: skills/engineering and skills/productivity, copied unchanged.
