@@ -48,6 +48,11 @@ local get_yanked_paths = ya.sync(function(state)
 	return paths
 end)
 
+---@return integer
+local yanked_count = ya.sync(function()
+	return #cx.yanked
+end)
+
 ---@param state table
 ---@return string
 local get_cwd = ya.sync(function(state)
@@ -69,7 +74,13 @@ function M:entry(job)
 	self.notify_unknown_display_server = to_boolean(job.args.notify_unknown_display_server)
 	self.disable_paste_notifications = to_boolean(job.args.disable_paste_notifications)
 
-	if job.args.action == "copy" then
+	if job.args.action == "smart-paste" then
+		-- Prefer files yanked inside yazi; otherwise paste from the system clipboard.
+		if yanked_count() > 0 then
+			return ya.emit("paste", {})
+		end
+		return self:paste()
+	elseif job.args.action == "copy" then
 		return self:copy()
 	elseif job.args.action == "paste" then
 		return self:paste()
@@ -327,6 +338,17 @@ function M:paste()
 		return self:notify_error("Paste failed: " .. err)
 	end
 	if not paths or #paths == 0 then
+		if self.paste_image then
+			local name, img_err = self:paste_image(get_cwd())
+			if img_err then
+				return self:notify_error("Paste failed: " .. img_err)
+			elseif name then
+				if not self.disable_paste_notifications then
+					ya.notify({ title = "Clipboard", content = "Pasted image " .. name, timeout = 3, level = "info" })
+				end
+				return
+			end
+		end
 		return self:notify_error("No files in clipboard")
 	end
 
@@ -681,8 +703,31 @@ if os.getenv("WSL_DISTRO_NAME") then
 		return [[b64=$(for p; do wslpath -w "$p"; done | base64 -w0) && ]] .. COPY, nil
 	end
 
+	-- Save a clipboard image (e.g. a screenshot) into `cwd` as a PNG.
+	-- Returns the file name, or nil if the clipboard holds no image.
+	M.paste_image = function(self, cwd)
+		local name = os.date("screenshot-%Y%m%d-%H%M%S")
+		local dest = tostring(Url(cwd):join(name .. ".png"))
+		if fs.cha(Url(dest)) then
+			dest = self:unique_name(Url(cwd), name .. ".png")
+		end
+		local script = [[b64=$(wslpath -w "$1" | tr -d '\n' | base64 -w0) && ]]
+			.. PS
+			.. [[ "Add-Type -AssemblyName System.Windows.Forms, System.Drawing;
+\$img = [System.Windows.Forms.Clipboard]::GetImage();
+if (\$img) { \$img.Save([Text.Encoding]::UTF8.GetString([Convert]::FromBase64String('$b64')), [System.Drawing.Imaging.ImageFormat]::Png); 'saved' }"]]
+		local output, err = self:run_command("sh", { "-c", (script:gsub("\n", " ")), "--", dest })
+		if err then
+			return nil, err
+		end
+		if not output.stdout:find("saved") then
+			return nil, nil
+		end
+		return dest:match("[^/]+$"), nil
+	end
+
 	M.paste_linux = function(self)
-		local script = PASTE .. [[ | tr -d '\r' | while IFS= read -r p; do [ -n "$p" ] && wslpath -u "$p"; done]]
+		local script = PASTE .. [[ | tr -d '\r' | while IFS= read -r p; do if [ -n "$p" ]; then wslpath -u "$p"; fi; done]]
 		local output, err = self:run_command("sh", { "-c", script })
 		if err then
 			return nil, err

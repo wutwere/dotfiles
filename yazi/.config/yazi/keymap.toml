@@ -12,4 +12,11 @@ desc = "Yank selected files (cut)"
 [[mgr.prepend_keymap]]
 on   = "<C-p>"
 run  = "plugin system-clipboard -- --action=paste"
-desc = "Paste files from system clipboard"
+desc = "Paste from system clipboard (files or image)"
+
+# p: paste files yanked in yazi; if none, paste from the system clipboard
+# (files, or an image such as a screenshot, saved as a PNG)
+[[mgr.prepend_keymap]]
+on   = "p"
+run  = "plugin system-clipboard -- --action=smart-paste"
+desc = "Paste (yazi yank, else system clipboard)"
