@@ -3,7 +3,8 @@
   "packages": [
     "npm:pi-context-view",
     "npm:pi-web-access",
-    "npm:pi-compact-tools"
+    "npm:pi-compact-tools",
+    "npm:@deathbeam/pi-hashline"
   ],
   "defaultProvider": "github-copilot",
   "defaultModel": "claude-opus-5.5",
