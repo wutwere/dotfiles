@@ -1,7 +1,7 @@
 shell-integration = none
 
 theme = Monokai Remastered
-# background = #0d1118
+# background = #0D1118
 background = #000000
 
 mouse-hide-while-typing = true
@@ -9,13 +9,14 @@ mouse-hide-while-typing = true
 window-decoration = auto
 macos-titlebar-style = transparent
 
-font-family = ComicShannsMono Nerd Font
+# font-family = ComicShannsMono Nerd Font
+font-family = GeistMono Nerd Font Mono
 # font-family = JetBrainsMono Nerd Font Mono
 # font-family = Monaspace Argon
 # font-feature = calt,liga,dlig,ss01,ss02,ss03,ss04,ss05,ss06,ss07,ss08
 # font-family-italic = Monaspace Radon
 font-size = 15
-adjust-cell-height = 20%
+adjust-cell-height = 0%
 # adjust-cell-width = 0%
 # 0 to 255
 font-thicken-strength = 30
@@ -34,62 +35,59 @@ copy-on-select = clipboard
 
 # custom-shader = cursor_warp.glsl
 
-### TMUX BINDS
+### HERDR BINDS
 
 # switch tabs (aka windows)
-keybind = super+1=text:\x001
-keybind = super+2=text:\x002
-keybind = super+3=text:\x003
-keybind = super+4=text:\x004
-keybind = super+5=text:\x005
-keybind = super+6=text:\x006
-keybind = super+7=text:\x007
-keybind = super+8=text:\x008
-keybind = super+9=text:\x009
+keybind = super+1=text:\x021
+keybind = super+2=text:\x022
+keybind = super+3=text:\x023
+keybind = super+4=text:\x024
+keybind = super+5=text:\x025
+keybind = super+6=text:\x026
+keybind = super+7=text:\x027
+keybind = super+8=text:\x028
+keybind = super+9=text:\x029
 # new ghostty version or something needs this
-keybind = super+digit_1=text:\x001
-keybind = super+digit_2=text:\x002
-keybind = super+digit_3=text:\x003
-keybind = super+digit_4=text:\x004
-keybind = super+digit_5=text:\x005
-keybind = super+digit_6=text:\x006
-keybind = super+digit_7=text:\x007
-keybind = super+digit_8=text:\x008
-keybind = super+digit_9=text:\x009
+keybind = super+digit_1=text:\x021
+keybind = super+digit_2=text:\x022
+keybind = super+digit_3=text:\x023
+keybind = super+digit_4=text:\x024
+keybind = super+digit_5=text:\x025
+keybind = super+digit_6=text:\x026
+keybind = super+digit_7=text:\x027
+keybind = super+digit_8=text:\x028
+keybind = super+digit_9=text:\x029
 
 # switch panes
-keybind = super+h=text:\x00h
-keybind = super+j=text:\x00j
-keybind = super+k=text:\x00k
-keybind = super+l=text:\x00l
+keybind = super+h=text:\x02h
+keybind = super+j=text:\x02j
+keybind = super+k=text:\x02k
+keybind = super+l=text:\x02l
 
 # split panes
-keybind = super+shift+h=text:\x00H
-keybind = super+shift+j=text:\x00J
-keybind = super+shift+k=text:\x00K
-keybind = super+shift+l=text:\x00L
-keybind = super+x=text:\x00x
+keybind = super+shift+h=text:\x02v
+keybind = super+shift+j=text:\x02-
+keybind = super+shift+k=text:\x02-
+keybind = super+shift+l=text:\x02v
+keybind = super+x=text:\x02x
 
 # create tab
-keybind = super+t=text:\x00t
+keybind = super+t=text:\x02c
 
 # close tab
-keybind = super+w=text:\x00w
+keybind = super+w=text:\x02x
 
 # open sessions
-keybind = super+s=text:\x00s
+keybind = super+s=text:\x02s
 
 # open sessionizer
-keybind = super+f=text:\x00f
+keybind = super+f=text:\x02g
 
 # go to last session
-keybind = super+b=text:\x00b
+keybind = super+b=text:\x02b
 
 # select mode
-keybind = super+[=text:\x00[
-keybind = super+u=text:\x00U
-keybind = super+d=text:\x00D
-keybind = super+/=text:\x00/
-
-# stripe shift+enter for newline
-keybind = shift+enter=text:\x1b\r
+keybind = super+[=text:\x02[
+keybind = super+u=text:\x02U
+keybind = super+d=text:\x02D
+keybind = super+/=text:\x02/
