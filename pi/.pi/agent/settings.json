@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "1.1.0",
+  "lastChangelogVersion": "1.4.0",
   "packages": [
     "npm:pi-context-view",
     "npm:pi-web-access",
@@ -8,5 +8,6 @@
   ],
   "defaultProvider": "github-copilot",
   "defaultModel": "claude-opus-5.5",
-  "hideThinkingBlock": true
+  "hideThinkingBlock": true,
+  "theme": "system"
 }

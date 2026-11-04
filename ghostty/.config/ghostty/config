@@ -81,7 +81,7 @@ keybind = super+w=text:\x02x
 keybind = super+s=text:\x02s
 
 # open sessionizer
-keybind = super+f=text:\x02g
+keybind = super+f=text:\x02[?
 
 # go to last session
 keybind = super+b=text:\x02b

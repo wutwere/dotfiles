@@ -7,14 +7,23 @@ local home = vim.fn.expand("~")
 ---@type table<string, UserLspServerConfig>
 local server_overrides = {
 	luau_lsp = {
-		cmd = {
-			"luau-lsp",
-			"lsp",
-			"--definitions=@roblox=" .. home .. "/.luau-lsp/globalTypes.d.luau",
-			"--docs=" .. home .. "/.luau-lsp/en-us.json",
-			-- "--definitions=@zune=~/.zune/typedefs/global/zune.d.luau",
-			-- "--docs=~/.zune/typedefs/global/zune.d.json",
-		},
+		-- Prefer the project's pinned Roblox types (e.g. .cache/roblox.d.luau from `mise run install`)
+		-- so editor diagnostics match the project's typecheck; fall back to the global copy.
+		cmd = function(dispatchers, config)
+			local defs = home .. "/.luau-lsp/globalTypes.d.luau"
+			local project_defs = config.root_dir and (config.root_dir .. "/.cache/roblox.d.luau")
+			if project_defs and vim.uv.fs_stat(project_defs) then
+				defs = project_defs
+			end
+			return vim.lsp.rpc.start({
+				"luau-lsp",
+				"lsp",
+				"--definitions=@roblox=" .. defs,
+				"--docs=" .. home .. "/.luau-lsp/en-us.json",
+				-- "--definitions=@zune=~/.zune/typedefs/global/zune.d.luau",
+				-- "--docs=~/.zune/typedefs/global/zune.d.json",
+			}, dispatchers, { cwd = config.cmd_cwd, env = config.cmd_env })
+		end,
 		settings = {
 			["luau-lsp"] = {
 				completion = {

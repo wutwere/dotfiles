@@ -12,7 +12,7 @@ vim.opt.breakindent = true
 vim.opt.clipboard = "unnamedplus" -- on windows, install win32yank
 -- vim.opt.cmdheight = 0
 vim.opt.confirm = true
-vim.opt.cursorline = true
+-- vim.opt.cursorline = true
 -- vim.opt.expandtab = true
 vim.opt.fillchars = { eob = " ", fold = " ", foldopen = "", foldsep = " ", foldinner = " ", foldclose = "" }
 vim.opt.ignorecase = true
