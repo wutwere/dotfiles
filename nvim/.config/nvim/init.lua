@@ -28,7 +28,8 @@ vim.opt.shiftwidth = 4
 vim.opt.showbreak = "↪ "
 vim.opt.showcmd = false
 vim.opt.sidescrolloff = 0
-vim.opt.signcolumn = "auto"
+vim.opt.signcolumn = "no" -- signs replaced by the git bar in config.statuscolumn
+vim.opt.statuscolumn = "%!v:lua.require'config.statuscolumn'.render()"
 vim.opt.smartcase = true
 vim.opt.smartindent = true
 vim.opt.splitbelow = true
@@ -97,7 +98,26 @@ vim.diagnostic.config({
 	signs = false,
 })
 
--- vim.cmd("colorscheme rose-pine-moon")
--- vim.cmd("colorscheme monokai-pro-classic")
--- vim.cmd("colorscheme gruvbox")
--- vim.cmd.colorscheme("github_dark_default")
+vim.cmd.colorscheme("hearth")
+
+-- Subtly highlight a tab character under the cursor (listchars draws tabs blank).
+do
+	local ns = vim.api.nvim_create_namespace("cursor_tab")
+	local function set_hl()
+		vim.api.nvim_set_hl(0, "CursorTab", { link = "CursorLine", default = true })
+	end
+	set_hl()
+	vim.api.nvim_create_autocmd("ColorScheme", { callback = set_hl })
+	vim.api.nvim_create_autocmd({ "CursorMoved", "InsertEnter", "BufLeave", "WinLeave" }, {
+		callback = function(ev)
+			vim.api.nvim_buf_clear_namespace(ev.buf, ns, 0, -1)
+			if ev.event ~= "CursorMoved" then
+				return
+			end
+			local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+			if vim.api.nvim_get_current_line():sub(col + 1, col + 1) == "\t" then
+				vim.api.nvim_buf_set_extmark(ev.buf, ns, row - 1, col, { end_col = col + 1, hl_group = "CursorTab" })
+			end
+		end,
+	})
+end

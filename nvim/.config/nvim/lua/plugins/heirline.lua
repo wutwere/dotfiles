@@ -1,125 +1,80 @@
-local FLASH_INTERVAL = 80
-local STATUSLINE_BG = "#1f242d"
-local LOCATION_FLASH_BG = "#7ee787"
-local LSP_ICON = ""
+-- Per-window statusline drawn as a thin rule (fillchars stl/stlnc) with the
+-- file's state set into it. Non-file windows get the bare rule.
+-- Colors come from highlight groups, so any colorscheme works.
 
-local S = vim.diagnostic and vim.diagnostic.severity or { ERROR = 1, WARN = 2, INFO = 3, HINT = 4 }
+local FLASH_INTERVAL = 80
+local LSP_ICON = ""
+
+local S = vim.diagnostic.severity
 local DIAGNOSTICS = {
-	{ icon = "", severity = S.ERROR, hl = "UserStatuslineDiagError", src = "DiagnosticError" },
-	{ icon = "", severity = S.WARN, hl = "UserStatuslineDiagWarn", src = "DiagnosticWarn" },
-	{ icon = "", severity = S.INFO, hl = "UserStatuslineDiagInfo", src = "DiagnosticInfo" },
-	{ icon = "󰌵", severity = S.HINT, hl = "UserStatuslineDiagHint", src = "DiagnosticHint" },
+	{ icon = "", severity = S.ERROR, src = "DiagnosticError" },
+	{ icon = "", severity = S.WARN, src = "DiagnosticWarn" },
+	{ icon = "", severity = S.INFO, src = "DiagnosticInfo" },
+	{ icon = "󰌵", severity = S.HINT, src = "DiagnosticHint" },
 }
 
-local function set_highlights()
+-- Colors resolved from the current colorscheme, refreshed on ColorScheme.
+local C = {}
+local function refresh_colors()
+	local function get(name, attr)
+		local v = vim.api.nvim_get_hl(0, { name = name, link = false })[attr or "fg"]
+		return v and string.format("#%06x", v)
+	end
+	C.text = get("Normal")
+	C.dim = get("Comment")
+	C.modified = get("Changed") or get("DiagnosticWarn")
+	C.warn = get("DiagnosticWarn")
+	C.error = get("DiagnosticError")
+	C.flash_fg = get("IncSearch")
+	C.flash_bg = get("IncSearch", "bg")
 	for _, d in ipairs(DIAGNOSTICS) do
-		vim.api.nvim_set_hl(0, d.hl, { fg = vim.api.nvim_get_hl(0, { name = d.src }).fg, bg = STATUSLINE_BG })
+		C[d.src] = get(d.src)
 	end
-	vim.api.nvim_set_hl(0, "UserStatuslineText", { fg = "#ffffff", bg = STATUSLINE_BG })
-end
-
-local function hl(group, text)
-	if text == "" then
-		return ""
-	end
-	return "%#" .. group .. "#" .. text
 end
 
 local function ctx()
 	local win = vim.g.statusline_winid or vim.api.nvim_get_current_win()
 	return win, vim.api.nvim_win_get_buf(win)
 end
-local function file_parts(bufnr)
-	local name = vim.api.nvim_buf_get_name(bufnr)
-	if name == "" or vim.bo[bufnr].filetype == "minifiles" then
-		return "[No Name]", ""
-	end
-	local filename = vim.fn.fnamemodify(name, ":t")
-	local path = vim.fn.fnamemodify(vim.fn.fnamemodify(name, ":h"), ":~:.")
-	return filename, path == "." and "" or path
+
+local function buf()
+	return select(2, ctx())
 end
 
-local function filename_hl(win, bufnr)
+-- While a statusline is drawn, the current window is the one being drawn and
+-- g:actual_curwin is the window that really has focus.
+local function is_active()
+	return vim.api.nvim_get_current_win() == tonumber(vim.g.actual_curwin)
+end
+
+local function is_file(bufnr)
+	return vim.bo[bufnr].buftype == "" and vim.api.nvim_buf_get_name(bufnr) ~= ""
+end
+
+local function rule_hl()
+	return is_active() and "StatusLine" or "StatusLineNC"
+end
+
+local function name_hl()
+	local win, bufnr = ctx()
 	local has_errors = vim.diagnostic.count(bufnr)[S.ERROR] ~= nil
 	if vim.w[win]._heirline_flash then
-		return { fg = "#000000", bg = LOCATION_FLASH_BG, bold = has_errors }
+		return { fg = C.flash_fg, bg = C.flash_bg, bold = true }
 	end
 	if has_errors then
-		return { fg = "#ff0000", bg = STATUSLINE_BG, bold = true, undercurl = true, sp = "#F85149" }
+		return { fg = C.error, bold = true, undercurl = true, sp = C.error }
 	end
-	return { fg = "#ffffff", bg = STATUSLINE_BG }
-end
-
-local function get_diagnostics(bufnr)
-	local counts = vim.diagnostic.count(bufnr)
-	local parts = {}
-	for _, d in ipairs(DIAGNOSTICS) do
-		local count = counts[d.severity] or 0
-		if count > 0 then
-			table.insert(parts, hl(d.hl, d.icon .. " " .. count))
-		end
+	if is_active() then
+		return { fg = C.text, bold = true }
 	end
-	return table.concat(parts, " ")
+	return { fg = C.dim }
 end
 
-local function get_lsp_status(bufnr)
-	local clients = vim.lsp.get_clients({ bufnr = bufnr })
-	if #clients == 0 then
-		return ""
-	end
-	local seen, names = {}, {}
-	for _, c in ipairs(clients) do
-		if not seen[c.name] then
-			seen[c.name] = true
-			names[#names + 1] = c.name
-		end
-	end
-	return LSP_ICON .. " " .. table.concat(names, ", ")
-end
-
-local function right_status(bufnr)
-	local sep = hl("UserStatuslineText", "  ")
-	local parts = vim.tbl_filter(function(s)
-		return s ~= ""
-	end, {
-		hl("UserStatuslineText", get_lsp_status(bufnr)),
-		get_diagnostics(bufnr),
-	})
-	return table.concat(parts, sep)
-end
-
-local function island_edge_hl(spec)
-	local island_hl = type(spec) == "function" and spec() or spec
-	return { fg = island_hl.bg or STATUSLINE_BG }
-end
-
-local function island(components, opts)
-	opts = opts or {}
-	local body = { hl = opts.hl or { bg = STATUSLINE_BG } }
-	vim.list_extend(body, components)
-	return {
-		condition = opts.condition,
-		{
-			provider = opts.left_sep or "",
-			hl = function()
-				return island_edge_hl(body.hl)
-			end,
-		},
-		body,
-		{
-			provider = opts.right_sep or "",
-			hl = function()
-				return island_edge_hl(body.hl)
-			end,
-		},
-	}
-end
-
-local function flash(buf, win)
+local function flash(bufnr, win)
 	if win == -1 or not vim.api.nvim_win_is_valid(win) or vim.api.nvim_win_get_config(win).relative ~= "" then
 		return
 	end
-	if vim.bo[buf].buftype ~= "" or vim.bo[buf].filetype == "oil" then
+	if not is_file(bufnr) then
 		return
 	end
 
@@ -138,14 +93,144 @@ local function flash(buf, win)
 	end
 end
 
+local Rule = { provider = "──", hl = rule_hl }
+
+local Icon = {
+	provider = function()
+		local icon = require("nvim-web-devicons").get_icon(vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf()), ":t"), nil, { default = true })
+		return " " .. icon
+	end,
+	hl = function()
+		local _, color = require("nvim-web-devicons").get_icon_color(vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf()), ":t"), nil, {
+			default = true,
+		})
+		return { fg = is_active() and color or C.dim }
+	end,
+}
+
+local Name = {
+	provider = function()
+		return " " .. vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf()), ":t") .. " "
+	end,
+	hl = name_hl,
+}
+
+local Modified = {
+	condition = function()
+		return vim.bo[buf()].modified
+	end,
+	provider = "● ",
+	hl = function()
+		return { fg = C.modified }
+	end,
+}
+
+local Readonly = {
+	condition = function()
+		return vim.bo[buf()].readonly or not vim.bo[buf()].modifiable
+	end,
+	provider = " ",
+	hl = function()
+		return { fg = C.dim }
+	end,
+}
+
+local Path = {
+	provider = function()
+		local path = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf()), ":~:.:h")
+		return path ~= "." and path .. " " or ""
+	end,
+	hl = function()
+		return { fg = C.dim }
+	end,
+}
+
+-- Only shown when unusual: CRLF line endings or a non-UTF-8 encoding.
+local Format = {
+	provider = function()
+		local bo = vim.bo[buf()]
+		local parts = {}
+		if bo.fileformat ~= "unix" then
+			parts[#parts + 1] = bo.fileformat
+		end
+		if bo.fileencoding ~= "" and bo.fileencoding ~= "utf-8" then
+			parts[#parts + 1] = bo.fileencoding
+		end
+		return #parts > 0 and table.concat(parts, " ") .. " " or ""
+	end,
+	hl = function()
+		return { fg = C.warn }
+	end,
+}
+
+local Diagnostics = {
+	init = function(self)
+		self.counts = vim.diagnostic.count(buf())
+	end,
+	condition = function()
+		return next(vim.diagnostic.count(buf())) ~= nil
+	end,
+	{ provider = " " },
+	vim.tbl_map(function(d)
+		return {
+			provider = function(self)
+				local n = self.counts[d.severity]
+				return n and d.icon .. " " .. n .. " " or ""
+			end,
+			hl = function()
+				return { fg = C[d.src] }
+			end,
+		}
+	end, DIAGNOSTICS),
+}
+
+local Lsp = {
+	condition = function()
+		return is_active() and #vim.lsp.get_clients({ bufnr = buf() }) > 0
+	end,
+	provider = function()
+		local seen, names = {}, {}
+		for _, client in ipairs(vim.lsp.get_clients({ bufnr = buf() })) do
+			if not seen[client.name] then
+				seen[client.name] = true
+				names[#names + 1] = client.name
+			end
+		end
+		return " " .. LSP_ICON .. " " .. table.concat(names, ", ") .. " "
+	end,
+	hl = function()
+		return { fg = C.dim }
+	end,
+}
+
+local FileStatusline = {
+	condition = function()
+		return is_file(buf())
+	end,
+	Rule,
+	Icon,
+	Name,
+	Modified,
+	Readonly,
+	-- Truncate the path first when the window is narrow.
+	{ provider = "%<" },
+	Path,
+	Format,
+	{ provider = "%=", hl = rule_hl },
+	Diagnostics,
+	Lsp,
+	Rule,
+}
+
+local BareStatusline = { provider = "%=", hl = rule_hl }
+
 return {
 	{
 		"rebelot/heirline.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
-			set_highlights()
-
-			vim.api.nvim_create_autocmd("ColorScheme", { callback = set_highlights })
+			refresh_colors()
+			vim.api.nvim_create_autocmd("ColorScheme", { callback = refresh_colors })
 
 			vim.api.nvim_create_autocmd("BufWinEnter", {
 				callback = function(args)
@@ -153,67 +238,13 @@ return {
 				end,
 			})
 
+			vim.opt.laststatus = 2
+			vim.opt.fillchars:append({ stl = "─", stlnc = "─" })
+
 			require("heirline").setup({
 				---@diagnostic disable-next-line: missing-fields
-				statusline = {
-					{ provider = "%=" },
-					island({
-						{
-							provider = function()
-								local filename = file_parts(select(2, ctx()))
-								return " " .. filename .. " "
-							end,
-							hl = function()
-								return filename_hl(ctx())
-							end,
-						},
-						{
-							condition = function()
-								return vim.bo[select(2, ctx())].modified
-							end,
-							provider = function()
-								return " "
-							end,
-							hl = function()
-								local spec = vim.deepcopy(filename_hl(ctx()))
-								spec.fg = "#888888"
-								return spec
-							end,
-						},
-						{
-							condition = function()
-								local _, path = file_parts(select(2, ctx()))
-								return path ~= ""
-							end,
-							provider = function()
-								local _, path = file_parts(select(2, ctx()))
-								return " " .. path
-							end,
-							hl = "NonText",
-						},
-						{
-							condition = function()
-								return right_status(select(2, ctx())) ~= ""
-							end,
-							provider = function()
-								local _, path = file_parts(select(2, ctx()))
-								local prefix = path == "" and " " or "  "
-								return prefix .. right_status(select(2, ctx())) .. " "
-							end,
-						},
-					}),
-					-- Preserve the filename/left side when the statusline overflows.
-					{ provider = "%<" },
-					{ provider = "%=" },
-				},
-				opts = {
-					disable_winbar_cb = function(args)
-						return vim.api.nvim_win_get_config(args.winid).relative ~= ""
-					end,
-				},
+				statusline = { fallthrough = false, FileStatusline, BareStatusline },
 			})
-
-			vim.opt.laststatus = 3
 		end,
 	},
 }

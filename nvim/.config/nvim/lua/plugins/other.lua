@@ -20,12 +20,38 @@ return {
 	-- },
 	{ "lewis6991/gitsigns.nvim", opts = { current_line_blame_opts = { delay = 0 } } },
 	{
-		"lewis6991/satellite.nvim",
-		opts = { current_only = true, excluded_filetypes = { "snacks_picker_list" } },
-		init = function()
-			vim.api.nvim_create_autocmd("BufWinEnter", {
+		-- Zoomed-out view of the file: <leader>M opens it focused, move to scroll the
+		-- source, <CR> to jump there, <Esc> to go back. Closes when it loses focus.
+		"echasnovski/mini.map",
+		keys = {
+			{
+				"<leader>M",
+				function()
+					local map = require("mini.map")
+					map.open()
+					-- open() renders on the next tick from the current window; focusing
+					-- the map before that leaves it empty.
+					vim.schedule(map.toggle_focus)
+				end,
+				desc = "Minimap",
+			},
+		},
+		config = function()
+			local map = require("mini.map")
+			map.setup({
+				integrations = {
+					map.gen_integration.builtin_search(),
+					map.gen_integration.diagnostic(),
+					map.gen_integration.gitsigns(),
+				},
+				symbols = { encode = map.gen_encode_symbols.dot("4x2") },
+				window = { width = 24, winblend = 0, show_integration_count = false },
+			})
+			vim.api.nvim_create_autocmd("WinLeave", {
 				callback = function()
-					vim.cmd(":SatelliteRefresh")
+					if vim.bo.filetype == "minimap" then
+						vim.schedule(map.close)
+					end
 				end,
 			})
 		end,

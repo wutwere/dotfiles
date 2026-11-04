@@ -3,8 +3,7 @@ return {
 		"tim3nd/github-nvim-theme",
 		branch = "feat-support_blink_cmp",
 		name = "github-theme",
-		lazy = false, -- make sure we load this during startup if it is your main colorscheme
-		priority = 1000, -- make sure to load this before all the other start plugins
+		lazy = true, -- loaded on `:colorscheme github_dark_default`; main scheme is colors/hearth.lua
 		opts = {
 			options = {
 				transparent = true,
@@ -57,8 +56,5 @@ return {
 				},
 			},
 		},
-		init = function()
-			vim.cmd.colorscheme("github_dark_default")
-		end,
 	},
 }
