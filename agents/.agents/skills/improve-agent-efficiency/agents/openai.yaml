@@ -1,0 +1,5 @@
+interface:
+  display_name: "Improve Agent Efficiency"
+  short_description: "Audit previous agent sessions and fix what went wrong."
+policy:
+  allow_implicit_invocation: false
