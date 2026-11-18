@@ -1,3 +1,6 @@
+if vim.fn.has("wsl") == 1 then
+	require("config.wsl")
+end
 local KEYMAPS = require("config.keymaps")
 KEYMAPS.general()
 

@@ -24,6 +24,9 @@ local server_overrides = {
 				-- "--docs=~/.zune/typedefs/global/zune.d.json",
 			}, dispatchers, { cwd = config.cmd_cwd, env = config.cmd_env })
 		end,
+		-- luau-lsp needs file watching to reload sourcemap.json/.luaurc changes. Every other
+		-- server keeps Neovim's Linux default (off): see the note in vim.lsp.config("*").
+		capabilities = { workspace = { didChangeWatchedFiles = { dynamicRegistration = true } } },
 		settings = {
 			["luau-lsp"] = {
 				completion = {
@@ -100,15 +103,11 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		config = function()
+			-- Don't enable workspace/didChangeWatchedFiles here. On Linux, Neovim's watcher
+			-- crawls the server's whole root dir on the UI thread, so a big root freezes the
+			-- editor while the server starts (pyright rooted at ~ froze it for ~5s).
 			vim.lsp.config("*", {
 				flags = { debounce_text_changes = 300 },
-				capabilities = {
-					workspace = {
-						didChangeWatchedFiles = {
-							dynamicRegistration = true,
-						},
-					},
-				},
 			})
 
 			for server_name, server_config in pairs(server_overrides) do
@@ -142,6 +141,7 @@ return {
 	{ "williamboman/mason.nvim", opts = { ui = { border = "rounded" } } },
 	{
 		"mfussenegger/nvim-lint",
+		event = "VeryLazy",
 		config = function()
 			local lint = require("lint")
 			lint.linters_by_ft = {
@@ -159,6 +159,7 @@ return {
 	},
 	{
 		"stevearc/conform.nvim",
+		event = "VeryLazy",
 		opts = {
 			formatters_by_ft = {
 				lua = { "stylua" },
@@ -178,6 +179,7 @@ return {
 	},
 	{
 		"j-hui/fidget.nvim",
+		event = "VeryLazy",
 		opts = { notification = { window = { winblend = 0 } } },
 	},
 }

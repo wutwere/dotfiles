@@ -1,7 +1,7 @@
 local KEYMAPS = require("config.keymaps")
 
 return {
-	{ "ThePrimeagen/vim-be-good" },
+	{ "ThePrimeagen/vim-be-good", cmd = "VimBeGood" },
 	-- {
 	-- 	"lervag/vimtex",
 	-- 	lazy = false,
@@ -63,6 +63,7 @@ return {
 	},
 	{
 		"jake-stewart/multicursor.nvim",
+		event = "VeryLazy",
 		branch = "1.0",
 		config = function()
 			local mc = require("multicursor-nvim")
@@ -74,10 +75,11 @@ return {
 	{
 		"catgoose/nvim-colorizer.lua",
 		event = "BufReadPre",
-		opts = {},
+		opts = { lazy_load = true }, -- highlight after the first screen is drawn
 	},
 	{
 		"otavioschwanck/arrow.nvim",
+		event = "VeryLazy",
 		dependencies = {
 			{ "nvim-tree/nvim-web-devicons" },
 		},
@@ -95,6 +97,7 @@ return {
 	{
 		-- brew install pngpaste on mac
 		"HakonHarnes/img-clip.nvim",
+		event = "VeryLazy",
 		opts = {
 			default = {
 				insert_mode_after_paste = false,

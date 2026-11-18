@@ -3,6 +3,7 @@ local KEYMAPS = require("config.keymaps")
 return {
 	{
 		"echasnovski/mini.files",
+		event = "VeryLazy",
 		config = function()
 			local mini_files = require("mini.files")
 			mini_files.setup({
